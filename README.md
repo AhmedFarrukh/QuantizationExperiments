@@ -26,7 +26,9 @@ To run this experiment, ...
 
 ### Measure inference time on cloud CPU
 
-### Measure inference time on edge device (Raspberry Pi)
+### Measure inference time on NVIDIA Jetson device
+
+### Measure inference time on Raspberry Pi
 
 ### Analyze results
 
