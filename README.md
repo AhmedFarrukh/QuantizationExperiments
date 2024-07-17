@@ -1,6 +1,6 @@
 <!-- Introduction - a couple of sentences about what we will do in this experiment -->
 
-In this experiment, we are going to measure inference time of some deep learning models. We will validate some results from the literature related to inference speedup due to quantization, and also resolve some discrepancies between different papers.
+In the following experiments, we are going to measure the effect of quantization on deep learning models on different hardware environments. We will validate some results from the literature related to inference speedup due to quantization, and also resolve some discrepancies between different papers.
 
 To run this experiment, ...
 
@@ -9,6 +9,23 @@ To run this experiment, ...
 ### Representing numbers
 
 <!-- put some stuff on quantization here -->
+While there are multiple ways to represent numbers in computing, Integers and Floating-Point numbers (also referred to as floats) are of particular relevance to machine learning. 
+
+**Integers** are represented by a fixed number of bits, though the specific number of bits can vary across data-types. The number of bits used to store integers, as well as their signedness, determines the range of numbers that can be represented. Working with integers is relatively computationally inexpensive, quick and accurate. However, using a fixed number of bits limits the range of integers. In addition, they do not allow fractional precision.
+
+**Floating-Point** numbers are represented in a different, though useful, format. The binary representation of a floating point number is split into three sections: sign, exponent and mantissa.
+<table>
+  <tr>
+    <th>S</th>
+    <th>EXPONENT</th>
+    <th>MANTISSA</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
 ### Quantization and deep learning
 
