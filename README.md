@@ -1,7 +1,7 @@
 <!-- Introduction - a couple of sentences about what we will do in this experiment -->
 In the following experiments, we are going to measure the effect of quantization on deep learning models on different hardware environments. We will validate some results from the literature related to inference speedup due to quantization, and also resolve some discrepancies between different papers.
 
-To run this experiment, ...
+<!--To run this experiment, ...-->
 
 ## Background
 
@@ -111,7 +111,11 @@ The discrepancy in results can be explained by the use of different quantization
 In our experiments, we use Tensorflow to apply [Post-training Dynamic Range Quantization](https://www.tensorflow.org/lite/performance/post_training_quant) on 7 popular Convolutional Neural Networks, and measure the inference times in different hardware environments.
 
 ### Create quantized models
+<a target="_blank" href="https://colab.research.google.com/github/https://colab.research.google.com/github/AhmedFarrukh/DeepLearning-EdgeComputing/blob/main/notebooks/QuantizingModels.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
 
+Follow along this notebook to load CNN models, and apply Post-training Dynamic Range Quantization.
 <!-- save in models subdirectory in this repo -->
 
 ### Measure inference time on Google Colab hosted runtime
