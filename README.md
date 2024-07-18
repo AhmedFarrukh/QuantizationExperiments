@@ -1,5 +1,4 @@
 <!-- Introduction - a couple of sentences about what we will do in this experiment -->
-
 In the following experiments, we are going to measure the effect of quantization on deep learning models on different hardware environments. We will validate some results from the literature related to inference speedup due to quantization, and also resolve some discrepancies between different papers.
 
 To run this experiment, ...
@@ -7,7 +6,6 @@ To run this experiment, ...
 ## Background
 
 ### Representing numbers
-
 <!-- put some stuff on quantization here -->
 While there are multiple ways to represent numbers in computing, Integers and Floating-Point numbers (also referred to as floats) are of particular relevance to machine learning. 
 
@@ -102,13 +100,15 @@ The format of the numbers used to represent quantities associated with Deep Lear
 <!-- start with reference to the survey paper by jiasi chen et al -->
 Deep Learning on Edge Devices, in contrast to a cloud-based approach, can decrease latency, offer better scalability and ensure greater privacy<sup>[1]</sup>. Deep Learning at the Edge has several applications including computer vision, natural language processing, and network functions. A familiar example of natural language processing on the edge are voice assistants, such as Amazon's Alexa and Apple's Siri, which use on-device processing to detect wakewords<sup>[1]</sup>. 
 
-However, the resource-constrained environments of edge devices can present a challenge. Model Compression techniques can be used to prepare Deep Neural Networks for deployment on the edge, with minimal loss in accuracy<sup>[1]</sup>. Amongst such methods is Paramter Quantization which converts the parameters of an existing DNN from floating-point numbers to low bit-width numbers to avoid costly floating-point operations<sup>[1]</sup>. 
+However, the resource-constrained environments of edge devices can present a challenge. Model Compression techniques can be used to prepare Deep Neural Networks for deployment on the edge, with minimal loss in accuracy<sup>[1]</sup>. Amongst such methods is Parameter Quantization which converts the parameters of an existing DNN from floating-point numbers to low bit-width numbers to avoid costly floating-point operations<sup>[1]</sup>. 
 <!-- then describe results from the two papers you looked at  - starting with fig 8 -->
-However, past literature reports varying results regarding the impact of Quantization. Q. Qin et al. reported that after quantizing the weights of populer Convolutional Neural Networks, their inference times were generally higher than the original models, though there was a decrease in memory footprint<sup>[2]</sup>. Krishnamoorthi also reports decrease in memory footprint, but also reports a decrease in inference times post-quantization<sup>[3]</sup>. The tensorflow website also claims that quantization can lead to over 2x speedup.
+However, past literature reports varying results regarding the impact of Quantization. Q. Qin et al. reported that after quantizing the weights of populer Convolutional Neural Networks, their inference times were generally higher than the original models, though there was a decrease in memory footprint<sup>[2]</sup>. Krishnamoorthi also reports decrease in memory footprint, but reports a decrease in inference times post-quantization<sup>[3]</sup>. The tensorflow website also claims that quantization can lead to over 2x speedup<sup>[4]</sup>.
 
 The discrepancy in results can be explained by the use of different quantization methods, frameworks and hardware environments. Nevertheless, the lack of unanimity in results make it difficult to make sound predictions and identify appropriate use cases. 
 
 ## Run my experiment
+
+In our experiments, we use Tensorflow to apply [Post-training Dynamic Range Quantization](https://www.tensorflow.org/lite/performance/post_training_quant) on 7 popular Convolutional Neural Networks, and measure the inference times in different hardware environments.
 
 ### Create quantized models
 
@@ -137,6 +137,8 @@ The [Copy of post_training_quant](https://github.com/AhmedFarrukh/DeepLearning-E
 [2] Q. Qin et al., "To Compress, or Not to Compress: Characterizing Deep Learning Model Compression for Embedded Inference," 2018 IEEE Intl Conf on Parallel & Distributed Processing with Applications, Ubiquitous Computing & Communications, Big Data & Cloud Computing, Social Computing & Networking, Sustainable Computing & Communications (ISPA/IUCC/BDCloud/SocialCom/SustainCom), Melbourne, VIC, Australia, 2018, pp. 729-736, doi: 10.1109/BDCloud.2018.00110.
 
 [3] R. Krishnamoorthi, “Quantizing deep convolutional networks for efficient inference: A whitepaper,” arXiv:1806.08342 [cs, stat], Jun. 2018, Available: https://arxiv.org/abs/1806.08342
+
+[4] https://www.tensorflow.org/lite/performance/post_training_quantization
 
 
 
