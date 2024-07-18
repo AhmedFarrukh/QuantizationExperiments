@@ -119,7 +119,11 @@ Follow along this notebook to load CNN models, and apply Post-training Dynamic R
 <!-- save in models subdirectory in this repo -->
 
 ### Measure inference time on Google Colab hosted runtime
+<a target="_blank" href="https://colab.research.google.com/github/AhmedFarrukh/DeepLearning-EdgeComputing/blob/main/notebooks/MeasuringInferenceTimes.ipynb">
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+</a>
 
+Follow along this notebook to quantize models, and measure their inference times and memory footprint before and after Post-training Dynamic Range Quantization.
 ### Measure inference time on cloud CPU
 
 ### Measure inference time on NVIDIA Jetson device
