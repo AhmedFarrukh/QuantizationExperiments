@@ -124,7 +124,8 @@ Follow along this notebook to load CNN models, and apply Post-training Dynamic R
 </a>
 
 Follow along this notebook to quantize models, and measure their inference times and memory footprint before and after Post-training Dynamic Range Quantization.
-### Measure inference time on cloud CPU
+### Measure inference time on Bare Metal CPU
+Open the CPU_reserve.pynb on the Jupyter Interface in Chameleon, which reserves a resource and then sets up a Jupyter Server on the Bare Metal CPU, where you can then run the CPU_inference notebook.
 
 ### Measure inference time on NVIDIA Jetson device
 
