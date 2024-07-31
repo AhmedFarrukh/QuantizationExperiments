@@ -1,5 +1,14 @@
 <!-- Introduction - a couple of sentences about what we will do in this experiment -->
-In the following experiments, we are going to measure the effect of quantization on deep learning models on different hardware environments. We will validate some results from the literature related to inference speedup due to quantization, and also resolve some discrepancies between different papers.
+In the following experiments, we are going to measure the effect of quantization on deep learning models on different hardware environments. We will validate results from literature related to inference speedup due to quantization, and resolve discrepancies between different papers.
+
+Quantization, which compresses models by converting parameters to a lower precision representation, can help prepare models for Deep Learning at the Edge. Across literature and our own experiments, Quantization was consistently found to decrease model size. However, there were discrepancies in the reported effects of Quantization on inference times. 
+
+In the paper, "To Compress, or Not to Compress: Characterizing Deep Learning Model Compression for Embedded Inference", Qin reported that Quantization increased inference times of Convolutional Neural Networks. The following bar chart from the paper represents how much the inference times increased post-Quantization:
+
+<img src="https://github.com/user-attachments/assets/3c5b11a8-d72b-4df1-b3dc-f3f86e35e197" width="600" height="300">
+
+In our experiments, we found that generally Quantization decreased inference times. The decrease in inference times was more pronounced on newer hardware, likely due to the inclusion of Machine Learning optimizations.
+
 
 <!--To run this experiment, ...-->
 
@@ -100,7 +109,7 @@ The format of the numbers used to represent quantities associated with Deep Lear
 <!-- start with reference to the survey paper by jiasi chen et al -->
 Deep Learning on Edge Devices, in contrast to a cloud-based approach, can decrease latency, offer better scalability and ensure greater privacy<sup>[1]</sup>. Deep Learning at the Edge has several applications including computer vision, natural language processing, and network functions. A familiar example of natural language processing on the edge are voice assistants, such as Amazon's Alexa and Apple's Siri, which use on-device processing to detect wakewords<sup>[1]</sup>. 
 
-However, the resource-constrained environments of edge devices can present a challenge. Model Compression techniques can be used to prepare Deep Neural Networks for deployment on the edge, with minimal loss in accuracy<sup>[1]</sup>. Amongst such methods is Parameter Quantization which converts the parameters of an existing DNN from floating-point numbers to low bit-width numbers to avoid costly floating-point operations<sup>[1]</sup>. 
+However, the resource-constrained environments of edge devices can present a challenge. Model Compression techniques can be used to prepare Deep Neural Networks (DNNs) for deployment on the edge, with minimal loss in accuracy<sup>[1]</sup>. Amongst such methods is Parameter Quantization which converts the parameters of an existing DNN from floating-point numbers to low bit-width numbers to avoid costly floating-point operations<sup>[1]</sup>. 
 <!-- then describe results from the two papers you looked at  - starting with fig 8 -->
 However, past literature reports varying results regarding the impact of Quantization. Q. Qin et al. reported that after quantizing the weights of populer Convolutional Neural Networks, their inference times were generally higher than the original models, though there was a decrease in memory footprint<sup>[2]</sup>. Krishnamoorthi also reports decrease in memory footprint, but reports a decrease in inference times post-quantization<sup>[3]</sup>. The tensorflow website also claims that quantization can lead to over 2x speedup<sup>[4]</sup>.
 
