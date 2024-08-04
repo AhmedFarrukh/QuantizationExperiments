@@ -20,7 +20,7 @@ First, the neccessary libraries are imported.
 
 
 :::{.cell .code}
-```
+```python
 import tensorflow as tf
 import numpy as np
 import os
@@ -35,7 +35,7 @@ A list of the names of the models to be quantized is defined.
 
 
 :::{.cell .code}
-```
+```python
 modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 ```
 :::
@@ -50,7 +50,7 @@ Both the original and the quantized versions of the models are stored in the `./
 
 
 :::{.cell .code}
-```
+```python
 for modelName in modelNames:
   model_class = getattr(tf.keras.applications, modelName)
   model = model_class(weights='imagenet')
@@ -80,7 +80,7 @@ Next, we can verify that all models have been correctly saved by printing the co
 
 
 :::{.cell .code}
-```
+```python
 !ls -l ./tflite_models
 ```
 :::

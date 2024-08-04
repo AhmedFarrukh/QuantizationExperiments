@@ -1,5 +1,5 @@
 # List of markdown files
-MARKDOWNS := quantizing_models.md measuring_inference_times.md
+MARKDOWNS := reserve.md
 
 # Convert markdown filenames to notebook filenames
 NOTEBOOKS := $(MARKDOWNS:.md=.ipynb)
@@ -9,7 +9,7 @@ all: $(NOTEBOOKS)
 
 # Clean target to remove generated notebooks
 clean:
-	rm -f quantizing_models.ipynb measuring_inference_times.ipynb
+	rm -f reserve.ipynb
 
 # Pattern rule to convert markdown to notebook
 %.ipynb: %.md

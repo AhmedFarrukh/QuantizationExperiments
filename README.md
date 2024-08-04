@@ -1,21 +1,18 @@
 <!-- Introduction - a couple of sentences about what we will do in this experiment -->
-In the following experiments, we are going to measure the effect of quantization on deep learning models on different hardware environments. We will validate results from literature related to inference speedup due to quantization, and resolve discrepancies between different papers.
+Quantization, a model compression technique, can prepare Deep Learning models for deployment on edge devices. By converting model paramters to lower precision representation, quantization reduces the memory footprint and can potential reduce inferece time as well.
 
-Quantization, which compresses models by converting parameters to a lower precision representation, can help prepare models for Deep Learning at the Edge. Across literature and our own experiments, Quantization was consistently found to decrease model size. However, there were discrepancies in the reported effects of Quantization on inference times. 
+In past literature, however, there is a discrepancy about the effect of quantization on inference time, with some papers reporting an increase while others suggest a decrease.
 
-In the paper, "To Compress, or Not to Compress: Characterizing Deep Learning Model Compression for Embedded Inference", Qin reported that Quantization increased inference times of Convolutional Neural Networks. The following bar chart from the paper represents how much the inference times increased post-Quantization:
+In the paper, "To Compress, or Not to Compress: Characterizing Deep Learning Model Compression for Embedded Inference", Qin reported that Quantization increased inference times of Convolutional Neural Networks <sup>[1]</sup>. The following bar chart from the paper represents how much the inference times increased post-Quantization:
 
 <img src="https://github.com/user-attachments/assets/3c5b11a8-d72b-4df1-b3dc-f3f86e35e197" width="600" height="300">
 
-In our experiments, we found that generally Quantization decreased inference times. The decrease in inference times was more pronounced on newer hardware, likely due to the inclusion of Machine Learning optimizations.
+In our experiments, we aim to reproduce this plot, and benchmark inference time speed-up due to quantization on multiple hardware environments.
 
-
-<!--To run this experiment, ...-->
 
 ## Background
 
 ### Representing numbers
-<!-- put some stuff on quantization here -->
 While there are multiple ways to represent numbers in computing, Integers and Floating-Point numbers (also referred to as floats) are of particular relevance to machine learning. 
 
 **Integers** are represented by a fixed number of bits, though the specific number of bits can vary across data-types. The number of bits used to store integers, as well as their signedness, determines the range of numbers that can be represented. Working with integers is relatively computationally inexpensive, quick and accurate. However, using a fixed number of bits limits the range of integers. In addition, they do not allow fractional precision.
@@ -103,60 +100,210 @@ An alternate way to consider floating point numbers is to think of the exponent 
 
 Floating Point numbers represent a large range of numbers with comparatively few bits, and can represent decimal numbers. However, compared to integer numbers, they have a higher computation cost. 
 
-The format of the numbers used to represent quantities associated with Deep Learning models (such as weights, activations and biases) can impact metrics such as accuracy, memory requirements, and inference time. 
+The format of the numbers used to represent the parameters of Deep Learning models (such as weights, activations and biases) can impact metrics such as accuracy, memory requirements, and inference time. 
 
 ### Quantization and Deep Learning
 <!-- start with reference to the survey paper by jiasi chen et al -->
-Deep Learning on Edge Devices, in contrast to a cloud-based approach, can decrease latency, offer better scalability and ensure greater privacy<sup>[1]</sup>. Deep Learning at the Edge has several applications including computer vision, natural language processing, and network functions. A familiar example of natural language processing on the edge are voice assistants, such as Amazon's Alexa and Apple's Siri, which use on-device processing to detect wakewords<sup>[1]</sup>. 
+Deep Learning on Edge Devices, in contrast to a cloud-based approach, can decrease latency, offer better scalability and ensure greater privacy<sup>[2]</sup>. Deep Learning at the Edge has several applications including computer vision, natural language processing, and network functions. A familiar example of natural language processing on the edge are voice assistants, such as Amazon's Alexa and Apple's Siri, which use on-device processing to detect wakewords<sup>[2]</sup>. 
 
-However, the resource-constrained environments of edge devices can present a challenge. Model Compression techniques can be used to prepare Deep Neural Networks (DNNs) for deployment on the edge, with minimal loss in accuracy<sup>[1]</sup>. Amongst such methods is Parameter Quantization which converts the parameters of an existing DNN from floating-point numbers to low bit-width numbers to avoid costly floating-point operations<sup>[1]</sup>. 
+However, the resource-constraints of edge devices can present a challenge. Model Compression techniques can be used to prepare Deep Neural Networks (DNNs) for deployment on the edge, with minimal loss in accuracy<sup>[2]</sup>. Amongst such methods is Parameter Quantization which converts the parameters of an existing DNN from floating-point numbers to low bit-width numbers to avoid costly floating-point operations<sup>[2]</sup>. 
 <!-- then describe results from the two papers you looked at  - starting with fig 8 -->
-However, past literature reports varying results regarding the impact of Quantization. Q. Qin et al. reported that after quantizing the weights of populer Convolutional Neural Networks, their inference times were generally higher than the original models, though there was a decrease in memory footprint<sup>[2]</sup>. Krishnamoorthi also reports decrease in memory footprint, but reports a decrease in inference times post-quantization<sup>[3]</sup>. The tensorflow website also claims that quantization can lead to over 2x speedup<sup>[4]</sup>.
+However, past literature reports varying results regarding the impact of Quantization. Q. Qin et al. reported that after quantizing the weights of populer Convolutional Neural Networks, their inference times were generally higher than the original models, though there was a decrease in memory footprint<sup>[1]</sup>. Krishnamoorthi also reports decrease in memory footprint, but reports a decrease in inference times post-quantization<sup>[3]</sup>. The tensorflow website also claims that quantization can lead to over 2x speedup<sup>[4]</sup>.
 
-The discrepancy in results can be explained by the use of different quantization methods, frameworks and hardware environments. Nevertheless, the lack of unanimity in results make it difficult to make sound predictions and identify appropriate use cases. 
+The discrepancy in results can be explained by the use of different quantization methods, frameworks and hardware environments; in "Performance evaluation of INT8 quantized inference on mobile GPUs", inference time speedup is shown to vary depending on aforemention factors, supporting this explanation<sup>[5]</sup>.  
 
-## Run my experiment
+Nevertheless, the lack of unanimity in results make it difficult to make sound predictions and identify appropriate use cases. 
 
-In our experiments, we use Tensorflow to apply [Post-training Dynamic Range Quantization](https://www.tensorflow.org/lite/performance/post_training_quant) on 7 popular Convolutional Neural Networks, and measure the inference times in different hardware environments.
+## Methodology
+### Models
+In our experiments, based on Kim's plot (presented earlier)<sup>[1]</sup>, we test on 7 popular Convolutional Neural Networks: MobileNet, InceptionV3, ResNet50, ResNet101, ResNet152, VGG16, VGG19. 
 
-### Create quantized models
-<a target="_blank" href="https://colab.research.google.com/github/https://colab.research.google.com/github/AhmedFarrukh/DeepLearning-EdgeComputing/blob/main/notebooks/QuantizingModels.ipynb">
+The quantized versions were generated by applying Tensorflow's [Post-training Dynamic Range Quantization](https://www.tensorflow.org/lite/performance/post_training_quant) to the original models. Post-training Dynamic Range Quantization converts the model weights to 8-bit fixed width numbers. The following notebook demonstrates how these models were quantized: 
+<a target="_blank" href="https://colab.research.google.com/github/AhmedFarrukh/DeepLearning-EdgeComputing/blob/main/notebooks/quantizing_models.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-Follow along this notebook to load CNN models, and apply Post-training Dynamic Range Quantization.
-<!-- save in models subdirectory in this repo -->
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Version</th>
+      <th>Original Size (MB)</th>
+      <th>Quantized Size (MB)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MobileNet</td>
+      <td>V1</td>
+      <td>17</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Inception</td>
+      <td>V3</td>
+      <td>91</td>
+      <td>24</td>
+    </tr>
+    <tr>
+      <td>ResNet50</td>
+      <td>V1</td>
+      <td>98</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td>ResNet101</td>
+      <td>V1</td>
+      <td>170</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <td>ResNet152</td>
+      <td>V1</td>
+      <td>230</td>
+      <td>59</td>
+    </tr>
+    <tr>
+      <td>VGG16</td>
+      <td>V1</td>
+      <td>528</td>
+      <td>133</td>
+    </tr>
+    <tr>
+      <td>VGG19</td>
+      <td>V1</td>
+      <td>549</td>
+      <td>138</td>
+    </tr>
+  </tbody>
+</table>
 
+All model, both original and quantized, are of `.tflite` format.
+
+The models are available on [Google Drive](https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link). 
+
+### Benchmarking
+The official [TFlite Benchmark](https://www.tensorflow.org/lite/performance/measurement) was used to measure performance metrics. The benchmark generates randon inputs, repeatedly runs the model and reports the aggregate latency and memory statistics. It reports the following output:  
+- Initialization time  
+- Inference time of warmup state  
+- Inference time of steady state  
+- Memory usage during initialization time  
+- Overall memory usage
+
+The benchmark is specific to the hardware type (such as x86_64/ARM64) and operating system, so it's important to ensure that the correct version of the becnhmark is being used.
+
+### Hardware Environments
+We tested on the following hardware environments, which with the exception of Google Colab, are all available through Chameleon. 
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Year of Release</th>
+      <th>Deep Learning Optimization</th>
+      <th>BogoMIPS</th>
+      <th>Clock Speed (GHz)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Intel Ice Lake CPU</td>
+      <td>Bare Metal</td>
+      <td>2019</td>
+      <td>AVX-512 VNNI</td>
+      <td>4600.00</td>
+      <td>2.30</td>
+    </tr>
+    <tr>
+      <td>Intel Cascade Lake CPU</td>
+      <td>Bare Metal</td>
+      <td>2019</td>
+      <td>AVX-512 VNNI</td>
+      <td>4988.36</td>
+      <td>2.80</td>
+    </tr>
+    <tr>
+      <td>Intel Skylake CPU</td>
+      <td>Bare Metal</td>
+      <td>2015</td>
+      <td>-</td>
+      <td>5200.00</td>
+      <td>3.00</td>
+    </tr>
+    <tr>
+      <td>Intel Broadwell CPU</td>
+      <td>Bare Metal</td>
+      <td>2014</td>
+      <td>-</td>
+      <td>4000.24</td>
+      <td>2.00</td>
+    </tr>
+    <tr>
+      <td>Intel Haswell CPU</td>
+      <td>Bare Metal</td>
+      <td>2013</td>
+      <td>-</td>
+      <td>4599.98</td>
+      <td>2.30</td>
+    </tr>
+    <tr>
+      <td>Raspberry Pi 5 (ARM Cortex A76)</td>
+      <td>Bare Metal</td>
+      <td>2023</td>
+      <td>Optimized integer and vector operations</td>
+      <td>108.00</td>
+      <td>2.40</td>
+    </tr>
+    <tr>
+      <td>Raspberry Pi 4 (ARM Cortex A72)</td>
+      <td>Bare Metal</td>
+      <td>2019</td>
+      <td>-</td>
+      <td>108.00</td>
+      <td>1.50</td>
+    </tr>
+    <tr>
+      <td>Google Colab CPU Runtime</td>
+      <td>Shared</td>
+      <td>-</td>
+      <td>-</td>
+      <td>4399.99</td>
+      <td>2.20</td>
+    </tr>
+  </tbody>
+</table>
+
+Some of the hardware, as shown, has special deep learning optimizations. The AVX-512 VNNI instruction set on newer Intel CPUs is designed to accelerate Convolutional Neural Networks. The new Raspberry Pi 5 also has special machine learning optimizations. 
+
+BogoMips values, also reported in the table, are a measurement of CPU speed made by the Linus kernel.
+
+## Run my experiment
 ### Measure inference time on Google Colab hosted runtime
 <a target="_blank" href="https://colab.research.google.com/github/AhmedFarrukh/DeepLearning-EdgeComputing/blob/main/notebooks/MeasuringInferenceTimes.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
-Follow along this notebook to quantize models, and measure their inference times and memory footprint before and after Post-training Dynamic Range Quantization.
-### Measure inference time on Bare Metal CPU
-Open the CPU_reserve.pynb on the Jupyter Interface in Chameleon, which reserves a resource and then sets up a Jupyter Server on the Bare Metal CPU, where you can then run the CPU_inference notebook.
 
-### Measure inference time on NVIDIA Jetson device
+### Measure inference time on a CPU (through Chameleon)
 
-### Measure inference time on Raspberry Pi
+### Measure inference time on a Raspberry Pi (through Chameleon)
 
-### Analyze results
+## Analyze results
 
 ## Notes
 
-The [PreliminaryExperiment_ResNet101V2](https://github.com/AhmedFarrukh/DeepLearning-EdgeComputing/blob/main/PreliminaryExperiment_ResNet101V2.ipynb) notebook contains a preliminary experiment, implementing post-training dynamic range quantization on a pre-trained ResNet101V2 model.
-
-The [Copy of post_training_quant](https://github.com/AhmedFarrukh/DeepLearning-EdgeComputing/blob/main/Copy_of_post_training_quant.ipynb) and [Copy of post_training_integer_quant](https://github.com/AhmedFarrukh/DeepLearning-EdgeComputing/blob/main/Copy_of_post_training_integer_quant.ipynb) notebooks contains modified versions of official TF examples. 
 
 
 ### References
-[1] J. Chen and X. Ran, "Deep Learning With Edge Computing: A Review," in Proceedings of the IEEE, vol. 107, no. 8, pp. 1655-1674, Aug. 2019, doi: 10.1109/JPROC.2019.2921977. 
+[1] Q. Qin et al., "To Compress, or Not to Compress: Characterizing Deep Learning Model Compression for Embedded Inference," 2018 IEEE Intl Conf on Parallel & Distributed Processing with Applications, Ubiquitous Computing & Communications, Big Data & Cloud Computing, Social Computing & Networking, Sustainable Computing & Communications (ISPA/IUCC/BDCloud/SocialCom/SustainCom), Melbourne, VIC, Australia, 2018, pp. 729-736, doi: 10.1109/BDCloud.2018.00110.
 
-[2] Q. Qin et al., "To Compress, or Not to Compress: Characterizing Deep Learning Model Compression for Embedded Inference," 2018 IEEE Intl Conf on Parallel & Distributed Processing with Applications, Ubiquitous Computing & Communications, Big Data & Cloud Computing, Social Computing & Networking, Sustainable Computing & Communications (ISPA/IUCC/BDCloud/SocialCom/SustainCom), Melbourne, VIC, Australia, 2018, pp. 729-736, doi: 10.1109/BDCloud.2018.00110.
+[2] J. Chen and X. Ran, "Deep Learning With Edge Computing: A Review," in Proceedings of the IEEE, vol. 107, no. 8, pp. 1655-1674, Aug. 2019, doi: 10.1109/JPROC.2019.2921977. 
 
 [3] R. Krishnamoorthi, “Quantizing deep convolutional networks for efficient inference: A whitepaper,” arXiv:1806.08342 [cs, stat], Jun. 2018, Available: https://arxiv.org/abs/1806.08342
 
 [4] https://www.tensorflow.org/lite/performance/post_training_quantization
+
+[5] S. Kim, G. Park and Y. Yi, "Performance Evaluation of INT8 Quantized Inference on Mobile GPUs," in IEEE Access, vol. 9, pp. 164245-164255, 2021, doi: 10.1109/ACCESS.2021.3133100.
 
 
 

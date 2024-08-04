@@ -11,18 +11,18 @@ The quantized models were created by applying [Post-training Dynamic Range Quant
 
 Both the original models and their quantized versions are of tflite format, and were uploaded to [Google Drive](https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link). 
 
-The benchmarking of models is achieved by using the official [TFlite benchmark](https://www.tensorflow.org/lite/performance/measurement) which measures the following metrics:
-\* Initialization time
-\* Inference time of warmup state
-\* Inference time of steady state
-\* Memory usage during initialization time
-\* Overall memory usage
+The benchmarking of models is achieved by using the official [TFlite benchmark](https://www.tensorflow.org/lite/performance/measurement) which measures the following metrics:  
+- Initialization time  
+- Inference time of warmup state  
+- Inference time of steady state   
+- Memory usage during initialization time   
+- Overall memory usage 
 
 The benchmark generates a series of random inputs, runs the models and aggregates the results to report the aforementioned metrics.
 :::
 
 :::{.cell .code}
-```
+```python
 modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 ```
 :::
@@ -32,7 +32,7 @@ We can download the models from the Google Drive using `gdown`. If you want to d
 :::
 
 :::{.cell .code}
-```
+```python
 !gdown --folder https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h -O ./tflite_models
 ```
 :::
@@ -42,7 +42,7 @@ You can verify that the models were correctly loaded by listing the files in the
 :::
 
 :::{.cell .code}
-```
+```python
 !ls -l ./tflite_models
 ```
 :::
@@ -55,7 +55,7 @@ The benchmark is downloaded to the `./benchmark` directory, and its permissions 
 
 
 :::{.cell .code}
-```
+```python
 !mkdir ./benchmark
 !wget https://storage.googleapis.com/tensorflow-nightly-public/prod/tensorflow/release/lite/tools/nightly/latest/linux_x86-64_benchmark_model -P ./benchmark
 !chmod +x ./benchmark/linux_x86-64_benchmark_model
@@ -67,7 +67,7 @@ Let's run the benchmark on the MobileNet_quant model and note the output.
 :::
 
 :::{.cell .code}
-```
+```python
 !./benchmark/linux_x86-64_benchmark_model \
       --graph=./tflite_models/MobileNet_quant.tflite \
       --num_threads=1
@@ -79,7 +79,7 @@ Let's define all the metrics that are reported by the benchmark:
 :::
 
 :::{.cell .code}
-```python
+```pythonpython
 metrics = ["Init Time (ms)", "Init Inference (ms)", "First Inference (ms)", "Warmup Inference (ms)", "Avg Inference (ms)", "Memory Init (MB)", "Memory Overall (MB)"]
 ```
 :::
@@ -90,7 +90,7 @@ Since the result of the benchmark is reported as text on the console, we can def
 
 
 :::{.cell .code}
-```
+```python
 import re
 
 def parse_benchmark_output(output, results):
@@ -150,7 +150,7 @@ Next, we can define a Pandas Dataframe to store our results. Since we will be re
 :::
 
 :::{.cell .code}
-```
+```python
 import pandas as pd
 
 # Define model types (rows)
@@ -176,7 +176,7 @@ Finally, run the benchmark repeatedly and average the results. For each model, w
 
 
 :::{.cell .code}
-```
+```python
 import subprocess
 from collections import defaultdict
 from statistics import mean
@@ -205,7 +205,7 @@ Let's have a look at the results.
 :::
 
 :::{.cell .code}
-```
+```python
 print(finalResult)
 ```
 :::
@@ -215,7 +215,7 @@ Let's create a directory to store the plots from our data:
 :::
 
 :::{.cell .code}
-```
+```python
 !mkdir ./plots
 ```
 :::
@@ -226,7 +226,7 @@ Finally, we can generate plots of the results.
 
 
 :::{.cell .code}
-```
+```python
 import matplotlib.pyplot as plt
 import numpy as np
 for metric in metrics:
