@@ -289,8 +289,10 @@ Click the button below to open the measuring_inference_times.ipynb notebook on G
 First, you'll run the `reserve.ipynb` notebook to reserve a resource on Chameleon and configure it with the software needed to run this experiment. At the end of this notebook, you'll set up an SSH tunnel between your local device and a Jupyter notebook server that you just created on your Chameleon resource. Then, you'll open the notebook server in your local browser and run the sequence of notebooks you see there.
 
 To get started, open the Jupyter Interface in Chameleon, initiate a terminal and run the following in the terminal:
-`cd ~/work
-git clone https://github.com/AhmedFarrukh/DeepLearning-EdgeComputing.git`
+```
+cd ~/work
+git clone https://github.com/AhmedFarrukh/DeepLearning-EdgeComputing.git
+```
 Then open the `reserve.ipynb` notebook inside the `DeepLearning-EdgeComputing` directory and follow along the instructions there.
 
 
