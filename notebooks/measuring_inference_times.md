@@ -19,6 +19,19 @@ The benchmarking of models is achieved by using the official [TFlite benchmark](
 The benchmark generates a series of random inputs, runs the models and aggregates the results to report the aforementioned metrics.
 :::
 
+:::{.cell}
+Before we begin, let's check the specifications of our hardware environment.
+:::
+:::{.cell .code}
+```python
+!lscpu
+```
+:::
+
+:::{.cell}
+Now let's define the CNN models we will be using.
+:::
+
 :::{.cell .code}
 ```python
 modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
@@ -31,7 +44,8 @@ We can download the models from the Google Drive using `gdown`. If you want to d
 
 :::{.cell .code}
 ```python
-!gdown --folder https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h -O ./tflite_models
+import gdown
+gdown.download_folder('https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h')
 ```
 :::
 
