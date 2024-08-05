@@ -20,7 +20,7 @@ The benchmark generates a series of random inputs, runs the models and aggregate
 :::
 
 :::{.cell}
-Before we begin, let's check the specifications of our hardware environment.
+Before we begin, let's check the specifications of our hardware environment. The `lscpu` utility in Linux can be used to learn more about the CPU architecture. Amongst details to notice are the BogoMIPS value and clock speed which are both measurements of CPU speed; BogoMIPS ("*Bog*us" *M*illions of *I*nstructions per *S*econd) is calculated by the Linux kernel whereas clock speed is reported by the hardware manufacturer. Also pay attention to the flags, and see if there are any special deep learning optimizations, such as the AVX-512 VNNI isntruction set which accelerates convolutional neural networks.
 :::
 :::{.cell .code}
 ```python
@@ -39,7 +39,7 @@ modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", 
 :::
 
 :::{.cell}
-We can download the models from the Google Drive using `gdown`. If you want to download your own set of models, you can modify the google drive link below. In this case, we download the models to the  `./tflite_models` directory.
+We can download the models from the Google Drive using `gdown`. If you want to download your own set of models, you can modify the google drive link below. In this case, the `tflite_models` folder is downloaded from Google Drive and we will be able to access the models in the `./tflite_models` directory. 
 :::
 
 :::{.cell .code}
@@ -50,7 +50,7 @@ gdown.download_folder('https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR
 :::
 
 :::{.cell}
-You can verify that the models were correctly loaded by listing the files in the `./tflite_models directory`. Note that there should be two `.tflite` files for each model: an original and a quantized version. The size of the quantized models should be about four times smaller than the size of the corresponding original model.
+You can verify that the models were correctly loaded by listing the files in the `./tflite_models` directory. Note that there should be two `.tflite` files for each model: an original and a quantized version. The size of the quantized models should be about four times smaller than the size of the corresponding original model.
 :::
 
 :::{.cell .code}
@@ -223,12 +223,22 @@ print(finalResult)
 :::
 
 :::{.cell}
-Let's create a directory to store the plots from our data:
+Let's create a directory to store the results from our experiment.
 :::
 
 :::{.cell .code}
 ```python
-!mkdir ./plots
+!mkdir ./results
+```
+:::
+
+:::{.cell}
+Let's convert the `finalResult` dataframe to a csv file and store it in the `./plot` directory, allowing us to download that data for later use.
+:::
+
+:::{.cell .code}
+```python
+finalResult.to_csv("./results/finalResult.csv")
 ```
 :::
 
@@ -274,7 +284,7 @@ for metric in metrics:
     plt.tight_layout()
 
     # Save the plot as an image
-    plt.savefig("./plots" + metric + "_bar_chart.png")
+    plt.savefig("./results/" + metric + ".png")
 
     # Show the plot
     plt.show()
