@@ -3,9 +3,7 @@
 :::
 
 :::{.cell}
-In this notebook, we measure the inference times and memory footprint of the 7 popular Convolutional Neural Network (CNN) models and their quantized versions.
-
-The CNN models are: MobileNet, InceptionV3, Resnet50, ResNet101, ResNet152, VGG16, VGG19.
+In this notebook, we measure the inference times and memory footprint of 7 popular Convolutional Neural Network (CNN) models and their quantized versions. The CNN models are: MobileNet, InceptionV3, Resnet50, ResNet101, ResNet152, VGG16, VGG19.
 
 The quantized models were created by applying [Post-training Dynamic Range Quantization](https://www.tensorflow.org/lite/performance/post_training_quantization), which converts model weights from floating point numbers to 8-bit fixed width numbers.
 
@@ -38,7 +36,7 @@ We can download the models from the Google Drive using `gdown`. If you want to d
 :::
 
 :::{.cell}
-You can verify that the models were correctly loaded by listing the files in the `./tflite_models directory`. Note that there should be two tflite files for each model: an original and a quantized version. The size of the quantized models should be significantly smaller than the size of their corresponding original model.
+You can verify that the models were correctly loaded by listing the files in the `./tflite_models directory`. Note that there should be two `.tflite` files for each model: an original and a quantized version. The size of the quantized models should be about four times smaller than the size of the corresponding original model.
 :::
 
 :::{.cell .code}
@@ -146,7 +144,7 @@ def parse_benchmark_output(output, results):
 :::
 
 :::{.cell}
-Next, we can define a Pandas Dataframe to store our results. Since we will be repeatedly running the benchmark to estimate the standard deviation of results as well, for each metric, we will define two columns - one for the mean and the other for the standard deviation.
+Next, we can define a Pandas Dataframe to store our results. Since we will be repeatedly running the benchmark to estimate the standard deviation of results as well, for each metric we will define two columns - one for the mean and the other for the standard deviation.
 :::
 
 :::{.cell .code}

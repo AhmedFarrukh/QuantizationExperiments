@@ -98,7 +98,7 @@ l['id']
 :::
 
 :::{.cell}
-This cell provisions resources. It will take approximately 10 minutes. You can check on its status in the Chameleon web-based UI, which can be accessed by selecting 'Instances' under the 'Compute' tab on the relevant site's webpage. For example, for a node on the CHI@UC site, you can use [https://chi.uc.chameleoncloud.org/project/instances/]( https://chi.uc.chameleoncloud.org/project/instances/). Come back here when it is in the RUNNING state.
+The following cell provisions resources. It will take approximately 10 minutes. You can check on its status in the Chameleon web-based UI, which can be accessed by selecting 'Instances' under the 'Compute' tab on the relevant site's webpage. For example, for a node on the CHI@UC site, you can use [https://chi.uc.chameleoncloud.org/project/instances/]( https://chi.uc.chameleoncloud.org/project/instances/). Come back here when it is in the RUNNING state.
 :::
 
 
