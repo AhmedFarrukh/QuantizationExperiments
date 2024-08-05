@@ -300,6 +300,11 @@ Then open the `reserve.ipynb` notebook inside the `DeepLearning-EdgeComputing` d
 ### Measure inference time on a Raspberry Pi (through Chameleon)
 
 ## Analyze results
+Across the different hardware environments we tested on, we generally found quantization to be effective in reducing inference time, and the inference time of quantized models was observed to be lower than the inference time of original models. One notable exception was the Intel Broadwell CPU where the inference time increased after quantization. 
+
+Quantization was more effective on newer Intel CPU microarchitectures that implemented the AVS-512 VNNI instruction set, and the decrease in inference times post-quantization was greater than older CPU microarchitectures.
+
+A greater decrease in inference times post-quantization was observed on the Raspberry Pi 5, compared to the older Raspberry Pi 4. In general, inference on the Raspberry Pi 5 was about three times faster than Raspberry Pi 4.
 
 ## Notes
 
