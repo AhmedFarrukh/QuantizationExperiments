@@ -1,13 +1,14 @@
 <!-- Introduction - a couple of sentences about what we will do in this experiment -->
-Quantization, a model compression technique, can prepare Deep Learning models for deployment on edge devices. By converting model paramters to lower precision representation, quantization reduces the memory footprint and can potential reduce inferece time as well.
 
-In past literature, however, there is a discrepancy about the effect of quantization on inference time, with some papers reporting an increase while others suggest a decrease.
+Quantization, a model compression technique, prepares Deep Learning models for deployment on edge devices. By converting model parameters to a lower precision representation, quantization reduces the memory footprint and can potentially reduce inference time.
 
-In the paper, "To Compress, or Not to Compress: Characterizing Deep Learning Model Compression for Embedded Inference", Qin reported that Quantization increased inference times of Convolutional Neural Networks <sup>[1]</sup>. The following bar chart from the paper represents how much the inference times increased post-Quantization:
+However, in past literature, there is a discrepancy about the effect of quantization on inference time, with some papers reporting an increase while others suggest a decrease.
+
+In the paper "To Compress, or Not to Compress: Characterizing Deep Learning Model Compression for Embedded Inference," Qin reported that quantization increased inference times of Convolutional Neural Networks<sup>[1]</sup>. The following bar chart from the paper represents how much the inference times increased post-quantization:
 
 <img src="https://github.com/user-attachments/assets/3c5b11a8-d72b-4df1-b3dc-f3f86e35e197" width="600" height="300">
 
-In our experiments, we aim to reproduce this plot, and benchmark inference time speed-up due to quantization on multiple hardware environments.
+In our experiments, we aim to reproduce this plot and benchmark the inference time speed-up due to quantization on multiple hardware environments.
 
 
 ## Background
@@ -191,7 +192,7 @@ The official [TFlite Benchmark](https://www.tensorflow.org/lite/performance/meas
 The benchmark is specific to the hardware type (such as x86_64/ARM64) and operating system, so it's important to ensure that the correct version of the benchmark is being used.
 
 ### Hardware Environments
-We tested on the following hardware environments, which with the exception of Google Colab, are all available through Chameleon. 
+We tested on the following hardware environments which, with the exception of Google Colab, are all available through Chameleon. 
 <table>
   <thead>
     <tr>
@@ -271,12 +272,12 @@ We tested on the following hardware environments, which with the exception of Go
   </tbody>
 </table>
 
-Some of the hardware, as shown, has special deep learning optimizations. The AVX-512 VNNI instruction set on newer Intel CPUs is designed to accelerate Convolutional Neural Networks. The new Raspberry Pi 5 also has special machine learning optimizations. 
+Some of the hardware, as shown, have special deep learning optimizations. The AVX-512 VNNI instruction set on newer Intel CPUs is designed to accelerate Convolutional Neural Networks. The new Raspberry Pi 5 also has special machine learning optimizations. 
 
 BogoMips values, also reported in the table, are a measurement of CPU speed made by the Linux kernel.
 
 ## Run my experiment
-In the following experiments, we first load the original quantized models in `.tflite` format from Google Drive, then repeatedly run the benchmark on each model, and finally plot the results.
+In the following experiments, we first load the original and quantized models from Google Drive, then repeatedly run the benchmark on each model, and finally plot the results.
 
 ### Measure inference time on Google Colab hosted runtime
 Click the button below to open the measuring_inference_times.ipynb notebook on Google Colab:
