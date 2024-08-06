@@ -98,6 +98,8 @@ metrics = ["Init Time (ms)", "Init Inference (ms)", "First Inference (ms)", "War
 
 :::{.cell}
 Since the result of the benchmark is reported as text on the console, we can define a parsing function to extract the data. The parsing function takes the output of the benchmark as an input and adds the results to a dictionary of metrics.
+
+The function employs regular expressions to extract key performance metrics from the output logs. It defines specific patterns and attempts to match these against the output logs. When a match is identified, the corresponding metrics are stored in a dictionary provided to the function. The metrics, as defined earlier, serve as the keys in this dictionary. Each key is associated with an array that contains the values reported for that metric, allowing for organized and accessible data retrieval for further analysis.
 :::
 
 
@@ -233,7 +235,7 @@ Let's create a directory to store the results from our experiment.
 :::
 
 :::{.cell}
-Let's convert the `finalResult` dataframe to a csv file and store it in the `./plot` directory, allowing us to download that data for later use.
+Let's convert the `finalResult` dataframe to a csv file and store it in the `./results` directory, allowing us to download that data for later use.
 :::
 
 :::{.cell .code}
@@ -243,7 +245,7 @@ finalResult.to_csv("./results/finalResult.csv")
 :::
 
 :::{.cell}
-Finally, we can generate plots of the results.
+Finally, we can generate plots of the results. We will display the bars for the original and quantized versions of each model side-by-side to facilitate easy comparison. Error bars, representing +/- one standard deviation, will also be included to provide an estimate of the variation.
 :::
 
 
@@ -289,4 +291,10 @@ for metric in metrics:
     # Show the plot
     plt.show()
 ```
+:::
+
+:::{.cell}
+As you look through the plots, pay particular attention to the Average Inference Time plot, and note if the quantization led to a decrease in inference time, and if so, by how much.
+
+It is also interesting to note that sometimes even if the average inference time is greater for the quantized models, quantization might reduce other sources of latency, such as initialization time.
 :::
