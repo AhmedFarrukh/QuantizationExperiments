@@ -17,7 +17,7 @@ This notebook describes how to run a single user Jupyter notebook server on Cham
 :::{.cell}
 This notebook will try to reserve a bare metal server on Chameleon - pending availability. You can see the hardware resources available here: [https://chameleoncloud.org/hardware/](https://chameleoncloud.org/hardware/).
 
-Once you have identified the hardware resource, identify the site where it is available, and then confirm availability using the following site-specific host calendars:  
+Once you have selected the hardware resource, identify it's site, and then confirm availability using the following site-specific host calendars:  
 - [TACC](https://chi.tacc.chameleoncloud.org/project/leases/calendar/host/)  
 - [UC](https://chi.uc.chameleoncloud.org/project/leases/calendar/host/)  
 - [NU](https://sl-ciab.northwestern.edu/project/leases/calendar/host/)  
@@ -35,7 +35,8 @@ In the following cell, you can enter the site and node type.
 
 :::{.cell .code}
 ```python
-site = "CHI@UC"
+import chi, os
+chi.use_site("CHI@UC")
 NODE_TYPE = "compute_cascadelake_r"
 ```
 :::
@@ -46,8 +47,6 @@ You can also change your Chameleon project name (if not using the one that is au
 
 :::{.cell .code}
 ```python
-import chi, os
-chi.use_site("CHI@UC")
 PROJECT_NAME = os.getenv('OS_PROJECT_NAME')
 chi.set("project_name", PROJECT_NAME)
 username = os.getenv('USER')
@@ -228,7 +227,7 @@ In the output of the cell above, look for a URL in this format:
 http://localhost:8888/?token=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
-Copy this URL and open it in a browser. Then, you can run the sequence of notebooks that you'll see there, in order.
+Copy this URL and open it in a browser. Then, you can run the sequence of notebooks that you'll see there.
 
 If you need to stop and re-start your Jupyter server,
 
@@ -247,9 +246,21 @@ node.run("sudo killall jupyter-notebook")
 :::
 
 :::{.cell}
-If you finish with your experimentation before your lease expires,release your resources and tear down your environment by running the following (commented out to prevent accidental deletions).
+If you finish with your experimentation before your lease expires, release your resources and tear down your environment by running the following (commented out to prevent accidental deletions).
 
-This section is designed to work as a "standalone" portion - you can come back to this notebook, ignore the top part, and just run this section to delete your reasources.
+This section is designed to work as a "standalone" portion - you can come back to this notebook, ignore the top part, and just run this section to delete your reasources. 
+:::
+
+:::{.cell}
+Make sure to set the correct site first, by entering its name in the following cell.
+:::
+
+:::{.cell .code}
+```python
+import chi, os
+from chi import lease, server
+chi.use_site("CHI@UC")
+```
 :::
 
 :::{.cell .code}
@@ -259,7 +270,6 @@ import chi, os
 from chi import lease, server
 
 PROJECT_NAME = os.getenv('OS_PROJECT_NAME')
-chi.use_site("CHI@UC")
 chi.set("project_name", PROJECT_NAME)
 
 
