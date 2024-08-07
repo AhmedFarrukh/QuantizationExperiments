@@ -29,6 +29,18 @@ Before we begin, let's check the specifications of our hardware environment. The
 :::
 
 :::{.cell}
+It's particularly important to take note of the architecture type (x86-64/ARM64 etc.) since the benchmark binary we will use later is specific to the architecture type. The `platform` library in python can be used to find out more about the architecture, and in our case, to store the architecture type in a variable for later use.
+:::
+
+:::{.cell .code}
+```python
+import platform
+arch_type = platform.machine().replace("_", "-")
+print(arch_type)
+```
+:::
+
+:::{.cell}
 Now let's define the CNN models we will be using.
 :::
 
@@ -60,17 +72,16 @@ You can verify that the models were correctly loaded by listing the files in the
 :::
 
 :::{.cell}
-Next, we download the TFlite benchmark which we will use to measure inference times and memory footprint. More details about the benchmark can be found on the [tensorflow website](https://www.tensorflow.org/lite/performance/measurement). Note that the benchmark is specific to the architecture type (such as x86 or ARM), and the appropriate benchmark binary must be downloaded. Below, the benchmark is loaded for an x86-64 type architecture.
+Next, we download the TFlite benchmark which we will use to measure inference times and memory footprint. More details about the benchmark can be found on the [tensorflow website](https://www.tensorflow.org/lite/performance/measurement). Note that the benchmark is specific to the architecture type (such as x86 or ARM), and the appropriate benchmark binary must be downloaded; therefore, we will concatenate the `arch_type` we defined earlier to the download link.
 
-The benchmark is downloaded to the `./benchmark` directory, and its permissions are then updated to allow it to be executed.
+The benchmark is downloaded and its permissions are then updated to allow it to be executed.
 :::
 
 
 :::{.cell .code}
 ```python
-!mkdir ./benchmark
-!wget https://storage.googleapis.com/tensorflow-nightly-public/prod/tensorflow/release/lite/tools/nightly/latest/linux_x86-64_benchmark_model -P ./benchmark
-!chmod +x ./benchmark/linux_x86-64_benchmark_model
+!wget https://storage.googleapis.com/tensorflow-nightly-public/prod/tensorflow/release/lite/tools/nightly/latest/linux_{arch_type}_benchmark_model -O benchmark
+!chmod +x ./benchmark
 ```
 :::
 
@@ -80,7 +91,7 @@ Let's run the benchmark on the MobileNet_quant model and note the output.
 
 :::{.cell .code}
 ```python
-!./benchmark/linux_x86-64_benchmark_model \
+!./benchmark \
       --graph=./tflite_models/MobileNet_quant.tflite \
       --num_threads=1
 ```
@@ -202,7 +213,7 @@ for modelName in rows:
   print(modelName)
   modelResults = defaultdict(list)
   for i in range(n):
-    outputOriginal = subprocess.check_output("./benchmark/linux_x86-64_benchmark_model \
+    outputOriginal = subprocess.check_output("./benchmark \
       --graph=./tflite_models/" + modelName +".tflite"+" \
       --num_threads=1", shell=True)
     outputOriginal = outputOriginal.decode('utf-8')
