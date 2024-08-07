@@ -1,5 +1,6 @@
 <!-- Introduction - a couple of sentences about what we will do in this experiment -->
-# Quantization for Deep Learning at the Edge
+# Benchmarking Inference Speedup due to Quantization for Deep Learning at the Edge
+
 Quantization, a model compression technique, prepares Deep Learning models for deployment on edge devices. By converting model parameters to a lower precision representation, quantization reduces memory footprint and can potentially reduce inference time.
 
 However, in past literature, there is a discrepancy about the effect of quantization on inference time, with some papers reporting an increase while others suggest a decrease.
@@ -287,7 +288,7 @@ Click the button below to open the measuring_inference_times.ipynb notebook on G
 </a>
 
 ### Measure inference time on a CPU (through Chameleon)
-First, you'll run the `reserve.ipynb` notebook to reserve a resource on Chameleon and configure it with the software needed to run this experiment. At the end of this notebook, you'll set up an SSH tunnel between your local device and a Jupyter notebook server that you just created on your Chameleon resource. Then, you'll open the notebook server in your local browser and run the sequence of notebooks you see there.
+First, you'll run the `reserve.ipynb` notebook to reserve a resource on Chameleon, configure it with the software needed to run this experiment and set up a Jupyter notebook server. At the end of this notebook, you'll set up an SSH tunnel between your local device and the Jupyter notebook server that you just created on your Chameleon resource. Then, you'll open the notebook server in your local browser and run the sequence of notebooks you see there.
 
 To get started, open the Jupyter Interface in Chameleon, initiate a terminal and run the following in the terminal:
 ```
