@@ -227,7 +227,7 @@ In the output of the cell above, look for a URL in this format:
 http://localhost:8888/?token=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
-Copy this URL and open it in a browser. Then, you can run the sequence of notebooks that you'll see there.
+Copy this URL and open it in a browser. Then, you can run `measuring_inference_times.ipynb` notebook that you'll see there.
 
 If you need to stop and re-start your Jupyter server,
 
