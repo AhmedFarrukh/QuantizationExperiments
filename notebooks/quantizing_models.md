@@ -20,7 +20,7 @@ First, let's install TensorFlow (version 2.17.0).
 
 :::{.cell .code}
 ```python
-pip install tensorflow==2.17.0
+!pip install tensorflow==2.17.0
 ```
 :::
 
