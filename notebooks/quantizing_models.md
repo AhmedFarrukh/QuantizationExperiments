@@ -15,22 +15,30 @@ The technique is applied on popular Convolutional Neural Networks: MobileNet, In
 :::
 
 :::{.cell}
-First, the neccessary libraries are imported.
+First, let's install TensorFlow (version 2.17.0).
+:::
+
+:::{.cell .code}
+```python
+pip install tensorflow==2.17.0
+```
+:::
+
+:::{.cell}
+Next, let's import the neccessary libraries.
 :::
 
 
 :::{.cell .code}
 ```python
 import tensorflow as tf
-import numpy as np
 import os
-import numpy as np
 import pathlib
 ```
 :::
 
 :::{.cell}
-A list of the names of the models to be quantized is defined.
+We can now define a list of the names of the models to be quantized.
 :::
 
 
@@ -41,7 +49,7 @@ modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", 
 :::
 
 :::{.cell}
-The models are loaded using the Keras API. One instance of each model is converted to tflite format without any optimization; another instance is optimized using Dynamic Range Quantization.
+The models are then loaded using the Keras API. One instance of each model is converted to tflite format without any optimization; another instance is optimized using Dynamic Range Quantization.
 :::
 
 :::{.cell}
@@ -75,12 +83,12 @@ for modelName in modelNames:
 :::
 
 :::{.cell}
-Next, we can verify that all models have been correctly saved by printing the contents of the `./tflite_models` directory. You should be able to see two files for each model, one for the original and one for the quantized version. Note that the size of the original models is bigger than the size of their quantized version.
+Next, we can verify that all models have been correctly saved by printing the contents of the `./tflite_models` directory. You should be able to see two files for each model, one for the original and one for the quantized version. Note that the size of the original models is bigger than the size of their quantized version. 
 :::
 
 
 :::{.cell .code}
 ```python
-!ls -l ./tflite_models
+!ls -l --block-size=M ./tflite_models
 ```
 :::
