@@ -1,10 +1,8 @@
 #main dependency: TF version 2.17.0
 
 import tensorflow as tf
-import os
 import pathlib
 import argparse
-import sys
 
 modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 
@@ -36,9 +34,5 @@ if __name__ == "__main__":
     parser.add_argument('--dir', help='The directory to save the models', required=True)
     
     args = parser.parse_args()
-
-    if not args.dir:
-        print("Warning: Must provide: directory.")
-        sys.exit(1)
 
     quantize(args.dir)
