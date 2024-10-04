@@ -55,7 +55,6 @@ def benchmark(dir, modelNames, metrics):
             parse_benchmark_output(outputOriginal, modelResults)
 
         for metric in metrics:
-            print(f'\n{metric}\n')
             finalResult.loc[modelName, metric] = mean(modelResults[metric])
             finalResult.loc[modelName, metric + "_sd"] = stdev(modelResults[metric])
     
@@ -73,17 +72,17 @@ def parse_benchmark_output(output, results):
         re.compile(r'INFO: Initialized session in (\d+)ms.')
     ]
     inference_patterns = [
-        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \\(avg\\): ([\d.e+]+), Inference \\(avg\\): ([\d.e+]+)'),
-        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \\(avg\\): ([\d.e+]+), Inference \\(avg\\): (\d+)'),
-        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \\(avg\\): (\d+.\d+), Inference \\(avg\\): (\d+.\d+)'),
-        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \\(avg\\): (\d+), Inference \\(avg\\): (\d+.\d+)'),
-        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \\(avg\\): (\d+), Inference \\(avg\\): (\d+)'),
+        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \(avg\): ([\d.e+]+), Inference \(avg\): ([\d.e+]+)'),
+        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \(avg\): ([\d.e+]+), Inference \(avg\): (\d+)'),
+        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \(avg\): (\d+.\d+), Inference \(avg\): (\d+.\d+)'),
+        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \(avg\): (\d+), Inference \(avg\): (\d+.\d+)'),
+        re.compile(r'INFO: Inference timings in us: Init: (\d+), First inference: (\d+), Warmup \(avg\): (\d+), Inference \(avg\): (\d+)'),
     ]
     memory_patterns = [
-        re.compile(r'INFO: Memory footprint delta from the start of the tool \\(MB\\): init=(\d+.\d+) overall=(\d+.\d+)'),
-        re.compile(r'INFO: Memory footprint delta from the start of the tool \\(MB\\): init=(\d+.\d+) overall=(\d+)'),
-        re.compile(r'INFO: Memory footprint delta from the start of the tool \\(MB\\): init=(\d+) overall=(\d+.\d+)'),
-        re.compile(r'INFO: Memory footprint delta from the start of the tool \\(MB\\): init=(\d+) overall=(\d+)'),
+        re.compile(r'INFO: Memory footprint delta from the start of the tool \(MB\): init=(\d+.\d+) overall=(\d+.\d+)'),
+        re.compile(r'INFO: Memory footprint delta from the start of the tool \(MB\): init=(\d+.\d+) overall=(\d+)'),
+        re.compile(r'INFO: Memory footprint delta from the start of the tool \(MB\): init=(\d+) overall=(\d+.\d+)'),
+        re.compile(r'INFO: Memory footprint delta from the start of the tool \(MB\): init=(\d+) overall=(\d+)'),
     ]
     for line in output.split('\n'):
         # Match the initialization time
