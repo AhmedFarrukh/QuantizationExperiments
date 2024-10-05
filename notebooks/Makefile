@@ -1,16 +1,16 @@
-# List of markdown files
-MARKDOWNS := quantizing_models.md measuring_inference_times.md
+# Define notebooks and their respective markdown files
+NOTEBOOKS := quantization_TensorFlow.ipynb 
 
-# Convert markdown filenames to notebook filenames
-NOTEBOOKS := $(MARKDOWNS:.md=.ipynb)
+# List of markdown files that form specific notebooks
+quantization_TensorFlow_md := quantization_header.md reserve_top.md quantization_tf.md ssh_transfer.md reserve_end.md
 
 # Default target to build all notebooks
 all: $(NOTEBOOKS)
 
 # Clean target to remove generated notebooks
 clean:
-	rm -f quantizing_models.ipynb measuring_inference_times.ipynb
+	rm -f $(NOTEBOOKS)
 
-# Pattern rule to convert markdown to notebook
-%.ipynb: %.md
-	pandoc --wrap=none $< -o $@
+# Rule to create quantization_TensorFlow notebook by combining markdown files
+quantization_TensorFlow.ipynb: $(quantization_TensorFlow_md)
+	cat $(quantization_TensorFlow_md) | pandoc --wrap=none -o $@

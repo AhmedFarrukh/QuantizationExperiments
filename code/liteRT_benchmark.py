@@ -139,14 +139,17 @@ def print_results(benchmark_results, metrics, modelNames, dir, name):
 
         plt.xlabel('Model')
         plt.ylabel(metric)
-        plt.title(f'Bar Chart for {metric} on {name}')
+        if name:
+            plt.title(f'Bar Chart for {metric} on {name}')
+        else:
+            plt.title(f'Bar Chart for {metric}')
         plt.xticks(index + bar_width / 2, modelNames, rotation=45)
         plt.legend()
 
         plt.tight_layout()
 
         # Save the plot as an image
-        plt.savefig(f'{results_dir}/{metrics}.png')
+        plt.savefig(f'{results_dir}/{metric}.png')
 
 
 if __name__ == "__main__":
