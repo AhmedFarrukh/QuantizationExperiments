@@ -6,7 +6,10 @@ import argparse
 
 modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 
-def quantize(dir):
+def quantize(save_dir):
+    tflite_models_dir = pathlib.Path(save_dir)
+    tflite_models_dir.mkdir(exist_ok=True, parents=True)
+
     for modelName in modelNames:
         model_class = getattr(tf.keras.applications, modelName)
         model = model_class(weights='imagenet')
@@ -17,9 +20,6 @@ def quantize(dir):
         converter = tf.lite.TFLiteConverter.from_keras_model(model)
         converter.optimizations = [tf.lite.Optimize.DEFAULT]
         tflite_model_quant = converter.convert()
-
-        tflite_models_dir = pathlib.Path(dir)
-        tflite_models_dir.mkdir(exist_ok=True, parents=True)
 
         # Save the unquantized/float model:
         tflite_model_file = tflite_models_dir/(modelName+".tflite")
