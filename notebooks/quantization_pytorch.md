@@ -21,7 +21,7 @@ Now, let's install the neccessary Python packages.
 
 :::{.cell .code}
 ```python
-node.run('python3 -m pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu')
+node.run('python3 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu')
 ```
 :::
 
@@ -32,6 +32,6 @@ We are now all set to run the Python script that will load models using `torchvi
 
 :::{.cell .code}
 ```python
-node.run('python3 ./QuantizationExperiment/code/dynamicRangeQuantization_pytorch --dir=/home/cc/models')
+node.run('python3 ./QuantizationExperiments/code/dynamicRangeQuantization_pytorch.py --dir=/home/cc/models')
 ```
 :::

@@ -21,7 +21,7 @@ Now, let's install the neccessary Python packages.
 
 :::{.cell .code}
 ```python
-node.run('python3 -m pip install --user tensorflow==2.17.0')
+node.run('python3 -m pip install --user tensorflow==2.13.0')
 ```
 :::
 
@@ -32,6 +32,6 @@ We are now all set to run the Python script that will load models using `Keras`,
 
 :::{.cell .code}
 ```python
-node.run('python3 ./QuantizationExperiment/code/dynamicRangeQuantization_tf --dir=/home/cc/models')
+node.run('python3 ./QuantizationExperiments/code/dynamicRangeQuantization_tf.py --dir=/home/cc/models')
 ```
 :::

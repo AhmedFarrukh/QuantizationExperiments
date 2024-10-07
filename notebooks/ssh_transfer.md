@@ -9,6 +9,6 @@ Paste the following command into a local terminal. Note that `~/.ssh/id_rsa_cham
 
 :::{.cell .code}
 ```python
-print(f'scp -i ~/.ssh/id_rsa_chameleon cc@{reserved_fip}:/home/cc/models ./experiment_models')
+print(f'scp -ri ~/.ssh/id_rsa_chameleon cc@{reserved_fip}:/home/cc/models ./experiment_models')
 ```
 :::

@@ -32,6 +32,6 @@ We are now all set to run the Python script that will load models using ONNX Mod
 
 :::{.cell .code}
 ```python
-node.run('python3 ./QuantizationExperiment/code/dynamicRangeQuantization_onnx --dir=/home/cc/models')
+node.run('python3 ./QuantizationExperiments/code/dynamicRangeQuantization_onnx.py --dir=/home/cc/models')
 ```
 :::
