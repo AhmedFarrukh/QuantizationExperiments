@@ -5,7 +5,7 @@ from onnx import hub
 import pathlib
 import argparse
 
-modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+modelNames = ["mobilenetv2-12", "inceptionv2-9", "resnet50-v1-12", "resnet101-v1-7", "resnet152-v1-7", "vgg16-12", "vgg19-7"]
 
 def quantize(save_dir):
     onnx_models_dir = pathlib.Path(save_dir)
