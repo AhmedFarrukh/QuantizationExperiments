@@ -33,8 +33,9 @@ def convert(input_dir, output_dir):
             print(f"Exported ONNX model for {model_name}")
 
             # Load and export the quantized model
-            model.load_state_dict(torch.load(quant_model_path))
-            torch.onnx.export(model, torch_input, os.path.join(output_dir, f"pytorch_{model_name}_quant.onnx"), opset_version=15)
+            quantized_model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
+            quantized_model.load_state_dict(torch.load(quant_model_path))
+            torch.onnx.export(quantized_model, torch_input, os.path.join(output_dir, f"pytorch_{model_name}_quant.onnx"), opset_version=15)
             print(f"Exported quantized ONNX model for {model_name}")
 
         except Exception as e:
