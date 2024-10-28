@@ -4,6 +4,7 @@ import argparse
 import os
 
 tflite_model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+onnx_model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 
 def profile(tflite_dir, onnx_dir, pytorch_dir):
     if tflite_dir:
@@ -16,7 +17,14 @@ def profile(tflite_dir, onnx_dir, pytorch_dir):
             tflite_model_path_quant = os.path.join(tflite_dir, f"tflite_{tflite_model}_quant.onnx")
             run_profiler(tflite_model_path_quant, f"tflite_{tflite_model}_quant_profiling.json")
     if onnx_dir:
-        print("Yet to be implemented")
+        for onnx_model in onnx_model_names:
+            print(f"Profiling ONNX Model: {onnx_model}")
+            onnx_model_path = os.path.join(onnx_dir, f"{onnx_model}.onnx")
+            run_profiler(onnx_model_path, f"onnx_{onnx_model}_profiling.json")
+            
+            print(f"Profiling Quantized ONNX Model: {onnx_model}")
+            onnx_model_path_quant = os.path.join(onnx_dir, f"{onnx_model}_quant.onnx")
+            run_profiler(onnx_model_path_quant, f"onnx_{onnx_model}_quant_profiling.json")
     if pytorch_dir:
         print("Yet to be implemented")
 
