@@ -33,8 +33,8 @@ The original and quantized versions of the models in our experiment are availabl
 
 :::{.cell .code}
 ```python
-node.run('gdown https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link -O /home/cc/tflite_models --folder')
-node.run('gdown https://drive.google.com/drive/folders/1YD2eW0557lorRmmP5izPiVf5anjdFgdc?usp=drive_link -O /home/cc/onnx_models --folder')
+node.run('/home/cc/.local/bin/gdown https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link -O /home/cc/tflite_models --folder')
+node.run('/home/cc/.local/bin/gdown https://drive.google.com/drive/folders/1YD2eW0557lorRmmP5izPiVf5anjdFgdc?usp=drive_link -O /home/cc/onnx_models --folder')
 ```
 :::
 
@@ -70,7 +70,7 @@ Paste the output of the following cell in a terminal on your Jupyter Interface.
 :::{.cell .code}
 ```python
 current_directory = os.getcwd()
-print(f'scp -r cc@{reserved_fip}:/home/cc/plots {current_directory}')
+print(f'scp -r cc@{reserved_fip}:/home/cc/plots {current_directory}/{NODE_TYPE}')
 
 ```
 :::
@@ -85,7 +85,7 @@ import os
 from IPython.display import Image, display
 import glob
 
-image_dir = current_directory + '/models' 
+image_dir = current_directory + f'/{NODE_TYPE}' 
 image_files = glob.glob(os.path.join(image_dir, '*.png'))
 
 for image_file in image_files:
