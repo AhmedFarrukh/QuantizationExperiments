@@ -5,6 +5,7 @@ import os
 
 tflite_model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 onnx_model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+pytorch_model_names = ["mobilenet_v2", "inception_v3", "resnet50", "resnet101", "resnet152", "vgg16", "vgg19"]
 
 def profile(tflite_dir, onnx_dir, pytorch_dir):
     if tflite_dir:
@@ -26,7 +27,14 @@ def profile(tflite_dir, onnx_dir, pytorch_dir):
             onnx_model_path_quant = os.path.join(onnx_dir, f"{onnx_model}_quant.onnx")
             run_profiler(onnx_model_path_quant, f"onnx_{onnx_model}_quant_profiling.json")
     if pytorch_dir:
-        print("Yet to be implemented")
+        for pytorch_model in pytorch_model_names:
+            print(f"Profiling PyTorch Model: {pytorch_model}")
+            pytorch_model_path = os.path.join(pytorch_dir, f"pytorch_{pytorch_model}.onnx")
+            run_profiler(pytorch_model_path, f"pytorch_{pytorch_model}_profiling.json")
+            
+            print(f"Profiling Quantized PyTorch Model: {pytorch_model}")
+            pytorch_model_path_quant = os.path.join(pytorch_dir, f"pytorch_{pytorch_model}_quant.onnx")
+            run_profiler(pytorch_model_path_quant, f"pytorch_{pytorch_model}_quant_profiling.json")
 
 def run_profiler(model_path, output_name):
     session_options = ort.SessionOptions()

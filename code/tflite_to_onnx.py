@@ -15,7 +15,7 @@ def convert(input_path, output_path):
         # Original Model
         tflite_model_path = os.path.join(input_path, f"{model_name}.tflite")
         onnx_model_path = os.path.join(output_path, f"tflite_{model_name}.onnx")
-        exit_code = os.system(f"python3 -m tf2onnx.convert --opset 15 --tflite {tflite_model_path} --output {onnx_model_path}")
+        exit_code = os.system(f"python3 -m tf2onnx.convert --opset 17 --tflite {tflite_model_path} --output {onnx_model_path}")
         
         if exit_code != 0:
             print(f"Error: Conversion failed for model {model_name}.")
@@ -26,7 +26,7 @@ def convert(input_path, output_path):
         # Quantized Model
         tflite_model_path_quant = os.path.join(input_path, f"{model_name}_quant.tflite")
         onnx_model_path_quant = os.path.join(output_path, f"tflite_{model_name}_quant.onnx")
-        exit_code_quant = os.system(f"python3 -m tf2onnx.convert --opset 15 --tflite {tflite_model_path_quant} --output {onnx_model_path_quant}")
+        exit_code_quant = os.system(f"python3 -m tf2onnx.convert --opset 17 --tflite {tflite_model_path_quant} --output {onnx_model_path_quant}")
         
         if exit_code_quant != 0:
             print(f"Error: Conversion failed for quantized model {model_name}_quant")
