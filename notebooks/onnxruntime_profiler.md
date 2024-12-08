@@ -21,7 +21,7 @@ Now, let's install the neccessary Python packages.
 
 :::{.cell .code}
 ```python
-node.run('python3 -m pip install --user tf2onnx==1.16.1 onnxruntime==1.19.2 gdown==5.2.0 tensorflow==2.13.0 matplotlib==3.7.5')
+node.run('python3 -m pip install --user onnxruntime==1.19.2 gdown==5.2.0 matplotlib==3.7.5')
 node.run('export PATH=\"$PATH:/home/cc/.local/bin\"')
 ```
 :::
@@ -46,9 +46,9 @@ Finally, we can run the profiler. For each model, the results from the profiler 
 :::{.cell .code}
 ```python
 node.run('mkdir /home/cc/onnxruntime_profiling_results')
-node.run('python3 /home/cc/QuantizationExperiments/code/onnx_profiling.py  --onnx_dir=/home/cc/onnx_models --result_dir=/home/cc/onnxruntime_profiling_results --num_repetitions=10')
+node.run('python3 /home/cc/QuantizationExperiments/code/onnx_profiling.py  --onnx_dir=/home/cc/onnx_models --results_dir=/home/cc/onnxruntime_profiling_results --num_repetitions=10')
 node.run('mkdir /home/cc/plots')
-node.run('python3 /home/cc/QuantizationExperiments/code/plot_results.py --onnx_dir=/home/cc/onnxruntime_profiling_results --save_dir=/home/cc/plots --num_repetitions=10')
+node.run('python3 /home/cc/QuantizationExperiments/code/onnx_plots.py --onnx_dir=/home/cc/onnxruntime_profiling_results --save_dir=/home/cc/plots --num_repetitions=10')
 node.run('python3 /home/cc/QuantizationExperiments/code/onnx_operators.py --model=ResNet50 --orig_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_profiling --quant_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_quant_profiling --num_repetitions=10 --output_name=ResNet50_OperatorLevel')
 ```
 :::

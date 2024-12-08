@@ -116,7 +116,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--onnx_dir', help='The directory where the ONNX models\' results are saved', required=True)
     parser.add_argument('--save_dir', help='The directory where the plots should be saved', required = True)
-    parser.add_argument('--num_repetitions', help='The number of profiling files for each model', required = True)
+    parser.add_argument('--num_repetitions', type=int, help='The number of profiling files for each model', required = True)
     args = parser.parse_args()
 
 

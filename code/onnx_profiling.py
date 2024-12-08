@@ -8,8 +8,9 @@ onnx_model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet
 def profile(onnx_dir, results_dir, n):
     results_dir = results_dir or '.'
     n = int(n) if n else 10
-    for i in range(n):
-        for onnx_model in onnx_model_names:
+    
+    for onnx_model in onnx_model_names:
+        for i in range(n):
             print(f"Profiling ONNX Model: {onnx_model}")
             onnx_model_path = os.path.join(onnx_dir, f"{onnx_model}.onnx")
             onnx_results_path = os.path.join(results_dir, f"onnx_{onnx_model}_profiling_{i}.json")
