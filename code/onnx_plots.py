@@ -43,9 +43,9 @@ def plot(results_dir, save_dir, num_repetitions):
                 if entry.get('name') == 'model_run':
                     orig_model_run[-1] += entry['dur']
 
-        orig_model_loading_uri /= num_repetitions
-        orig_session_initialized /= num_repetitions
-        orig_model_run /= num_repetitions
+        orig_model_loading_uri[-1] /= num_repetitions
+        orig_session_initialized[-1] /= num_repetitions
+        orig_model_run[-1] /= num_repetitions
 
     for model in model_names:
 
@@ -66,9 +66,9 @@ def plot(results_dir, save_dir, num_repetitions):
                 if entry.get('name') == 'model_run':
                     quant_model_run[-1] += entry['dur']
 
-        orig_model_loading_uri /= num_repetitions
-        orig_session_initialized /= num_repetitions
-        orig_model_run /= num_repetitions
+        orig_model_loading_uri[-1] /= num_repetitions
+        orig_session_initialized[-1] /= num_repetitions
+        orig_model_run[-1] /= num_repetitions
     
     n_groups = len(model_names)
     index = np.arange(n_groups)
