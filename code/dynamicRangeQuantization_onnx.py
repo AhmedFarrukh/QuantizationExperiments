@@ -1,6 +1,7 @@
 import os
 import onnx
 from onnxruntime.quantization import quantize_dynamic, QuantType
+from onnxruntime.quantization.shape_inference import quant_pre_process
 import pathlib
 import argparse
 import requests
@@ -19,6 +20,7 @@ def quantize(save_dir):
 
     for modelName in modelNames:
         original_model_path = os.path.join(save_dir, f"{modelName}.onnx")
+        preprocessed_model_path = os.path.join(save_dir, f"{modelName}_preprocessed.onnx")
         quantized_model_path = os.path.join(save_dir, f"{modelName}_quant.onnx")
 
         try:
@@ -34,11 +36,11 @@ def quantize(save_dir):
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
 
-        model = onnx.load(original_model_path)
+        quant_pre_process(original_model_path, preprocessed_model_path)
 
         # Perform dynamic range quantization
         quantize_dynamic(
-            original_model_path,  # input model
+            preprocessed_model_path,  # input model
             quantized_model_path,  # save quantized model
             weight_type=QuantType.QUInt8  # Quantize weights to 8 bits
         )
