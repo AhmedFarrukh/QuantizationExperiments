@@ -61,6 +61,7 @@ Paste the output of the following cell in a terminal on your Jupyter Interface.
 :::{.cell .code}
 ```python
 current_directory = os.getcwd()
+!mkdir {NODE_TYPE}
 print(f'scp cc@{reserved_fip}:/home/cc/plots/* {current_directory}/{NODE_TYPE}')
 
 ```

@@ -28,7 +28,7 @@ def plot(orig_ops, quant_ops, output_name):
     plt.barh(np.arange(len(orig_operations)), orig_durations, color="#1f77b4", label='Original')
 
     # Customize the first graph
-    plt.title('Original Operations (Horizontal Bar Chart)')
+    plt.title("ONNX-{model}-Original", loc='center')
     plt.xlabel('Average Duration - us')
     plt.ylabel('Operation Types')
     plt.yticks(np.arange(len(orig_operations)), orig_operations)
@@ -40,8 +40,8 @@ def plot(orig_ops, quant_ops, output_name):
     plt.close()
 
     # Prepare data for the second plot (Stacked Quantized Operations)
-    all_operations = orig_operations + ["Additional"]  # Include "Additional" operations explicitly
-    n_operations = len(all_operations)
+    matching_operations = list(matching.keys())  # Use only matching dictionary keys
+    n_operations = len(matching_operations)
     stack_durations = np.zeros(n_operations)  # Initialize baseline for stacking
 
     plt.figure(figsize=(12, 8))
@@ -56,36 +56,41 @@ def plot(orig_ops, quant_ops, output_name):
     color_index = 0
 
     # Use matching dictionary to stack equivalent operators
-    for op_idx, op_type in enumerate(all_operations):
-        if op_type in matching:
-            for eq_op in matching[op_type]:
-                if eq_op in quant_ops:
-                    # Durations for the current equivalent operation
-                    eq_durations = [
-                        quant_ops[eq_op]["duration"] if idx == op_idx else 0 for idx in range(n_operations)
-                    ]
-                    plt.barh(
-                        np.arange(n_operations),
-                        eq_durations,
-                        left=stack_durations,
-                        color=color_palette[color_index % len(color_palette)],  # Assign unique color
-                        label=eq_op
-                    )
-                    stack_durations += np.array(eq_durations)  # Update baseline for stacking
-                    color_index += 1  # Increment color index
+    for op_idx, op_type in enumerate(matching_operations):
+        for eq_op in matching[op_type]:
+            if eq_op in quant_ops:
+                # Directly plot the duration for the matching quantized operation
+                plt.barh(
+                    op_idx,  # Specify the index for this operation
+                    quant_ops[eq_op]["duration"],  # Use the duration value directly
+                    left=stack_durations[op_idx],  # Use the existing baseline for stacking
+                    color=color_palette[color_index % len(color_palette)],  # Assign unique color
+                    label=eq_op
+                )
+                stack_durations[op_idx] += quant_ops[eq_op]["duration"]  # Update baseline for this row
+                color_index += 1  # Increment color index
+
+        # Overlay red markers for original operator durations
+        for op_idx, op_type in enumerate(matching_operations):
+            if op_type in orig_ops:
+                # Place a red marker above the total duration for this operation
+                plt.plot(
+                    orig_ops[op_type]["duration"],  # x-coordinate (duration)
+                    op_idx,  # y-coordinate (operation index)
+                    marker="o", color="red", markersize=8, label=None  # Red marker
+                )
 
     # Customize the second graph
-    plt.title('Stacked Quantized Operations')
+    plt.title("ONNX-{model}-Quantized", loc='center')
     plt.xlabel('Average Duration - us')
     plt.ylabel('Operation Types')
-    plt.yticks(np.arange(n_operations), all_operations)
+    plt.yticks(np.arange(n_operations), matching_operations)  # Only use matching keys for labels
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=3)  # Move legend below the plot
 
     # Save the second plot
     plt.tight_layout()
-    plt.savefig(output_name + "_stacked.png")
-
-
+    plt.savefig(output_name + "_quantized.png")
+    plt.close()
 
 
 def consolidate_results(result_format, n):
