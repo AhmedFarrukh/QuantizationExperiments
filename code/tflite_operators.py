@@ -45,7 +45,7 @@ def plot(orig_ops, quant_ops, output_name, model):
     plt.barh(np.arange(len(orig_operations)), orig_durations, color="#1f77b4", label='Original')
 
     # Customize the first graph
-    plt.title("TFlite-{model}-Original", loc='center')
+    plt.title(f"TFlite-{model}-Original", loc='center')
     plt.title('Original Operations (Horizontal Bar Chart)')
     plt.xlabel('Average Duration - ms')
     plt.ylabel('Operation Types')
@@ -107,7 +107,7 @@ def plot(orig_ops, quant_ops, output_name, model):
             )
 
     # Customize the second graph
-    plt.title("TFlite-{model}-Quantized", loc='center')
+    plt.title(f"TFlite-{model}-Quantized", loc='center')
     plt.xlabel('Average Duration - ms')
     plt.ylabel('Operation Types')
     plt.yticks(np.arange(n_operations), matching_operations)  # Only use matching keys for labels

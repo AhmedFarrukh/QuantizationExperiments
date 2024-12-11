@@ -9,16 +9,16 @@ import json
 
 
 matching = {
-    "Conv": ["ConvInteger", "Cast", "Mul", "Relu", "DynamicQuantizeLinear"],
+    "Conv": ["ConvInteger", "Cast", "Mul", "Relu", "DynamicQuantizeLinear", "Add"],
     "Gemm": ["DynamicQuantizeMatMul"],
     "MaxPool": ["MaxPool"],
     "GlobalAveragePool": ["GlobalAveragePool"],
     "ReorderOutput": ["ReorderOutput"],
     "Flatten": ["Flatten"],
-    "Additional": ["ReorderInput", "Add"]
+    "Additional": ["ReorderInput"]
     }
     
-def plot(orig_ops, quant_ops, output_name):
+def plot(orig_ops, quant_ops, output_name, model):
     # Prepare data for the first plot (Original Operations)
     orig_operations = [operation for operation in orig_ops]
     orig_durations = [orig_ops[operation]["duration"] for operation in orig_operations]
@@ -28,7 +28,7 @@ def plot(orig_ops, quant_ops, output_name):
     plt.barh(np.arange(len(orig_operations)), orig_durations, color="#1f77b4", label='Original')
 
     # Customize the first graph
-    plt.title("ONNX-{model}-Original", loc='center')
+    plt.title(f"ONNX-{model}-Original", loc='center')
     plt.xlabel('Average Duration - us')
     plt.ylabel('Operation Types')
     plt.yticks(np.arange(len(orig_operations)), orig_operations)
@@ -81,7 +81,7 @@ def plot(orig_ops, quant_ops, output_name):
                 )
 
     # Customize the second graph
-    plt.title("ONNX-{model}-Quantized", loc='center')
+    plt.title(f"ONNX-{model}-Quantized", loc='center')
     plt.xlabel('Average Duration - us')
     plt.ylabel('Operation Types')
     plt.yticks(np.arange(n_operations), matching_operations)  # Only use matching keys for labels
@@ -128,6 +128,6 @@ if __name__ == "__main__":
     orig_ops = consolidate_results(args.orig_result_format, int(args.num_repetitions))
     print("\nQuantized Model:")
     quant_ops = consolidate_results(args.quant_result_format, int(args.num_repetitions))
-    plot(orig_ops, quant_ops, args.output_name)
+    plot(orig_ops, quant_ops, args.output_name, args.model)
 
 
