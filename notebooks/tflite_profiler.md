@@ -48,8 +48,8 @@ Finally, we can download and run the benchmark. We then parse the output and cre
 node.run('mkdir /home/cc/tflite_profiling_results')
 node.run('python3 /home/cc/QuantizationExperiments/code/tflite_profiling.py  --results_dir=/home/cc/tflite_profiling_results')
 node.run('mkdir /home/cc/plots')
-node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=ResNet50 --orig_result_path=/home/cc/tfllite_profiling_results/tflite_ResNet50_profiling.txt --quant_result_path=/home/cc/tfllite_profiling_results/tflite_ResNet50_quant_profiling.txt --output_name=ResNet50')
-node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=VGG16 --orig_result_path=/home/cc/tfllite_profiling_results/tflite_VGG16_profiling.txt --quant_result_path=/home/cc/tfllite_profiling_results/tflite_VGG16_quant_profiling.txt --output_name=VGG16')
+node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=ResNet50 --orig_result_path=/home/cc/tflite_profiling_results/tflite_ResNet50_profiling.txt --quant_result_path=/home/cc/tflite_profiling_results/tflite_ResNet50_quant_profiling.txt --output_name=/home/cc/plots/ResNet50')
+node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=VGG16 --orig_result_path=/home/cc/tflite_profiling_results/tflite_VGG16_profiling.txt --quant_result_path=/home/cc/tflite_profiling_results/tflite_VGG16_quant_profiling.txt --output_name=/home/cc/plots/VGG16')
 ```
 :::
 

@@ -47,7 +47,6 @@ def plot(orig_ops, quant_ops, output_name, model):
 
     # Customize the first graph
     plt.title(f"TFlite-{model}-Original", loc='center')
-    plt.title('Original Operations (Horizontal Bar Chart)')
     plt.xlabel('Average Duration - ms')
     plt.ylabel('Operation Types')
     plt.yticks(np.arange(len(orig_operations)), orig_operations)
