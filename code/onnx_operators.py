@@ -10,11 +10,11 @@ import json
 
 matching = {
     "Conv": ["ConvInteger", "Cast", "Mul", "Relu", "DynamicQuantizeLinear", "Add"],
-    "Gemm": ["DynamicQuantizeMatMul"],
     "MaxPool": ["MaxPool"],
     "GlobalAveragePool": ["GlobalAveragePool"],
     "ReorderOutput": ["ReorderOutput"],
     "Flatten": ["Flatten"],
+    "Gemm": ["DynamicQuantizeMatMul"],
     "Additional": ["ReorderInput"]
     }
     
