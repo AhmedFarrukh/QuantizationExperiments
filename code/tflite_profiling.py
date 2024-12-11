@@ -18,7 +18,7 @@ def download_benchmark(dir, arch_type):
 def benchmark(dir):
     model_names = tflite_model_names + [f'{model_name}_quant' for model_name in tflite_model_names]
     for model_name in model_names:
-        outputOriginal = subprocess.check_output(f'{dir}/benchmark --graph={dir}/models/{model_name}.tflite --num_threads=1 --num_runs=100 --enable_op_profiling=true > tflite_{model_name}_profiling.txt', shell=True)
+        outputOriginal = subprocess.check_output(f'{dir}/benchmark --graph=/home/cc/models/{model_name}.tflite --num_threads=1 --num_runs=100 --enable_op_profiling=true > {dir}/tflite_{model_name}_profiling.txt', shell=True)
         outputOriginal = outputOriginal.decode('utf-8')
         print(outputOriginal)
 

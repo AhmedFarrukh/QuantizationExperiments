@@ -33,7 +33,7 @@ The original and quantized versions of the models in our experiment are availabl
 
 :::{.cell .code}
 ```python
-node.run('/home/cc/.local/bin/gdown https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link -O /home/cc/tflite_models --folder')
+node.run('/home/cc/.local/bin/gdown https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link -O /home/cc/models --folder')
 ```
 :::
 
