@@ -9,13 +9,13 @@ import json
 
 
 matching = {
-    "Conv": ["ConvInteger", "Cast", "Mul", "Relu", "DynamicQuantizeLinear", "Add"],
+    "Conv": ["ConvInteger", "Cast", "Mul", "Relu", "Add"],
     "MaxPool": ["MaxPool"],
     "GlobalAveragePool": ["GlobalAveragePool"],
     "ReorderOutput": ["ReorderOutput"],
     "Flatten": ["Flatten"],
     "Gemm": ["DynamicQuantizeMatMul"],
-    "Additional": ["ReorderInput"]
+    "Additional": ["ReorderInput", "DynamicQuantizeLinear"]
     }
     
 def plot(orig_ops, quant_ops, output_name, model):
