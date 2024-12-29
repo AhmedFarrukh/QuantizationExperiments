@@ -75,11 +75,18 @@ def plot(results_dir, save_dir, num_repetitions):
     bar_width = 0.35
     opacity = 0.8
 
+    orig_model_loading_uri = [x/1000 for x in orig_model_loading_uri]
+    quant_model_loading_uri = [x/1000 for x in quant_model_loading_uri]
+    orig_session_initialized = [x/1000 for x in orig_session_initialized]
+    quant_session_initialized = [x/1000 for x in quant_session_initialized]
+    orig_model_run = [x/1000 for x in orig_model_run]
+    quant_model_run = [x/1000 for x in quant_model_run]
+
     fig, ax = plt.subplots()
     rects1 = plt.bar(index, orig_model_loading_uri, bar_width, alpha=opacity, label='Original')
     rects2 = plt.bar(index + bar_width, quant_model_loading_uri, bar_width, alpha=opacity, label='Quantized')
     plt.xlabel('Model')
-    plt.ylabel(f'Model Loading Time')
+    plt.ylabel(f'Model Loading Time (ms)')
     plt.xticks(index + bar_width / 2, model_names, rotation=45)
     plt.legend()
     plt.tight_layout()
@@ -91,7 +98,7 @@ def plot(results_dir, save_dir, num_repetitions):
     rects1 = plt.bar(index, orig_session_initialized, bar_width, alpha=opacity, label='Original')
     rects2 = plt.bar(index + bar_width, quant_session_initialized, bar_width, alpha=opacity, label='Quantized')
     plt.xlabel('Model')
-    plt.ylabel(f'Session Intialization Time')
+    plt.ylabel(f'Session Intialization Time (ms)')
     plt.xticks(index + bar_width / 2, model_names, rotation=45)
     plt.legend()
     plt.tight_layout()
@@ -103,7 +110,7 @@ def plot(results_dir, save_dir, num_repetitions):
     rects1 = plt.bar(index, orig_model_run, bar_width, alpha=opacity, label='Original')
     rects2 = plt.bar(index + bar_width, quant_model_run, bar_width, alpha=opacity, label='Quantized')
     plt.xlabel('Model')
-    plt.ylabel(f'Model Run Time')
+    plt.ylabel(f'Model Run Time (ms)')
     plt.xticks(index + bar_width / 2, model_names, rotation=45)
     plt.legend()
     plt.tight_layout()
