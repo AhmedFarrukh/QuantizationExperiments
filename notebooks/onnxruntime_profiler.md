@@ -21,7 +21,7 @@ Now, let's install the neccessary Python packages.
 
 :::{.cell .code}
 ```python
-node.run('python3 -m pip install --user onnxruntime==1.19.2 gdown==5.2.0 matplotlib==3.7.5')
+node.run('python3 -m pip install --user onnxruntime==1.19.2 gdown==5.2.0 matplotlib==3.7.5 pandas==2.0.3')
 node.run('export PATH=\"$PATH:/home/cc/.local/bin\"')
 ```
 :::
@@ -47,9 +47,9 @@ Finally, we can run the profiler. For each model, the results from the profiler 
 ```python
 node.run('mkdir /home/cc/onnxruntime_profiling_results')
 node.run('python3 /home/cc/QuantizationExperiments/code/onnx_profiling.py  --onnx_dir=/home/cc/onnx_models --results_dir=/home/cc/onnxruntime_profiling_results --num_repetitions=10')
-node.run('mkdir /home/cc/plots')
-node.run('python3 /home/cc/QuantizationExperiments/code/onnx_plots.py --onnx_dir=/home/cc/onnxruntime_profiling_results --save_dir=/home/cc/plots --num_repetitions=10')
-node.run('python3 /home/cc/QuantizationExperiments/code/onnx_operators.py --model=ResNet50 --orig_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_profiling --quant_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_quant_profiling --num_repetitions=10 --output_name=/home/cc/plots/ResNet50_OperatorLevel')
+node.run('mkdir /home/cc/onnx_plots')
+node.run('python3 /home/cc/QuantizationExperiments/code/onnx_plots.py --results_dir=/home/cc/onnxruntime_profiling_results --save_dir=/home/cc/onnx_plots --num_repetitions=10')
+node.run('python3 /home/cc/QuantizationExperiments/code/onnx_operators.py --model=ResNet50 --orig_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_profiling --quant_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_quant_profiling --num_repetitions=10 --output_name=/home/cc/onnx_plots/ResNet50')
 ```
 :::
 
@@ -62,7 +62,7 @@ Paste the output of the following cell in a terminal on your Jupyter Interface.
 ```python
 current_directory = os.getcwd()
 !mkdir {NODE_TYPE}
-print(f'scp cc@{reserved_fip}:/home/cc/plots/* {current_directory}/{NODE_TYPE}')
+print(f'scp -r cc@{reserved_fip}:/home/cc/onnx_plots {current_directory}/{NODE_TYPE}')
 
 ```
 :::
@@ -77,7 +77,7 @@ import os
 from IPython.display import Image, display
 import glob
 
-image_dir = current_directory + f'/{NODE_TYPE}' 
+image_dir = current_directory + f'/{NODE_TYPE}/onnx_plots' 
 image_files = glob.glob(os.path.join(image_dir, '*.png'))
 
 for image_file in image_files:

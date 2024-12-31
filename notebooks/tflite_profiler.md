@@ -21,7 +21,7 @@ Now, let's install the neccessary Python packages.
 
 :::{.cell .code}
 ```python
-node.run('python3 -m pip install --user gdown==5.2.0 matplotlib==3.7.5')
+node.run('python3 -m pip install --user gdown==5.2.0 matplotlib==3.7.5 pandas==2.0.3')
 node.run('export PATH=\"$PATH:/home/cc/.local/bin\"')
 ```
 :::
@@ -33,7 +33,7 @@ The original and quantized versions of the models in our experiment are availabl
 
 :::{.cell .code}
 ```python
-node.run('/home/cc/.local/bin/gdown https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link -O /home/cc/models --folder')
+node.run('/home/cc/.local/bin/gdown https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link -O /home/cc/tflite_models --folder')
 ```
 :::
 
@@ -46,10 +46,11 @@ Finally, we can download and run the benchmark. We then parse the output and cre
 :::{.cell .code}
 ```python
 node.run('mkdir /home/cc/tflite_profiling_results')
-node.run('python3 /home/cc/QuantizationExperiments/code/tflite_profiling.py  --results_dir=/home/cc/tflite_profiling_results')
-node.run('mkdir /home/cc/plots')
-node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=ResNet50 --orig_result_path=/home/cc/tflite_profiling_results/tflite_ResNet50_profiling.txt --quant_result_path=/home/cc/tflite_profiling_results/tflite_ResNet50_quant_profiling.txt --output_name=/home/cc/plots/ResNet50')
-node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=VGG16 --orig_result_path=/home/cc/tflite_profiling_results/tflite_VGG16_profiling.txt --quant_result_path=/home/cc/tflite_profiling_results/tflite_VGG16_quant_profiling.txt --output_name=/home/cc/plots/VGG16')
+node.run('python3 /home/cc/QuantizationExperiments/code/tflite_profiling.py  --tflite_dir=/home/cc/tflite_models --results_dir=/home/cc/tflite_profiling_results')
+node.run('mkdir /home/cc/tflite_plots')
+node.run('python3 /home/cc/QuantizationExperiments/code/tflite_plots.py --results_dir=/home/cc/tflite_profiling_results --save_dir=/home/cc/tflite_plots')
+node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=ResNet50 --orig_result_path=/home/cc/tflite_profiling_results/tflite_ResNet50_profiling.txt --quant_result_path=/home/cc/tflite_profiling_results/tflite_ResNet50_quant_profiling.txt --output_name=/home/cc/tflite_plots/ResNet50')
+node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=VGG16 --orig_result_path=/home/cc/tflite_profiling_results/tflite_VGG16_profiling.txt --quant_result_path=/home/cc/tflite_profiling_results/tflite_VGG16_quant_profiling.txt --output_name=/home/cc/tflite_plots/VGG16')
 ```
 :::
 
@@ -62,7 +63,7 @@ Paste the output of the following cell in a terminal on your Jupyter Interface.
 ```python
 current_directory = os.getcwd()
 !mkdir {NODE_TYPE}
-print(f'scp cc@{reserved_fip}:/home/cc/plots/* {current_directory}/{NODE_TYPE}')
+print(f'scp -r cc@{reserved_fip}:/home/cc/tflite_plots {current_directory}/{NODE_TYPE}')
 
 ```
 :::
@@ -77,7 +78,7 @@ import os
 from IPython.display import Image, display
 import glob
 
-image_dir = current_directory + f'/{NODE_TYPE}' 
+image_dir = current_directory + f'/{NODE_TYPE}/tflite_plots' 
 image_files = glob.glob(os.path.join(image_dir, '*.png'))
 
 for image_file in image_files:

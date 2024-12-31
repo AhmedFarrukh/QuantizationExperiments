@@ -12,8 +12,7 @@ metrics = ["model_loading_uri", "session_initialization", "model_run"]
 
 def extract_results(results_dir, num_repetitions):
     if not os.path.exists(results_dir):
-        print(f"Error: The input path '{results_dir}' does not exist.")
-        return
+        raise FileNotFoundError(f"Error: The input path '{results_dir}' does not exist.")
     
     # Define model types (rows)
     rows = []
@@ -46,11 +45,11 @@ def extract_results(results_dir, num_repetitions):
 def plot(results_df, save_dir):
     save_dir = pathlib.Path(save_dir)
     save_dir.mkdir(exist_ok=True, parents=True)
-    results_df.to_csv(f'{save_dir}/results.csv')
+    results_df.to_csv(f'{save_dir}/onnx_results.csv')
 
     titles = {"model_loading_uri": "Model Loading Time", 
               "session_initialization": "Session Initialization Time", 
-              "model_run": "Avg Inference"}
+              "model_run": "Avg Inference Time"}
 
     for metric in metrics:
         means_orig = results_df.loc[model_names, metric].values

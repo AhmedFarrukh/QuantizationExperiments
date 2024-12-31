@@ -10,13 +10,12 @@ def profile(onnx_dir, results_dir, n):
     n = int(n) if n else 10
     
     for onnx_model in onnx_model_names:
+        print(f"Profiling {onnx_model} models")
         for i in range(n):
-            print(f"Profiling ONNX Model: {onnx_model}")
             onnx_model_path = os.path.join(onnx_dir, f"{onnx_model}.onnx")
             onnx_results_path = os.path.join(results_dir, f"onnx_{onnx_model}_profiling_{i}.json")
             run_profiler(onnx_model_path, onnx_results_path)
             
-            print(f"Profiling Quantized ONNX Model: {onnx_model}")
             onnx_model_path_quant = os.path.join(onnx_dir, f"{onnx_model}_quant.onnx")
             onnx_results_path_quant = os.path.join(results_dir, f"onnx_{onnx_model}_quant_profiling_{i}.json")
             run_profiler(onnx_model_path_quant, onnx_results_path_quant)
@@ -40,9 +39,7 @@ def run_profiler(model_path, output_name):
 
     # Retrieve the profiling file path and rename it
     profiling_file = session.end_profiling()
-    new_profiling_file = os.path.join(os.path.dirname(profiling_file), output_name)
-    os.rename(profiling_file, new_profiling_file)
-    print(f"Profiling data saved to: {new_profiling_file}")
+    os.rename(profiling_file, output_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -50,5 +47,8 @@ if __name__ == "__main__":
     parser.add_argument('--results_dir', help='The directory where the ONNX profiling are to be saved')
     parser.add_argument('--num_repetitions', type=int, help='The number of repetitions for profiling')
     args = parser.parse_args()
+
+    if not os.path.exists(args.onnx_dir):
+        raise FileNotFoundError(f"Error: The input path '{args.onnx_dir}' does not exist.")
 
     profile(args.onnx_dir, args.results_dir, args.num_repetitions)

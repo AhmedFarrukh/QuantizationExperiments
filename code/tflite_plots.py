@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
-metrics = ["Init Time (ms)", "Init Inference (ms)", "First Inference (ms)", "Warmup Inference (ms)", "Avg Inference (ms)", "Memory Init (MB)", "Memory Overall (MB)"]
+metrics = ["Init Time", "Init Inference", "First Inference", "Warmup Inference", "Avg Inference", "Memory Init", "Memory Overall"]
 
 def parse_benchmark_output(output, results):
     """
@@ -23,25 +23,25 @@ def parse_benchmark_output(output, results):
         # Match the initialization time
         init_match = init_time_pattern.search(line)
         if init_match:
-            results['Init Time (ms)'].append(float(init_match.group(1)))
+            results['Init Time'] = (float(init_match.group(1)))
 
         # Match the inference timings
         inference_match = inference_pattern.search(line)
         if inference_match:
-            results["Init Inference (ms)"].append(int(inference_match.group(1))/1000)
-            results["First Inference (ms)"].append(int(inference_match.group(2))/1000)
-            results["Warmup Inference (ms)"].append(float(inference_match.group(3))/1000)
-            results["Avg Inference (ms)"].append(float(inference_match.group(4))/1000)
+            results["Init Inference"] = int(inference_match.group(1))/1000
+            results["First Inference"] = int(inference_match.group(2))/1000
+            results["Warmup Inference"] = float(inference_match.group(3))/1000
+            results["Avg Inference"] = float(inference_match.group(4))/1000
 
         # Match the memory footprint
         memory_match = memory_pattern.search(line)
         if memory_match:
-            results['Memory Init (MB)'].append(float(memory_match.group(1)))
-            results['Memory Overall (MB)'].append(float(memory_match.group(2)))
+            results['Memory Init'] = float(memory_match.group(1))
+            results['Memory Overall'] = float(memory_match.group(2))
 
 def extract_results(results_dir):
     if not os.path.exists(results_dir):
-        print(f"Error: The input path '{results_dir}' does not exist.")
+        raise FileNotFoundError(f"Error: The input path '{results_dir}' does not exist.")
         return
     # Define model types (rows)
     rows = []
@@ -58,7 +58,7 @@ def extract_results(results_dir):
     results_df = pd.DataFrame(index=rows, columns=cols)
 
     for model_name in rows:
-        model_results = defaultdict(list)
+        model_results = defaultdict(int)
         with open(f'{results_dir}/tflite_{model_name}_profiling.txt', 'r') as file:
             output_original = file.read()
         parse_benchmark_output(output_original, model_results)
@@ -71,7 +71,7 @@ def extract_results(results_dir):
 def plot(results_df, save_dir):
     save_dir = pathlib.Path(save_dir)
     save_dir.mkdir(exist_ok=True, parents=True)
-    results_df.to_csv(f'{save_dir}/results.csv')
+    results_df.to_csv(f'{save_dir}/tflite_results.csv')
     for metric in metrics:
         means_orig = results_df.loc[model_names, metric].values
         means_quant = results_df.loc[[model + "_quant" for model in model_names], metric].values
@@ -92,7 +92,10 @@ def plot(results_df, save_dir):
                         label='Quantized')
 
         plt.xlabel('Model')
-        plt.ylabel(metric)
+        if metric.startswith('Memory'):
+            plt.ylabel(f'{metric} (MB)')
+        else:
+            plt.ylabel(f'{metric} (ms)')
         plt.title(F'TFlite: {metric}')
         plt.xticks(index + bar_width / 2, model_names, rotation=45)
         plt.legend()
@@ -105,7 +108,7 @@ def plot(results_df, save_dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--tflite_results_dir', help='The directory where the TFlite models\' results are saved', required=True)
+    parser.add_argument('--results_dir', help='The directory where the TFlite models\' results are saved', required=True)
     parser.add_argument('--save_dir', help='The directory where the plots should be saved', required = True)
     args = parser.parse_args()
 

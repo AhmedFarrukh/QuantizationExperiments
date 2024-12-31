@@ -15,10 +15,11 @@ def download_benchmark(dir, arch_type):
     open(dir + '/benchmark', 'wb').write(r.content)
     os.chmod(dir + '/benchmark', stat.S_IEXEC)
 
-def benchmark(dir):
+def benchmark(results_dir, tflite_dir):
+    results_dir = results_dir or '.'
     model_names = tflite_model_names + [f'{model_name}_quant' for model_name in tflite_model_names]
     for model_name in model_names:
-        outputOriginal = subprocess.check_output(f'{dir}/benchmark --graph=/home/cc/models/{model_name}.tflite --num_threads=1 --num_runs=100 --enable_op_profiling=true > {dir}/tflite_{model_name}_profiling.txt', shell=True)
+        outputOriginal = subprocess.check_output(f'{results_dir}/benchmark --graph={tflite_dir}/{model_name}.tflite --num_threads=1 --num_runs=100 --enable_op_profiling=true > {results_dir}/tflite_{model_name}_profiling.txt', shell=True)
         outputOriginal = outputOriginal.decode('utf-8')
         print(outputOriginal)
 
@@ -26,11 +27,12 @@ def benchmark(dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--results_dir', help='The directory to save the results', required=True)
+    parser.add_argument('--tflite_dir', help='The directory where the TFlite models are saved', required=True)
+    parser.add_argument('--results_dir', help='The directory to save the results')
     args = parser.parse_args()
 
-    if not os.path.exists(args.results_dir):
-        os.makedirs(args.results_dir)
+    if not os.path.exists(args.tflite_dir):
+        raise FileNotFoundError(f"Error: The input path '{args.tflite_dir}' does not exist.")
     
     arch_type = platform.machine().replace("_", "-")
     download_benchmark(args.results_dir, arch_type)
