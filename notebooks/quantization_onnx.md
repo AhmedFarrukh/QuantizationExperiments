@@ -21,7 +21,7 @@ Now, let's install the neccessary Python packages.
 
 :::{.cell .code}
 ```python
-node.run('python3 -m pip install onnx onnxruntime')
+node.run('python3 -m pip install onnx onnxruntime==1.19.2')
 ```
 :::
 

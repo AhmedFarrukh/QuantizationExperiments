@@ -1,5 +1,4 @@
 import os
-import onnx
 from onnxruntime.quantization import quantize_dynamic, QuantType
 from onnxruntime.quantization.shape_inference import quant_pre_process
 import pathlib
