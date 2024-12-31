@@ -62,5 +62,5 @@ if __name__ == "__main__":
 
     # Comparison
     print("\n--- Inference Time Comparison ---")
-    print(f"ONNX Total Time: {onnx_time:.4f} seconds")
-    print(f"TFLite Total Time: {tflite_time:.4f} seconds")
+    print(f"ONNX Total Time: {onnx_time:.4f} ms")
+    print(f"TFLite Total Time: {tflite_time:.4f} ms")
