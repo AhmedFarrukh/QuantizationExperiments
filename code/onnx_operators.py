@@ -29,7 +29,7 @@ def plot(orig_ops, quant_ops, output_name, model):
 
     # Customize the first graph
     plt.title(f"ONNX-{model}-Original", loc='center')
-    plt.xlabel('Average Duration - us')
+    plt.xlabel('Average Duration - ms')
     plt.ylabel('Operation Types')
     plt.yticks(np.arange(len(orig_operations)), orig_operations)
     plt.legend()
@@ -55,6 +55,8 @@ def plot(orig_ops, quant_ops, output_name, model):
     ]
     color_index = 0
 
+    quant_ops_plotted = set()
+
     # Use matching dictionary to stack equivalent operators
     for op_idx, op_type in enumerate(matching_operations):
         for eq_op in matching[op_type]:
@@ -69,6 +71,11 @@ def plot(orig_ops, quant_ops, output_name, model):
                 )
                 stack_durations[op_idx] += quant_ops[eq_op]["duration"]  # Update baseline for this row
                 color_index += 1  # Increment color index
+                quant_ops_plotted.add(eq_op)
+
+        if set(quant_ops) - quant_ops_plotted:
+            print("ERROR: THE FOLLOWING OPERATIONS WERE NOT MAPPED!")
+            print(set(quant_ops) - quant_ops_plotted)
 
         # Overlay red markers for original operator durations
         for op_idx, op_type in enumerate(matching_operations):
@@ -82,7 +89,7 @@ def plot(orig_ops, quant_ops, output_name, model):
 
     # Customize the second graph
     plt.title(f"ONNX-{model}-Quantized", loc='center')
-    plt.xlabel('Average Duration - us')
+    plt.xlabel('Average Duration - ms')
     plt.ylabel('Operation Types')
     plt.yticks(np.arange(n_operations), matching_operations)  # Only use matching keys for labels
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.1), ncol=3)  # Move legend below the plot
@@ -107,11 +114,10 @@ def consolidate_results(result_format, n):
             ops[op_name]['count'] += 1
 
     for op in ops:
+        ops[op]['duration'] /= n*1000
+        ops[op]['count'] /= n*1000
         print(f"Operator: {op}, Duration: {ops[op]['duration']}, Count: {ops[op]['count']}")
-        ops[op]['duration'] /= n
-        ops[op]['count'] /= n
         
-    
     return ops
 
 if __name__ == "__main__":

@@ -112,6 +112,6 @@ if __name__ == "__main__":
     parser.add_argument('--save_dir', help='The directory where the plots should be saved', required = True)
     args = parser.parse_args()
 
-    results_df = extract_results(args.tflite_results_dir)
+    results_df = extract_results(args.results_dir)
     plot(results_df, args.save_dir)
     print(results_df)

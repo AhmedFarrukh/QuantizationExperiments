@@ -36,4 +36,4 @@ if __name__ == "__main__":
     
     arch_type = platform.machine().replace("_", "-")
     download_benchmark(args.results_dir, arch_type)
-    benchmark(args.results_dir)
+    benchmark(args.results_dir, args.tflite_dir)

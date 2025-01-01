@@ -73,6 +73,8 @@ def plot(orig_ops, quant_ops, output_name, model):
     ]
     color_index = 0
 
+    quant_ops_plotted = set()
+
     # Use matching dictionary to stack equivalent operators
     for op_idx, op_type in enumerate(matching_operations):
         for eq_op in matching[op_type]:
@@ -87,15 +89,21 @@ def plot(orig_ops, quant_ops, output_name, model):
                 )
                 stack_durations[op_idx] += quant_ops[eq_op]["duration"]  # Update baseline for this row
                 color_index += 1  # Increment color index
+                quant_ops_plotted.add(eq_op)
+    
+    if set(quant_ops) - quant_ops_plotted:
+        print("ERROR: THE FOLLOWING OPERATIONS WERE NOT MAPPED!")
+        print(set(quant_ops) - quant_ops_plotted)
+
 
     # Overlay red markers for original operator durations
     orig_ops_matching = copy.deepcopy(orig_ops)
     if model == "ResNet50":
         del orig_ops_matching["Convolution (NHWC, F32) IGEMM"]
         del orig_ops_matching["Convolution (NHWC, F32) GEMM"]
-        orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"] = {"duration":0, "counts":0}
+        orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"] = {"duration":0, "count":0}
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["duration"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["duration"] + orig_ops["Convolution (NHWC, F32) GEMM"]["duration"]
-        orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["duration"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["counts"] + orig_ops["Convolution (NHWC, F32) GEMM"]["counts"]
+        orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["count"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["count"] + orig_ops["Convolution (NHWC, F32) GEMM"]["count"]
 
     for op_idx, op_type in enumerate(matching_operations):
         if op_type in orig_ops_matching:
@@ -150,11 +158,15 @@ def parse_results(result_path):
         
         # Extract fields based on known order
         op_name = fields[0]
-        counts = int(fields[1])
+        count = int(fields[1])
         avg_ms = float(fields[2])
         
         # Add to the dictionary
-        ops[op_name] = {"counts": counts, "duration": avg_ms}
+        ops[op_name] = {"count": count, "duration": avg_ms}
+    
+    for op in ops:
+        print(f"Operator: {op}, Duration: {ops[op]['duration']}, Count: {ops[op]['count']}")
+
     return ops
 
 
@@ -167,6 +179,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.model != "ResNet50" and args.model != "VGG16":
         raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50")
+    print("Original Model:")
     orig_ops = parse_results(args.orig_result_path)
+    print("Ouantized Model:")
     quant_ops = parse_results(args.quant_result_path)
     plot(orig_ops, quant_ops, args.output_name, args.model) 
