@@ -10,24 +10,24 @@ import copy
 
 
 ResNet50_matching = {
-    "Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM": ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM"],
+    "Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM": ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM"],
     "Unary Elementwise (NC)": ["Unary Elementwise (NC)"],
     "Binary Elementwise (ND)": ["Binary Elementwise (ND)"],
-    "Fully Connected (NC, F32) GEMM": ["Fully Connected (NC, QDU8, F32, QC8W) GEMM"],
+    "Fully Connected (NC, F32) GEMM": ["Fully Connected (NC, QDU8, F32, QC8W) GEMM", "Fully Connected (NC, QD8, F32, QC8W) GEMM"],
     "Constant Pad (ND, X32)": ["Constant Pad (ND, X32)"],
     "Max Pooling (NHWC, F32)": ["Max Pooling (NHWC, F32)"],
     "Mean (ND) Mean": ["Mean (ND) Mean"],
     "Softmax (NC, F32)": ["Softmax (NC, F32)"],
-    "Additional": ["Convert (NC, F32, QDU8)"]
+    "Additional": ["Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)"]
     }
 
 VGG16_matching = {
-    "Convolution (NHWC, F32) IGEMM": ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM"],
-    "Fully Connected (NC, F32) GEMM": ["Fully Connected (NC, QDU8, F32, QC8W) GEMM"],
+    "Convolution (NHWC, F32) IGEMM": ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM"],
+    "Fully Connected (NC, F32) GEMM": ["Fully Connected (NC, QDU8, F32, QC8W) GEMM", "Fully Connected (NC, QD8, F32, QC8W) GEMM"],
     "Max Pooling (NHWC, F32)": ["Max Pooling (NHWC, F32)"],
     "Softmax (NC, F32)": ["Softmax (NC, F32)"],
     "Copy (NC, X32)": ["Copy (NC, X32)"],
-    "Additional": ["Convert (NC, F32, QDU8)"]
+    "Additional": ["Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)"]
     }
     
 def plot(orig_ops, quant_ops, output_name, model):
@@ -179,8 +179,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.model != "ResNet50" and args.model != "VGG16":
         raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50")
-    print("Original Model:")
+    print(f"Original Model - {args.model}:")
     orig_ops = parse_results(args.orig_result_path)
-    print("Ouantized Model:")
+    print(f"Ouantized Model - {args.model}:")
     quant_ops = parse_results(args.quant_result_path)
     plot(orig_ops, quant_ops, args.output_name, args.model) 
