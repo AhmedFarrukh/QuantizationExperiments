@@ -14,8 +14,8 @@ matching = {
     "GlobalAveragePool": ["GlobalAveragePool"],
     "ReorderOutput": ["ReorderOutput"],
     "Flatten": ["Flatten"],
-    "Gemm": ["DynamicQuantizeMatMul"],
-    "Additional": []
+    "Gemm": ["DynamicQuantizeMatMul"]
+    #"Additional": []
     }
     
 def plot(orig_ops, quant_ops, output_name, model):

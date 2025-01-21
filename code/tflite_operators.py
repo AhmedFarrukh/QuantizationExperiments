@@ -18,16 +18,16 @@ ResNet50_matching = {
     "Max Pooling (NHWC, F32)": ["Max Pooling (NHWC, F32)"],
     "Mean (ND) Mean": ["Mean (ND) Mean"],
     "Softmax (NC, F32)": ["Softmax (NC, F32)"],
-    "Additional": []
+    #"Additional": []
     }
 
 VGG16_matching = {
-    "Convolution (NHWC, F32) IGEMM": ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM"],
+    "Convolution (NHWC, F32) IGEMM": ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM", "Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)"],
     "Fully Connected (NC, F32) GEMM": ["Fully Connected (NC, QDU8, F32, QC8W) GEMM", "Fully Connected (NC, QD8, F32, QC8W) GEMM"],
     "Max Pooling (NHWC, F32)": ["Max Pooling (NHWC, F32)"],
     "Softmax (NC, F32)": ["Softmax (NC, F32)"],
-    "Copy (NC, X32)": ["Copy (NC, X32)"],
-    "Additional": ["Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)"]
+    "Copy (NC, X32)": ["Copy (NC, X32)"]
+    #"Additional": []
     }
     
 def plot(orig_ops, quant_ops, output_name, model):
