@@ -41,7 +41,7 @@ def quantize(save_dir):
         quantize_dynamic(
             preprocessed_model_path,  # input model
             quantized_model_path,  # save quantized model
-            weight_type=QuantType.QInt8  # Quantize weights to 8 bits
+            weight_type=QuantType.QUInt8  # Quantize weights to 8 bits
         )
 
 
