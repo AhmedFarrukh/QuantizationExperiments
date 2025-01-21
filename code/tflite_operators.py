@@ -10,7 +10,7 @@ import copy
 
 
 ResNet50_matching = {
-    "Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM": ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM"],
+    "Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM": ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM", "Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)"],
     "Unary Elementwise (NC)": ["Unary Elementwise (NC)"],
     "Binary Elementwise (ND)": ["Binary Elementwise (ND)"],
     "Fully Connected (NC, F32) GEMM": ["Fully Connected (NC, QDU8, F32, QC8W) GEMM", "Fully Connected (NC, QD8, F32, QC8W) GEMM"],
@@ -18,7 +18,7 @@ ResNet50_matching = {
     "Max Pooling (NHWC, F32)": ["Max Pooling (NHWC, F32)"],
     "Mean (ND) Mean": ["Mean (ND) Mean"],
     "Softmax (NC, F32)": ["Softmax (NC, F32)"],
-    "Additional": ["Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)"]
+    "Additional": []
     }
 
 VGG16_matching = {
