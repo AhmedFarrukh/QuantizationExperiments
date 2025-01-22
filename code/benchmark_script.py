@@ -43,8 +43,8 @@ if __name__ == "__main__":
     parser.add_argument('--onnx_model', help='The path to the onnx model', required=True)
     args = parser.parse_args()
     # Paths to local models
-    onnx_model_path = args.tflite_model  # Path to ONNX model
-    tflite_model_path = args.onnx_model  # Path to TFLite model
+    onnx_model_path = args.onnx_model # Path to ONNX model
+    tflite_model_path = args.tflite_model  # Path to TFLite model
 
     # Generate fake dataset
     print("Generating fake dataset...")
