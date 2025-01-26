@@ -29,12 +29,25 @@ VGG16_matching = {
     "Copy (NC, X32)": ["Copy (NC, X32)"]
     #"Additional": []
     }
+
+MobileNet_matching = {
+    "Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv":["DEPTHWISE_CONV_2D", "Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM", "Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)", "Convolution (NHWC, F32) DWConv", "Constant Pad (ND, X32)"],
+    "Convolution (NHWC, F32) IGEMM":["Convolution (NHWC, F32) IGEMM"],
+    "Mean (ND) Mean":["Mean (ND) Mean"],
+    "Softmax (NC, F32)":["Softmax (NC, F32)"],
+    "STRIDED_SLICE":["STRIDED_SLICE"],
+    "SHAPE":["SHAPE"],
+    "RESHAPE":["RESHAPE"],
+    "PACK":["PACK"]
+    }
     
 def plot(orig_ops, quant_ops, output_name, model):
     if model == "ResNet50":
         matching = ResNet50_matching
     elif model == "VGG16":
         matching = VGG16_matching
+    elif model == "MobileNet":
+        matching = MobileNet_matching
     else:
         raise NotImplementedError
     # Prepare data for the first plot (Original Operations)
@@ -104,6 +117,13 @@ def plot(orig_ops, quant_ops, output_name, model):
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"] = {"duration":0, "count":0}
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["duration"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["duration"] + orig_ops["Convolution (NHWC, F32) GEMM"]["duration"]
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["count"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["count"] + orig_ops["Convolution (NHWC, F32) GEMM"]["count"]
+
+    if model == "MobileNet":
+        del orig_ops_matching["Convolution (NHWC, F32) GEMM"]
+        del orig_ops_matching["Convolution (NHWC, F32) DWConv"]
+        orig_ops_matching["Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv"] = {"duration":0, "count":0}
+        orig_ops_matching["Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv"]["duration"] = orig_ops["Convolution (NHWC, F32) GEMM"]["duration"] + orig_ops["Convolution (NHWC, F32) DWConv"]["duration"]
+        orig_ops_matching["Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv"]["count"] = orig_ops["Convolution (NHWC, F32) GEMM"]["count"] + orig_ops["Convolution (NHWC, F32) DWConv"]["count"]
 
     for op_idx, op_type in enumerate(matching_operations):
         if op_type in orig_ops_matching:
@@ -177,8 +197,8 @@ if __name__ == "__main__":
     parser.add_argument('--quant_result_path', help='The path of the txt file with the result from the quantized model', required=True)
     parser.add_argument('--output_name', help='The name for the output plots', required=True)
     args = parser.parse_args()
-    if args.model != "ResNet50" and args.model != "VGG16":
-        raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50")
+    if args.model not in ["ResNet50", "VGG16", "MobileNet"]:
+        raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50, VGG16 and MobileNet")
     print(f"Original Model - {args.model}:")
     orig_ops = parse_results(args.orig_result_path)
     print(f"Ouantized Model - {args.model}:")
