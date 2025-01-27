@@ -29,7 +29,7 @@ def quantize(save_dir):
         
         # Apply dynamic range quantization
         quantized_model = torch.quantization.quantize_dynamic(
-            model, {torch.nn.Linear}, dtype=torch.qint8
+            model, dtype=torch.qint8
         )
         
         # Save the quantized model
