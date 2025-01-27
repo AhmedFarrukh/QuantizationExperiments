@@ -3,7 +3,7 @@ import numpy as np
 import argparse
 import os
 
-onnx_model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+onnx_model_names = ["MobileNetV2", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 
 def profile(onnx_dir, results_dir, n):
     results_dir = results_dir or '.'

@@ -5,7 +5,13 @@ from torchvision import models
 import pathlib
 import argparse
 
-modelNames = ["mobilenet_v2", "inception_v3", "resnet50", "resnet101", "resnet152", "vgg16", "vgg19"]
+modelNames = {"mobilenet_v2": "MobileNetV2",
+              "inception_v3": "InceptionV3",
+              "resnet50": "ResNet50", 
+              "resnet101": "ResNet101", 
+              "resnet152": "ResNet152", 
+              "vgg16": "VGG16", 
+              "vgg19": "VGG19"}
     
 
 def quantize(save_dir):
@@ -18,7 +24,7 @@ def quantize(save_dir):
         model.eval()
 
         # Save the original model
-        original_model_path = os.path.join(save_dir, f"{modelName}.pth")
+        original_model_path = os.path.join(save_dir, f"{modelNames[modelName]}.pth")
         torch.save(model.state_dict(), original_model_path)
         
         # Apply dynamic range quantization
@@ -27,7 +33,7 @@ def quantize(save_dir):
         )
         
         # Save the quantized model
-        quantized_model_path = os.path.join(save_dir, f"{modelName}_quant.pth")
+        quantized_model_path = os.path.join(save_dir, f"{modelNames[modelName]}_quant.pth")
         torch.save(quantized_model.state_dict(), quantized_model_path)
 
 if __name__ == "__main__":
