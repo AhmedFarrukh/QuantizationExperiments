@@ -30,7 +30,7 @@ VGG16_matching = {
     #"Additional": []
     }
 
-MobileNet_matching = {
+MobileNetV2_matching = {
     "Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv":["DEPTHWISE_CONV_2D", "Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM", "Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)", "Convolution (NHWC, F32) DWConv", "Constant Pad (ND, X32)"],
     "Convolution (NHWC, F32) IGEMM":["Convolution (NHWC, F32) IGEMM"],
     "Mean (ND) Mean":["Mean (ND) Mean"],
@@ -46,8 +46,8 @@ def plot(orig_ops, quant_ops, output_name, model):
         matching = ResNet50_matching
     elif model == "VGG16":
         matching = VGG16_matching
-    elif model == "MobileNet":
-        matching = MobileNet_matching
+    elif model == "MobileNetV2":
+        matching = MobileNetV2_matching
     else:
         raise NotImplementedError
     # Prepare data for the first plot (Original Operations)
@@ -118,7 +118,7 @@ def plot(orig_ops, quant_ops, output_name, model):
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["duration"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["duration"] + orig_ops["Convolution (NHWC, F32) GEMM"]["duration"]
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["count"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["count"] + orig_ops["Convolution (NHWC, F32) GEMM"]["count"]
 
-    if model == "MobileNet":
+    if model == "MobileNetV2":
         del orig_ops_matching["Convolution (NHWC, F32) GEMM"]
         del orig_ops_matching["Convolution (NHWC, F32) DWConv"]
         orig_ops_matching["Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv"] = {"duration":0, "count":0}
@@ -197,8 +197,8 @@ if __name__ == "__main__":
     parser.add_argument('--quant_result_path', help='The path of the txt file with the result from the quantized model', required=True)
     parser.add_argument('--output_name', help='The name for the output plots', required=True)
     args = parser.parse_args()
-    if args.model not in ["ResNet50", "VGG16", "MobileNet"]:
-        raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50, VGG16 and MobileNet")
+    if args.model not in ["ResNet50", "VGG16", "MobileNetV2"]:
+        raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50, VGG16 and MobileNetV2")
     print(f"Original Model - {args.model}:")
     orig_ops = parse_results(args.orig_result_path)
     print(f"Ouantized Model - {args.model}:")

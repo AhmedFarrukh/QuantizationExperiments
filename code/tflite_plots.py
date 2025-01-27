@@ -7,7 +7,7 @@ from collections import defaultdict
 import matplotlib.pyplot as plt
 import numpy as np
 
-model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+model_names = ["MobileNetV2", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 metrics = ["Init Time", "Init Inference", "First Inference", "Warmup Inference", "Avg Inference", "Memory Init", "Memory Overall"]
 
 def parse_benchmark_output(output, results):

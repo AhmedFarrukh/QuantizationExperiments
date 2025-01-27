@@ -7,7 +7,7 @@ import subprocess
 
 
 
-tflite_model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+tflite_model_names = ["MobileNetV2", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 
 def download_benchmark(dir, arch_type):
     url = f'https://storage.googleapis.com/tensorflow-nightly-public/prod/tensorflow/release/lite/tools/nightly/latest/linux_{arch_type}_benchmark_model'

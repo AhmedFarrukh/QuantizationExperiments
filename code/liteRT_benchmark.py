@@ -161,7 +161,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     arch_type = platform.machine().replace("_", "-")
-    modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+    modelNames = ["MobileNetV2", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
     metrics = ["Init Time (ms)", "Init Inference (ms)", "First Inference (ms)", "Warmup Inference (ms)", "Avg Inference (ms)", "Memory Init (MB)", "Memory Overall (MB)"]
 
     download_models(args.dir, args.gdrive_link)

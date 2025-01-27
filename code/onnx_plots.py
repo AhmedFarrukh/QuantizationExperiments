@@ -7,7 +7,7 @@ import pathlib
 import matplotlib.pyplot as plt
 import pandas as pd
 
-model_names = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+model_names = ["MobileNetV2", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 metrics = ["model_loading_uri", "session_initialization", "model_run"]
 
 def extract_results(results_dir, num_repetitions):

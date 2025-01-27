@@ -5,7 +5,7 @@ import pathlib
 import argparse
 import requests
 
-modelNames = {"MobileNet": "https://github.com/onnx/models/raw/main/Computer_Vision/mobilenetv2_100_Opset16_timm/mobilenetv2_100_Opset16.onnx",
+modelNames = {"MobileNetV2": "https://github.com/onnx/models/raw/main/Computer_Vision/mobilenetv2_100_Opset16_timm/mobilenetv2_100_Opset16.onnx",
               "InceptionV3": "https://github.com/onnx/models/raw/main/Computer_Vision/inception_v3_Opset17_timm/inception_v3_Opset17.onnx",
               "ResNet50": "https://github.com/onnx/models/raw/main/Computer_Vision/resnet50_Opset16_timm/resnet50_Opset16.onnx",
               "ResNet101": "https://github.com/onnx/models/raw/main/Computer_Vision/resnet101_Opset17_torch_hub/resnet101_Opset17.onnx", 

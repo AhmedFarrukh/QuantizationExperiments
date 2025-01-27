@@ -4,7 +4,7 @@ import tensorflow as tf
 import pathlib
 import argparse
 
-modelNames = ["MobileNet", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
+modelNames = ["MobileNetV2", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 
 def quantize(save_dir):
     tflite_models_dir = pathlib.Path(save_dir)
