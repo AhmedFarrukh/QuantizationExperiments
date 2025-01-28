@@ -34,6 +34,9 @@ def run_profiler(model_name, model_path, output_file_path):
     model = model_class()  # Model initialized without pretrained weights
     model.eval()
 
+    if 'quant' in model_path:
+        model = torch.quantization.quantize_dynamic(model, dtype=torch.qint8)
+
     # Set input shape based on model type
     torch_input = torch.randn((1, 3, 299, 299) if model_name.startswith('inception') else (1, 3, 224, 224))
 
