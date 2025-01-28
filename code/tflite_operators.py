@@ -31,14 +31,13 @@ VGG16_matching = {
     }
 
 MobileNetV2_matching = {
-    "Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv":["DEPTHWISE_CONV_2D", "Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM", "Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)", "Convolution (NHWC, F32) DWConv", "Constant Pad (ND, X32)"],
+    "Convolution (NHWC, F32) GEMM":["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM", "Convolution (NHWC, F32) GEMM", "Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)"],
+    "Convolution (NHWC, F32) DWConv":["DEPTHWISE_CONV_2D", "Convolution (NHWC, F32) DWConv", "Constant Pad (ND, X32)"],
     "Convolution (NHWC, F32) IGEMM":["Convolution (NHWC, F32) IGEMM"],
+    "Fully Connected (NC, F32) GEMM":["Fully Connected (NC, QDU8, F32, QC8W) GEMM", "Fully Connected (NC, QD8, F32, QC8W) GEMM"],
+    "Binary Elementwise (ND)":["Binary Elementwise (ND)"],
     "Mean (ND) Mean":["Mean (ND) Mean"],
     "Softmax (NC, F32)":["Softmax (NC, F32)"],
-    "STRIDED_SLICE":["STRIDED_SLICE"],
-    "SHAPE":["SHAPE"],
-    "RESHAPE":["RESHAPE"],
-    "PACK":["PACK"]
     }
     
 def plot(orig_ops, quant_ops, output_name, model):
@@ -117,13 +116,6 @@ def plot(orig_ops, quant_ops, output_name, model):
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"] = {"duration":0, "count":0}
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["duration"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["duration"] + orig_ops["Convolution (NHWC, F32) GEMM"]["duration"]
         orig_ops_matching["Convolution (NHWC, F32) IGEMM + Convolution (NHWC, F32) GEMM"]["count"] = orig_ops["Convolution (NHWC, F32) IGEMM"]["count"] + orig_ops["Convolution (NHWC, F32) GEMM"]["count"]
-
-    if model == "MobileNetV2":
-        del orig_ops_matching["Convolution (NHWC, F32) GEMM"]
-        del orig_ops_matching["Convolution (NHWC, F32) DWConv"]
-        orig_ops_matching["Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv"] = {"duration":0, "count":0}
-        orig_ops_matching["Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv"]["duration"] = orig_ops["Convolution (NHWC, F32) GEMM"]["duration"] + orig_ops["Convolution (NHWC, F32) DWConv"]["duration"]
-        orig_ops_matching["Convolution (NHWC, F32) GEMM + Convolution (NHWC, F32) DWConv"]["count"] = orig_ops["Convolution (NHWC, F32) GEMM"]["count"] + orig_ops["Convolution (NHWC, F32) DWConv"]["count"]
 
     for op_idx, op_type in enumerate(matching_operations):
         if op_type in orig_ops_matching:
