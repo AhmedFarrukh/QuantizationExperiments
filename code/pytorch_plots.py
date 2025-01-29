@@ -40,7 +40,7 @@ def extract_results(results_dir, num_repetitions):
             result_path = os.path.join(results_dir, f"pytorch_{model}_profiling_{i}.txt")
             with open(result_path, 'r') as file:
                 output = file.read()
-            match = re.search(f"Self CPU time total: (.*?)", output, re.DOTALL)
+            match = re.search(f"Self CPU time total: (.*?)\n", output, re.DOTALL)
             cpu_time = parse_time(match.group(1).strip())
             results_df.loc[model, "CPU time total"] += cpu_time
 

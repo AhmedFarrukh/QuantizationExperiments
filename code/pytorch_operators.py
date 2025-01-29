@@ -10,34 +10,34 @@ import copy
 
 
 ResNet50_matching = {
-                    'conv2d': 'conv2d',
-                    'convolution': 'convolution',
-                    '_convolution': '_convolution',
-                    'mkldnn_convolution': 'mkldnn_convolution',
-                    'empty': 'empty',  
-                    'as_strided_': 'as_strided_',     
-                    'resize_': 'resize_',       
-                    'batch_norm': 'batch_norm',        
-                    '_batch_norm_impl_index': '_batch_norm_impl_index',         
-                    'native_batch_norm': 'native_batch_norm',
-                    'empty_like': 'empty_like',      
-                    'relu_': 'relu_',     
-                    'clamp_min_': 'clamp_min_',   
-                    'max_pool2d': 'max_pool2d',      
-                    'max_pool2d_with_indices': 'max_pool2d_with_indices',        
-                    'add_': 'add_',         
-                    'adaptive_avg_pool2d': 'adaptive_avg_pool2d',        
-                    'mean': 'mean',        
-                    'sum': 'sum',         
-                    'fill_': 'fill_',        
-                    'div_': 'div_',      
-                    'to': 'to',       
-                    '_to_copy': '_to_copy',      
-                    'empty_strided': 'empty_strided',       
-                    'copy_': 'copy_',      
-                    'flatten': 'flatten',        
-                    'view': 'view',      
-                    'linear + t + transpose + as_strided + addmm + expand + resolve_conj': 'quantized::linear_dynamic'    
+                    'conv2d': ['conv2d'],
+                    'convolution': ['convolution'],
+                    '_convolution': ['_convolution'],
+                    'mkldnn_convolution': ['mkldnn_convolution'],
+                    'empty': ['empty'],  
+                    'as_strided_': ['as_strided_'],     
+                    'resize_': ['resize_'],       
+                    'batch_norm': ['batch_norm'],        
+                    '_batch_norm_impl_index': ['_batch_norm_impl_index'],         
+                    'native_batch_norm': ['native_batch_norm'],
+                    'empty_like': ['empty_like'],      
+                    'relu_': ['relu_'],     
+                    'clamp_min_': ['clamp_min_'],   
+                    'max_pool2d': ['max_pool2d'],      
+                    'max_pool2d_with_indices': ['max_pool2d_with_indices'],        
+                    'add_': ['add_'],         
+                    'adaptive_avg_pool2d': ['adaptive_avg_pool2d'],        
+                    'mean': ['mean'],        
+                    'sum': ['sum'],         
+                    'fill_': ['fill_'],        
+                    'div_': ['div_'],      
+                    'to': ['to'],       
+                    '_to_copy': ['_to_copy'],      
+                    'empty_strided': ['empty_strided'],       
+                    'copy_': ['copy_'],      
+                    'flatten': ['flatten'],        
+                    'view': ['view'],      
+                    'linear + t + transpose + as_strided + addmm + expand + resolve_conj': ['quantized::linear_dynamic']    
                     }
 
     
@@ -161,7 +161,7 @@ def parse_results(result_path):
     # Parse the table into a dictionary
     lines = table_block.split("\n")
     headers = re.split(r"\s{2,}", lines[0].strip())  # Extract headers using consistent spacing
-    data_lines = lines[2:]  # The rest are data rows
+    data_lines = lines[3:]  # The rest are data rows
     
     # Create a dictionary for operations
     ops = {}
@@ -177,15 +177,12 @@ def parse_results(result_path):
             continue  # Skip lines that don't match the expected structure
         
         # Extract fields based on known header order
-        op_name = fields[0].removeprefix("aten::")
+        op_name = fields[0][len('aten::'):] if fields[0].startswith("aten::") else fields[0]
         total_cpu_time = parse_time(fields[4])
         num_calls = int(fields[6])
         
         # Add to the dictionary
         ops[op_name] = {"count": num_calls, "duration": total_cpu_time}
-    
-    for op in ops:
-        print(f"Operator: {op}, Duration: {ops[op]['duration']}, Count: {ops[op]['count']}")
 
     return ops
 
@@ -197,18 +194,33 @@ def parse_time(time_str):
     else:
         raise ValueError(f"Unknown time unit in: {time_str}")
 
+def consolidate_results(result_format, n):
+    ops = defaultdict(lambda: {'duration': 0, 'count': 0})
+    for i in range(n):
+        single_run = parse_results(f'{result_format}_{i}.txt')
+        for op_name in single_run:
+            ops[op_name]['duration'] = single_run[op_name]['duration']
+            ops[op_name]['count'] = single_run[op_name]['count']
+    
+    for op in ops:
+        ops[op]['duration'] /= n
+        ops[op]['count'] /= n
+        print(f"Operator: {op}, Duration: {ops[op]['duration']}, Count: {ops[op]['count']}")
+        
+    return ops
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', help='model name', required=True)
-    parser.add_argument('--orig_result_path', help='The path of the txt file with the result from the original model', required=True)
-    parser.add_argument('--quant_result_path', help='The path of the txt file with the result from the quantized model', required=True)
+    parser.add_argument('--orig_result_format', help='The path of the txt file with the result from the original model', required=True)
+    parser.add_argument('--quant_result_format', help='The path of the txt file with the result from the quantized model', required=True)
+    parser.add_argument('--num_repetitions', help='The number of time the profiler was run', required=True)
     parser.add_argument('--output_name', help='The name for the output plots', required=True)
     args = parser.parse_args()
     if args.model not in ["ResNet50"]:
         raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50.")
     print(f"Original Model - {args.model}:")
-    orig_ops = parse_results(args.orig_result_path)
+    orig_ops = consolidate_results(args.orig_result_format, int(args.num_repetitions))
     print(f"Ouantized Model - {args.model}:")
-    quant_ops = parse_results(args.quant_result_path)
+    quant_ops = consolidate_results(args.quant_result_format, int(args.num_repetitions))
     plot(orig_ops, quant_ops, args.output_name, args.model) 
