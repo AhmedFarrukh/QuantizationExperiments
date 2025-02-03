@@ -51,7 +51,7 @@ if __name__ == "__main__":
                     alpha=opacity,
                     label='ONNX')
 
-    rects3 = plt.bar(index + bar_width, pytorch_orig, bar_width,
+    rects3 = plt.bar(index + 2*bar_width, pytorch_orig, bar_width,
                     alpha=opacity,
                     label='PyTorch')
 
@@ -78,7 +78,7 @@ if __name__ == "__main__":
                     alpha=opacity,
                     label='ONNX')
 
-    rects3 = plt.bar(index + bar_width, pytorch_quant, bar_width,
+    rects3 = plt.bar(index + 2*bar_width, pytorch_quant, bar_width,
                     alpha=opacity,
                     label='PyTorch')
 
