@@ -40,7 +40,7 @@ if __name__ == "__main__":
     index = np.arange(n_groups)
 
     fig, ax = plt.subplots()
-    bar_width = 0.3
+    bar_width = 0.25
     opacity = 0.8
 
     rects1 = plt.bar(index - bar_width, tflite_orig, bar_width,
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     plt.xlabel('Model')
     plt.ylabel(f'Inference Time (ms)')
     plt.title(f'Comparing Original Inference Times')
-    plt.xticks(index + bar_width, model_names, rotation=45)
+    plt.xticks(index, model_names, rotation=45)
     plt.legend()
 
     plt.tight_layout()
@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     #Graph of Quantized Inference Times
     fig, ax = plt.subplots()
-    bar_width = 0.3
+    bar_width = 0.25
     opacity = 0.8
 
     rects1 = plt.bar(index - bar_width, tflite_quant, bar_width,
