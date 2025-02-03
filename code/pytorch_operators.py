@@ -199,8 +199,8 @@ def consolidate_results(result_format, n):
     for i in range(n):
         single_run = parse_results(f'{result_format}_{i}.txt')
         for op_name in single_run:
-            ops[op_name]['duration'] = single_run[op_name]['duration']
-            ops[op_name]['count'] = single_run[op_name]['count']
+            ops[op_name]['duration'] += single_run[op_name]['duration']
+            ops[op_name]['count'] += single_run[op_name]['count']
     
     for op in ops:
         ops[op]['duration'] /= n
