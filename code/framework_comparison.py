@@ -40,25 +40,25 @@ if __name__ == "__main__":
     index = np.arange(n_groups)
 
     fig, ax = plt.subplots()
-    bar_width = 0.35
+    bar_width = 0.3
     opacity = 0.8
 
-    rects1 = plt.bar(index, tflite_orig, bar_width,
+    rects1 = plt.bar(index - bar_width, tflite_orig, bar_width,
                     alpha=opacity,
                     label='TFlite')
 
-    rects2 = plt.bar(index + bar_width, onnx_orig, bar_width,
+    rects2 = plt.bar(index, onnx_orig, bar_width,
                     alpha=opacity,
                     label='ONNX')
 
-    rects3 = plt.bar(index + 2*bar_width, pytorch_orig, bar_width,
+    rects3 = plt.bar(index + bar_width, pytorch_orig, bar_width,
                     alpha=opacity,
                     label='PyTorch')
 
     plt.xlabel('Model')
     plt.ylabel(f'Inference Time (ms)')
     plt.title(f'Comparing Original Inference Times')
-    plt.xticks(index + bar_width / 2, model_names, rotation=45)
+    plt.xticks(index + bar_width, model_names, rotation=45)
     plt.legend()
 
     plt.tight_layout()
@@ -67,25 +67,25 @@ if __name__ == "__main__":
 
     #Graph of Quantized Inference Times
     fig, ax = plt.subplots()
-    bar_width = 0.35
+    bar_width = 0.3
     opacity = 0.8
 
-    rects1 = plt.bar(index, tflite_quant, bar_width,
+    rects1 = plt.bar(index - bar_width, tflite_quant, bar_width,
                     alpha=opacity,
                     label='TFlite')
 
-    rects2 = plt.bar(index + bar_width, onnx_quant, bar_width,
+    rects2 = plt.bar(index, onnx_quant, bar_width,
                     alpha=opacity,
                     label='ONNX')
 
-    rects3 = plt.bar(index + 2*bar_width, pytorch_quant, bar_width,
+    rects3 = plt.bar(index + bar_width, pytorch_quant, bar_width,
                     alpha=opacity,
                     label='PyTorch')
 
     plt.xlabel('Model')
     plt.ylabel(f'Inference Time (ms)')
     plt.title(f'Comparing Inference Times Post-Quantization')
-    plt.xticks(index + bar_width / 2, model_names, rotation=45)
+    plt.xticks(index, model_names, rotation=45)
     plt.legend()
 
     plt.tight_layout()
