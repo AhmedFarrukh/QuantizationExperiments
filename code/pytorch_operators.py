@@ -104,7 +104,6 @@ def plot(orig_ops, quant_ops, output_name, model):
         print("ERROR: THE FOLLOWING OPERATIONS WERE NOT MAPPED!")
         print(set(quant_ops) - quant_ops_plotted)
 
-#linear + t + transpose + as_strided + addmm + expand + resolve_conj
     # Overlay red markers for original operator durations
     orig_ops_matching = copy.deepcopy(orig_ops)
     if model == "ResNet50":

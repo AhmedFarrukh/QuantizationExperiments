@@ -175,9 +175,6 @@ def parse_results(result_path):
         
         # Add to the dictionary
         ops[op_name] = {"count": count, "duration": avg_ms}
-    
-    for op in ops:
-        print(f"Operator: {op}, Duration: {ops[op]['duration']}, Count: {ops[op]['count']}")
 
     return ops
 
@@ -193,6 +190,10 @@ if __name__ == "__main__":
         raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50, VGG16 and MobileNetV2")
     print(f"Original Model - {args.model}:")
     orig_ops = parse_results(args.orig_result_path)
+    for op in orig_ops:
+        print(f"Operator: {op}, Duration: {orig_ops[op]['duration']}, Count: {orig_ops[op]['count']}")
     print(f"Ouantized Model - {args.model}:")
     quant_ops = parse_results(args.quant_result_path)
+    for op in quant_ops:
+        print(f"Operator: {op}, Duration: {quant_ops[op]['duration']}, Count: {quant_ops[op]['count']}")
     plot(orig_ops, quant_ops, args.output_name, args.model) 

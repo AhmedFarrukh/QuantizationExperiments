@@ -73,10 +73,6 @@ def plot(orig_ops, quant_ops, output_name, model):
                 color_index += 1  # Increment color index
                 quant_ops_plotted.add(eq_op)
 
-        if set(quant_ops) - quant_ops_plotted:
-            print("ERROR: THE FOLLOWING OPERATIONS WERE NOT MAPPED!")
-            print(set(quant_ops) - quant_ops_plotted)
-
         # Overlay red markers for original operator durations
         for op_idx, op_type in enumerate(matching_operations):
             if op_type in orig_ops:
@@ -86,6 +82,9 @@ def plot(orig_ops, quant_ops, output_name, model):
                     op_idx,  # y-coordinate (operation index)
                     marker="o", color="red", markersize=8, label=None  # Red marker
                 )
+    if set(quant_ops) - quant_ops_plotted:
+            print("ERROR: THE FOLLOWING OPERATIONS WERE NOT MAPPED!")
+            print(set(quant_ops) - quant_ops_plotted)
 
     # Customize the second graph
     plt.title(f"ONNX-{model}-Quantized", loc='center')
@@ -116,7 +115,6 @@ def consolidate_results(result_format, n):
     for op in ops:
         ops[op]['duration'] /= n*1000
         ops[op]['count'] /= n*1000
-        print(f"Operator: {op}, Duration: {ops[op]['duration']}, Count: {ops[op]['count']}")
         
     return ops
 
@@ -132,8 +130,12 @@ if __name__ == "__main__":
         raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50")
     print("Original Model:")
     orig_ops = consolidate_results(args.orig_result_format, int(args.num_repetitions))
+    for op in orig_ops:
+        print(f"Operator: {op}, Duration: {orig_ops[op]['duration']}, Count: {orig_ops[op]['count']}")
     print("\nQuantized Model:")
     quant_ops = consolidate_results(args.quant_result_format, int(args.num_repetitions))
+    for op in quant_ops:
+        print(f"Operator: {op}, Duration: {quant_ops[op]['duration']}, Count: {quant_ops[op]['count']}")
     plot(orig_ops, quant_ops, args.output_name, args.model)
 
 
