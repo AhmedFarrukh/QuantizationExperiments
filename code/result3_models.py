@@ -14,13 +14,12 @@ def main():
     parser.add_argument('--output', help='The name for the directory of the output plots', required=True)
     args = parser.parse_args()
 
+    #TFLITE 
     for model in ["ResNet50", "MobileNetV2", "VGG16"]:
     
         tflite_orig_ops = get_tflite_operators(args.tflite_result + f'/tflite_{model}_profiling.txt')
         tflite_quant_ops = get_tflite_operators(args.tflite_result + f'/tflite_{model}_quant_profiling.txt')
         tflite_df = extract_tflite_results(args.tflite_result)
-
-        
 
         colors = ["#00cd63", "#339fff", "#f7b300"]
 
@@ -41,7 +40,7 @@ def main():
         plot1.set_ylabel('Time (ms)')
         plot1.set_title(f"Inference Time for {model}")
         plot1.legend()
-        plt.savefig(f'{args.output}/Result3_{model}_InferenceTimes.png')
+        plt.savefig(f'{args.output}/Result3_tflite_{model}_InferenceTimes.png')
 
 
         #Part 2: Comapring time taken by convolution operators across models
@@ -68,7 +67,7 @@ def main():
         plot2.set_ylabel('Time (ms)')
         plot2.set_title("Convolution Layer")
         plot2.legend()
-        plt.savefig(f'{args.output}/Result3_{model}_ConvolutionComparison.png')
+        plt.savefig(f'{args.output}/Result3_tflite_{model}_ConvolutionComparison.png')
 
 
         #Part 3: Comparing Fully Connected Layers across models
@@ -86,7 +85,73 @@ def main():
         plot3.set_ylabel('Time (ms)')
         plot3.set_title("Fully Connected Layer")
         plot3.legend()
-        plt.savefig(f'{args.output}/Result3_{model}_FullyConnectedComparison.png')
+        plt.savefig(f'{args.output}/Result3_tflite_{model}_FullyConnectedComparison.png')
+
+    #ONNX 
+    for model in ["ResNet50", "MobileNetV2", "VGG16"]:
+    
+        onnx_orig_ops = get_onnx_operators(args.onnx_result + f'/onnx_{model}_profiling', n = 10)
+        onnx_quant_ops = get_onnx_operators(args.onnx_result + f'/onnx_{model}_quant_profiling', n = 10)
+        onnx_df = extract_onnx_results(args.onnx_result, 10)
+
+        colors = ["#00cd63", "#339fff", "#f7b300"]
+
+        #Part 1: Comparing Inference Times for each Model
+        onnx_orig = onnx_df.loc[model, 'model_run']
+        onnx_quant = onnx_df.loc[model + '_quant', 'model_run']
+
+        fig, plot1 = plt.subplots(figsize=(5, 10))
+        bar_width = 0.25
+
+        x = np.arange(1)
+        plot1.bar(x - bar_width / 2, onnx_orig, width=bar_width, label="Original", color=colors[0])
+        plot1.bar(x + bar_width / 2, onnx_quant, width=bar_width, label="Quantized", color=colors[1])
+
+        # Labels and title
+        plot1.set_xticks(x)
+        plot1.set_xticklabels([model])
+        plot1.set_ylabel('Time (ms)')
+        plot1.set_title(f"Inference Time for {model}")
+        plot1.legend()
+        plt.savefig(f'{args.output}/Result3_onnx_{model}_InferenceTimes.png')
+
+
+        #Part 2: Comapring time taken by convolution operators across models
+        onnx_conv = aggregate_convolution("onnx", onnx_orig_ops, onnx_quant_ops, model)
+        bar_width = 0.25
+        fig, plot2 = plt.subplots(figsize=(5, 10))
+        x = np.arange(1)
+        plot2.bar(x - bar_width / 2, onnx_conv["Convolution"], width=bar_width, label="Convolution", color=colors[0])
+
+        # Plot stacked bars for Quantized Convolution + Convert
+        plot2.bar(x + bar_width / 2, onnx_conv["Quantized Convolution"], width=bar_width, label="Quantized Convolution", color=colors[1])
+        plot2.bar(x + bar_width / 2, onnx_conv["Convert"], width=bar_width, label="Convert", bottom=onnx_conv["Quantized Convolution"], color=colors[2])
+
+        # Labels and title
+        plot2.set_xticks(x)
+        plot2.set_xticklabels([model])
+        plot2.set_ylabel('Time (ms)')
+        plot2.set_title("Convolution Layer")
+        plot2.legend()
+        plt.savefig(f'{args.output}/Result3_onnx_{model}_ConvolutionComparison.png')
+
+
+        #Part 3: Comparing Fully Connected Layers across models
+        onnx_fullyconnected = aggregate_fullyconnected("onnx", onnx_orig_ops, onnx_quant_ops, model)
+
+        bar_width = 0.25
+        fig, plot3 = plt.subplots(figsize=(5, 10))
+        x = np.arange(1)
+        plot3.bar(x - bar_width / 2, onnx_fullyconnected["Fully Connected"], width=bar_width, label="Fully Connected", color=colors[0])
+        plot3.bar(x + bar_width / 2, onnx_fullyconnected["Quantized Fully Connected"], width=bar_width, label="Quantized Fully Connected", color=colors[1])
+
+        # Labels and title
+        plot3.set_xticks(x)
+        plot3.set_xticklabels([model])
+        plot3.set_ylabel('Time (ms)')
+        plot3.set_title("Fully Connected Layer")
+        plot3.legend()
+        plt.savefig(f'{args.output}/Result3_onnx_{model}_FullyConnectedComparison.png')
 
 
 if __name__ == "__main__":
