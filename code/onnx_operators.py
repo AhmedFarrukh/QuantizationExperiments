@@ -114,7 +114,7 @@ def consolidate_results(result_format, n):
 
     for op in ops:
         ops[op]['duration'] /= n*1000
-        ops[op]['count'] /= n*1000
+        ops[op]['count'] /= n
         
     return ops
 
