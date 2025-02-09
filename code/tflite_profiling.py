@@ -10,7 +10,7 @@ import subprocess
 tflite_model_names = ["MobileNetV2", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 
 def download_benchmark(dir, arch_type):
-    url = f'https://storage.googleapis.com/tensorflow-nightly-public/prod/tensorflow/release/lite/tools/nightly/latest/linux_{arch_type}_benchmark_model'
+    url = f'https://drive.google.com/file/d/1YS5_PLZZ4qDuZYz8r4QFj5Sx4P5b1TfO/view?usp=drive_link'
     r = requests.get(url, allow_redirects=True)
     open(dir + '/benchmark', 'wb').write(r.content)
     os.chmod(dir + '/benchmark', stat.S_IEXEC)
