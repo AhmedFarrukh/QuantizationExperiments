@@ -46,10 +46,10 @@ Finally, we can run the profiler. For each model, the results from the profiler 
 :::{.cell .code}
 ```python
 node.run('mkdir /home/cc/onnxruntime_profiling_results')
-node.run('python3 /home/cc/QuantizationExperiments/code/onnx_profiling.py  --onnx_dir=/home/cc/onnx_models --results_dir=/home/cc/onnxruntime_profiling_results --num_repetitions=10')
+node.run('python3 /home/cc/QuantizationExperiments/code/onnx_profiling.py  --onnx_dir=/home/cc/onnx_models --results_dir=/home/cc/onnxruntime_profiling_results --num_repetitions=100')
 node.run('mkdir /home/cc/onnx_plots')
-node.run('python3 /home/cc/QuantizationExperiments/code/onnx_plots.py --results_dir=/home/cc/onnxruntime_profiling_results --save_dir=/home/cc/onnx_plots --num_repetitions=10')
-node.run('python3 /home/cc/QuantizationExperiments/code/onnx_operators.py --model=ResNet50 --orig_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_profiling --quant_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_quant_profiling --num_repetitions=10 --output_name=/home/cc/onnx_plots/ResNet50')
+node.run('python3 /home/cc/QuantizationExperiments/code/onnx_plots.py --results_dir=/home/cc/onnxruntime_profiling_results --save_dir=/home/cc/onnx_plots --num_repetitions=100')
+node.run('python3 /home/cc/QuantizationExperiments/code/onnx_operators.py --model=ResNet50 --orig_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_profiling --quant_result_format=/home/cc/onnxruntime_profiling_results/onnx_ResNet50_quant_profiling --num_repetitions=100 --output_name=/home/cc/onnx_plots/ResNet50')
 ```
 :::
 

@@ -9,6 +9,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', help='model name', required=True)
     parser.add_argument('--tflite_result', help='The parent directory with subdirectories containing hardware-specific results', required=True)
+    parser.add_argument('--num_repetitions', help='The number of times each model was profiled', required= True, type=int)
     parser.add_argument('--output', help='The name for the directory of the output plots', required=True)
     args = parser.parse_args()
     if args.model not in ["ResNet50"]:
@@ -26,7 +27,7 @@ def main():
         #Load Inference Time Statistics
         tflite_orig_ops = get_tflite_operators(args.tflite_result + f'/{hardware}/tflite_profiling_results/tflite_{args.model}_profiling.txt')
         tflite_quant_ops = get_tflite_operators(args.tflite_result + f'/{hardware}/tflite_profiling_results/tflite_{args.model}_quant_profiling.txt')
-        tflite_df = extract_tflite_results(args.tflite_result + f'/{hardware}/tflite_profiling_results')
+        tflite_df = extract_tflite_results(args.tflite_result + f'/{hardware}/tflite_profiling_results', args.num_repetitions)
 
         #Load required statistics for plots
         tflite_conv = aggregate_convolution("tflite", tflite_orig_ops, tflite_quant_ops, "ResNet50")

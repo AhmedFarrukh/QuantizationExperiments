@@ -12,6 +12,7 @@ def main():
     parser.add_argument('--model', help='model name', required=True)
     parser.add_argument('--tflite_result', help='The path where tflite results are stored', required=True)
     parser.add_argument('--onnx_result', help='The path where onnx results are stored', required= True)
+    parser.add_argument('--num_repetitions', help='The number of times each model was profiled', required= True, type=int)
     parser.add_argument('--output', help='The name for the directory of the output plots', required=True)
     args = parser.parse_args()
     if args.model not in ["ResNet50"]:
@@ -20,10 +21,10 @@ def main():
     #Load model run statistics
     tflite_orig_ops = get_tflite_operators(args.tflite_result + f'/tflite_{args.model}_profiling.txt')
     tflite_quant_ops = get_tflite_operators(args.tflite_result + f'/tflite_{args.model}_quant_profiling.txt')
-    onnx_orig_ops = get_onnx_operators(args.onnx_result + f'/onnx_{args.model}_profiling', n = 10)
-    onnx_quant_ops = get_onnx_operators(args.onnx_result + f'/onnx_{args.model}_quant_profiling', n = 10)
-    tflite_df = extract_tflite_results(args.tflite_result)
-    onnx_df = extract_onnx_results(args.onnx_result, 10)
+    onnx_orig_ops = get_onnx_operators(args.onnx_result + f'/onnx_{args.model}_profiling', n = args.num_repetitions)
+    onnx_quant_ops = get_onnx_operators(args.onnx_result + f'/onnx_{args.model}_quant_profiling', n = args.num_repetitions)
+    tflite_df = extract_tflite_results(args.tflite_result, args.num_repetitions)
+    onnx_df = extract_onnx_results(args.onnx_result, n = args.num_repetitions)
 
     frameworks = ['TFlite', 'ONNX']
     colors = ["#00cd63", "#339fff", "#f7b300"]

@@ -11,6 +11,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--tflite_result', help='The directory where tflite results are stored', required=True)
     parser.add_argument('--onnx_result', help='The directory where onnx results are stored', required= True)
+    parser.add_argument('--num_repetitions', help='The number of times each model was profiled', required= True, type=int)
     parser.add_argument('--output', help='The name for the directory of the output plots', required=True)
     args = parser.parse_args()
 
@@ -19,7 +20,7 @@ def main():
     
         tflite_orig_ops = get_tflite_operators(args.tflite_result + f'/tflite_{model}_profiling.txt')
         tflite_quant_ops = get_tflite_operators(args.tflite_result + f'/tflite_{model}_quant_profiling.txt')
-        tflite_df = extract_tflite_results(args.tflite_result)
+        tflite_df = extract_tflite_results(args.tflite_result, args.num_repetitions)
 
         colors = ["#00cd63", "#339fff", "#f7b300"]
 
@@ -90,9 +91,9 @@ def main():
     #ONNX 
     for model in ["ResNet50", "MobileNetV2", "VGG16"]:
     
-        onnx_orig_ops = get_onnx_operators(args.onnx_result + f'/onnx_{model}_profiling', n = 10)
-        onnx_quant_ops = get_onnx_operators(args.onnx_result + f'/onnx_{model}_quant_profiling', n = 10)
-        onnx_df = extract_onnx_results(args.onnx_result, 10)
+        onnx_orig_ops = get_onnx_operators(args.onnx_result + f'/onnx_{model}_profiling', n = args.num_repetitions)
+        onnx_quant_ops = get_onnx_operators(args.onnx_result + f'/onnx_{model}_quant_profiling', n = args.num_repetitions)
+        onnx_df = extract_onnx_results(args.onnx_result, args.num_repetitions)
 
         colors = ["#00cd63", "#339fff", "#f7b300"]
 
