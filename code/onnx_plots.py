@@ -23,11 +23,14 @@ def extract_results(results_dir, num_repetitions):
     cols = []
     for metric in metrics:
         cols.append(metric)
+    
+    cols.append("model_run_sd")
 
     # Create an empty DataFrame to store results
     results_df = pd.DataFrame(0.0, index=rows, columns=cols)
 
     for model in rows:
+        model_run_times = []
         for i in range(num_repetitions):
             result_path = os.path.join(results_dir, f"onnx_{model}_profiling_{i}.json")
             with open(result_path, 'r') as file:
@@ -36,6 +39,9 @@ def extract_results(results_dir, num_repetitions):
             for entry in data:
                 if entry.get('name') in metrics:
                     results_df.loc[model, entry.get('name')] += entry['dur']
+                if entry.get('name') == "model_run":
+                    model_run_times.append(entry['dur'])
+        results_df.loc[model, "model_run_sd"] = np.std(model_run_times)
 
     results_df = results_df / (num_repetitions*1000) #average and convert from us to ms 
 
@@ -53,6 +59,8 @@ def plot(results_df, save_dir):
     for metric in metrics:
         means_orig = results_df.loc[model_names, metric].values
         means_quant = results_df.loc[[model + "_quant" for model in model_names], metric].values
+        stds_orig = results_df.loc[model_names, "model_run_sd"].values if metric == "model_run" else np.zeros_like(means_orig)
+        stds_quant = results_df.loc[[model + "_quant" for model in model_names], "model_run_sd"].values if metric == "model_run" else np.zeros_like(means_quant)
 
         n_groups = len(model_names)
         index = np.arange(n_groups)
@@ -68,6 +76,10 @@ def plot(results_df, save_dir):
         rects2 = plt.bar(index + bar_width, means_quant, bar_width,
                         alpha=opacity,
                         label='Quantized')
+        
+        if metric == "model_run":
+            plt.errorbar(index, means_orig, yerr=stds_orig, fmt='none', color='black', capsize=5)
+            plt.errorbar(index + bar_width, means_quant, yerr=stds_quant, fmt='none', color='black', capsize=5)
 
         plt.xlabel('Model')
         plt.ylabel(f'{titles[metric]} (ms)')
