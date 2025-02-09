@@ -46,7 +46,7 @@ Finally, we can download and run the benchmark. We then parse the output and cre
 :::{.cell .code}
 ```python
 node.run('mkdir /home/cc/tflite_profiling_results')
-node.run('python3 /home/cc/QuantizationExperiments/code/tflite_profiling.py  --tflite_dir=/home/cc/tflite_models --results_dir=/home/cc/tflite_profiling_results')
+node.run('python3 /home/cc/QuantizationExperiments/code/tflite_profiling.py  --tflite_dir=/home/cc/tflite_models --results_dir=/home/cc/tflite_profiling_results --num_repetitions=100')
 node.run('mkdir /home/cc/tflite_plots')
 node.run('python3 /home/cc/QuantizationExperiments/code/tflite_plots.py --results_dir=/home/cc/tflite_profiling_results --save_dir=/home/cc/tflite_plots --num_repetitions=100')
 node.run('python3 /home/cc/QuantizationExperiments/code/tflite_operators.py --model=ResNet50 --orig_result_path=/home/cc/tflite_profiling_results/tflite_ResNet50_profiling.txt --quant_result_path=/home/cc/tflite_profiling_results/tflite_ResNet50_quant_profiling.txt --output_name=/home/cc/tflite_plots/ResNet50')
