@@ -27,7 +27,7 @@ def aggregate_convolution(framework, orig_ops, quant_ops, model):
             conv_operators['Depthwise Convolution'] = orig_ops["Convolution (NHWC, F32) DWConv"]["duration"]
             conv_operators['Convolution'] = sum([orig_ops[op]["duration"] for op in ["Convolution (NHWC, F32) GEMM", "Convolution (NHWC, F32) IGEMM"] if op in orig_ops])
             conv_operators['Quantized Convolution'] = sum([quant_ops[op]["duration"] for op in ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM", "Convolution (NHWC, F32) GEMM", "Convolution (NHWC, F32) IGEMM"] if op in quant_ops])
-            conv_operators['Quantized Depthwise Convolution'] = sum([quant_ops[op]["duration"] for op in ["Convolution (NHWC, QDU8, F32, QC8W) IGEMM", "Convolution (NHWC, QD8, F32, QC8W) IGEMM", "Convolution (NHWC, F32) GEMM", "Convolution (NHWC, F32) IGEMM"] if op in quant_ops])
+            conv_operators['Quantized Depthwise Convolution'] = sum([quant_ops[op]["duration"] for op in ["DEPTHWISE_CONV_2D", "Convolution (NHWC, F32) DWConv"] if op in quant_ops])
             conv_operators['Convert'] = sum([quant_ops[op]["duration"] for op in ["Convert (NC, F32, QDU8)", "Convert (NC, F32, QD8)"] if op in quant_ops])
             conv_operators['Pad'] = quant_ops["Constant Pad (ND, X32)"]["duration"]
 
