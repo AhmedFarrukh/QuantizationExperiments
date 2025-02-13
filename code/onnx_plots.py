@@ -43,7 +43,12 @@ def extract_results(results_dir, num_repetitions):
                     model_run_times.append(entry['dur'])
         results_df.loc[model, "model_run_sd"] = np.std(model_run_times)
 
-    results_df = results_df / (num_repetitions*1000) #average and convert from us to ms 
+    # Scale all columns except "model_run_sd"
+    results_df.loc[:, results_df.columns != "model_run_sd"] /= (num_repetitions * 1000)
+
+    # Scale only the "model_run_sd" column by 1000
+    results_df.loc[:, "model_run_sd"] /= 1000
+
 
     return results_df
 
@@ -65,7 +70,7 @@ def plot(results_df, save_dir):
         n_groups = len(model_names)
         index = np.arange(n_groups)
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(5, 4))
         bar_width = 0.35
         opacity = 0.8
 
@@ -83,7 +88,7 @@ def plot(results_df, save_dir):
 
         plt.xlabel('Model')
         plt.ylabel(f'{titles[metric]} (ms)')
-        plt.title(F'ONNX: {titles[metric]}')
+        #plt.title(F'ONNX: {titles[metric]}')
         plt.xticks(index + bar_width / 2, model_names, rotation=45)
         plt.legend()
 

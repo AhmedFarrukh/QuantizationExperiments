@@ -18,7 +18,7 @@ def parse_benchmark_output(output, results, num_repetitions):
     init_time_pattern = re.compile(r'INFO: Initialized session in (.+?)ms.')
     inference_pattern = re.compile(r'INFO: Inference timings in us: Init: (.+?), First inference: (.+?), Warmup \(avg\): (.+?), Inference \(avg\): (.+?)$')
     memory_pattern = re.compile(r'INFO: Memory footprint delta from the start of the tool \(MB\): init=(.+?) overall=(.+?)$')
-    inference_std_pattern = re.compile(f'INFO: Running benchmark for at least {num_repetitions} iterations.*?\nINFO: .*? std=(\d+)', re.DOTALL)
+    inference_std_pattern = re.compile(r'std=(.+?) ')
 
     for line in output.split('\n'):
         # Match the initialization time
@@ -89,7 +89,7 @@ def plot(results_df, save_dir):
         n_groups = len(model_names)
         index = np.arange(n_groups)
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(5, 4))
         bar_width = 0.35
         opacity = 0.8
 
@@ -109,7 +109,7 @@ def plot(results_df, save_dir):
         if metric.startswith('Memory'):
             plt.ylabel(f'{metric} (MB)')
         else:
-            plt.ylabel(f'{metric} (ms)')
+            plt.ylabel(f'{metric} Time (ms)')
         if metric.endswith('Inference'):
             plt.title(F'TFlite: {metric} Time')
         else:
