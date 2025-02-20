@@ -117,10 +117,12 @@ def plot(results_df, save_dir):
         plt.xticks(index + bar_width / 2, model_names, rotation=45)
         plt.legend()
 
-        plt.tight_layout()
+
 
         # Save the plot as an image
-        plt.savefig(f'{save_dir}/{metric}.png')
+        # plt.subplots_adjust(left=0.15, right=0.95, bottom=0.25, top=0.95)
+        plt.tight_layout()
+        plt.savefig(f'{save_dir}/{metric}.png', format='png')
 
 
 if __name__ == "__main__":

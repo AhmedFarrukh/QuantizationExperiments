@@ -97,6 +97,9 @@ def plot(results_df, save_dir):
         # Save the plot as an image
         plt.savefig(f'{save_dir}/{metric}.png')
 
+        # plt.subplots_adjust(left=0.15, right=0.95, bottom=0.25, top=0.95)
+        # plt.savefig(f'{save_dir}/{metric}.pdf', format='pdf')
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

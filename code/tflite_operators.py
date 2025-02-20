@@ -55,7 +55,7 @@ def plot(orig_ops, quant_ops, output_name, model):
 
     # Plot the first horizontal bar chart
     plt.figure(figsize=(10, 6))
-    plt.barh(np.arange(len(orig_operations)), orig_durations, color="#1f77b4", label='Original')
+    plt.barh(np.arange(len(orig_operations)), orig_durations, alpha=0.8, label='Original')
 
     # Customize the first graph
     plt.title(f"TFlite-{model}-Original", loc='center')
@@ -76,15 +76,6 @@ def plot(orig_ops, quant_ops, output_name, model):
 
     plt.figure(figsize=(12, 8))
 
-    # Define manually distinct colors
-    color_palette = [
-        "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b",
-        "#e377c2", "#7f7f7f", "#bcbd22", "#17becf", "#aec7e8", "#ffbb78",
-        "#98df8a", "#ff9896", "#c5b0d5", "#c49c94", "#f7b6d2", "#c7c7c7",
-        "#dbdb8d", "#9edae5"
-    ]
-    color_index = 0
-
     quant_ops_plotted = set()
 
     # Use matching dictionary to stack equivalent operators
@@ -96,11 +87,10 @@ def plot(orig_ops, quant_ops, output_name, model):
                     op_idx,  # Specify the index for this operation
                     quant_ops[eq_op]["duration"],  # Use the duration value directly
                     left=stack_durations[op_idx],  # Use the existing baseline for stacking
-                    color=color_palette[color_index % len(color_palette)],  # Assign unique color
+                    alpha = 0.8,   
                     label=eq_op
                 )
                 stack_durations[op_idx] += quant_ops[eq_op]["duration"]  # Update baseline for this row
-                color_index += 1  # Increment color index
                 quant_ops_plotted.add(eq_op)
     
     if set(quant_ops) - quant_ops_plotted:
