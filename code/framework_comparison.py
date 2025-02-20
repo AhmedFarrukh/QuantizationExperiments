@@ -12,8 +12,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--tflite_dir', help='The directory where the TFlite models\' results are saved', required=True)
     parser.add_argument('--onnx_dir', help='The directory where the ONNX models\' results are saved', required=True)
-    parser.add_argument('--pytorch_dir', help='The directory where the PyTorch models\' results are saved', required=True)
-    parser.add_argument('--num_repetitions', type=int, help='The number of times each model was profiled', required = True, type=int)
+    # parser.add_argument('--pytorch_dir', help='The directory where the PyTorch models\' results are saved', required=True)
+    parser.add_argument('--num_repetitions', type=int, help='The number of times each model was profiled', required = True)
     parser.add_argument('--save_dir', help='The directory where the plots should be saved', required = True)
 
     args = parser.parse_args()
@@ -23,7 +23,7 @@ if __name__ == "__main__":
 
     tflite_df = extract_tflite_results(args.tflite_dir, args.num_repetitions)
     onnx_df = extract_onnx_results(args.onnx_dir, args.num_repetitions)
-    pytorch_df = extract_pytorch_results(args.pytorch_dir, args.num_repetitions)
+    # pytorch_df = extract_pytorch_results(args.pytorch_dir, args.num_repetitions)
 
     tflite_orig = tflite_df.loc[model_names, 'Avg Inference'].values
     tflite_quant = tflite_df.loc[[model + "_quant" for model in model_names], 'Avg Inference'].values
@@ -31,8 +31,8 @@ if __name__ == "__main__":
     onnx_orig = onnx_df.loc[model_names, 'model_run'].values
     onnx_quant = onnx_df.loc[[model + "_quant" for model in model_names], 'model_run'].values
     
-    pytorch_orig = pytorch_df.loc[model_names, "CPU time total"].values
-    pytorch_quant = pytorch_df.loc[[model + "_quant" for model in model_names], "CPU time total"].values
+    # pytorch_orig = pytorch_df.loc[model_names, "CPU time total"].values
+    # pytorch_quant = pytorch_df.loc[[model + "_quant" for model in model_names], "CPU time total"].values
 
     #Graph of Original Inference Times
     n_groups = len(model_names)
@@ -42,17 +42,17 @@ if __name__ == "__main__":
     bar_width = 0.25
     opacity = 0.8
 
-    rects1 = plt.bar(index - bar_width, tflite_orig, bar_width,
+    rects1 = plt.bar(index - 0.5*bar_width, tflite_orig, bar_width,
                     alpha=opacity,
                     label='TFlite')
 
-    rects2 = plt.bar(index, onnx_orig, bar_width,
+    rects2 = plt.bar(index+0.5*bar_width, onnx_orig, bar_width,
                     alpha=opacity,
                     label='ONNX')
 
-    rects3 = plt.bar(index + bar_width, pytorch_orig, bar_width,
-                    alpha=opacity,
-                    label='PyTorch')
+    # rects3 = plt.bar(index + bar_width, pytorch_orig, bar_width,
+    #                 alpha=opacity,
+    #                 label='PyTorch')
 
     plt.xlabel('Model')
     plt.ylabel(f'Inference Time (ms)')
@@ -69,17 +69,17 @@ if __name__ == "__main__":
     bar_width = 0.25
     opacity = 0.8
 
-    rects1 = plt.bar(index - bar_width, tflite_quant, bar_width,
+    rects1 = plt.bar(index - 0.5*bar_width, tflite_quant, bar_width,
                     alpha=opacity,
                     label='TFlite')
 
-    rects2 = plt.bar(index, onnx_quant, bar_width,
+    rects2 = plt.bar(index + 0.5*bar_width, onnx_quant, bar_width,
                     alpha=opacity,
                     label='ONNX')
 
-    rects3 = plt.bar(index + bar_width, pytorch_quant, bar_width,
-                    alpha=opacity,
-                    label='PyTorch')
+    # rects3 = plt.bar(index + bar_width, pytorch_quant, bar_width,
+    #                 alpha=opacity,
+    #                 label='PyTorch')
 
     plt.xlabel('Model')
     plt.ylabel(f'Inference Time (ms)')

@@ -1,0 +1,98 @@
+INFO: STARTING!
+INFO: Log parameter values verbosely: [0]
+INFO: Min num runs: [10]
+INFO: Num threads: [1]
+INFO: Graph: [/home/cc/tflite_models/VGG16.tflite]
+INFO: Signature to run: []
+INFO: Enable op profiling: [1]
+INFO: #threads used for CPU inference: [1]
+INFO: Loaded model /home/cc/tflite_models/VGG16.tflite
+INFO: The input model file size (MB): 553.44
+INFO: Initialized session in 375.326ms.
+INFO: Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+INFO: count=2 first=369810 curr=370210 min=369810 max=370210 avg=370010 std=200 p5=369810 median=370210 p95=370210
+
+INFO: Running benchmark for at least 10 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+INFO: count=10 first=370078 curr=373380 min=370074 max=373380 avg=372195 std=1211 p5=370074 median=372945 p95=373380
+
+INFO: Inference timings in us: Init: 375326, First inference: 369810, Warmup (avg): 370010, Inference (avg): 372195
+INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+INFO: Memory footprint delta from the start of the tool (MB): init=1095.02 overall=1096.11
+INFO: Profiling Info for Benchmark Initialization:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	  333.889	  333.889	 95.503%	 95.503%	1080088.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	   15.723	   15.723	  4.497%	100.000%	 36396.000	        1	AllocateTensors/0
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	  333.889	  333.889	 95.503%	 95.503%	1080088.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	   15.723	   15.723	  4.497%	100.000%	 36396.000	        1	AllocateTensors/0
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	   333.889	    95.503%	    95.503%	1080088.125	        1
+	                         AllocateTensors	        1	    15.723	     4.497%	   100.000%	 36396.000	        1
+
+Timings (microseconds): count=1 curr=349612
+Memory (bytes): count=0
+2 nodes observed
+
+
+
+INFO: Operator-wise Profiling Info for Regular Benchmark Runs:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Convolution (NHWC, F32) IGEMM	    2.216	    2.214	  0.595%	  0.595%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:0
+	           Convolution (NHWC, F32) IGEMM	   38.090	   38.246	 10.277%	 10.871%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:1
+	                 Max Pooling (NHWC, F32)	    0.835	    0.835	  0.224%	 11.096%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):2
+	           Convolution (NHWC, F32) IGEMM	   19.140	   19.292	  5.184%	 16.279%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:3
+	           Convolution (NHWC, F32) IGEMM	   37.430	   37.608	 10.105%	 26.385%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:4
+	                 Max Pooling (NHWC, F32)	    0.338	    0.363	  0.098%	 26.482%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):5
+	           Convolution (NHWC, F32) IGEMM	   19.139	   19.153	  5.146%	 31.629%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:6
+	           Convolution (NHWC, F32) IGEMM	   41.083	   41.382	 11.119%	 42.748%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:7
+	           Convolution (NHWC, F32) IGEMM	   41.098	   41.402	 11.125%	 53.873%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:8
+	                 Max Pooling (NHWC, F32)	    0.173	    0.174	  0.047%	 53.919%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):9
+	           Convolution (NHWC, F32) IGEMM	   20.746	   20.900	  5.616%	 59.535%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:10
+	           Convolution (NHWC, F32) IGEMM	   41.991	   42.297	 11.365%	 70.900%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:11
+	           Convolution (NHWC, F32) IGEMM	   41.997	   42.160	 11.328%	 82.229%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:12
+	                 Max Pooling (NHWC, F32)	    0.096	    0.100	  0.027%	 82.255%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):13
+	           Convolution (NHWC, F32) IGEMM	   10.964	   10.975	  2.949%	 85.204%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:14
+	           Convolution (NHWC, F32) IGEMM	   10.943	   10.957	  2.944%	 88.148%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:15
+	           Convolution (NHWC, F32) IGEMM	   10.903	   11.053	  2.970%	 91.118%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:16
+	                 Max Pooling (NHWC, F32)	    0.035	    0.036	  0.010%	 91.128%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):17
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 91.128%	     0.000	        1	Delegate/Copy (NC, X32):18
+	          Fully Connected (NC, F32) GEMM	   27.370	   27.443	  7.374%	 98.502%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:19
+	          Fully Connected (NC, F32) GEMM	    4.365	    4.356	  1.170%	 99.672%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:20
+	          Fully Connected (NC, F32) GEMM	    1.089	    1.218	  0.327%	100.000%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:21
+	                       Softmax (NC, F32)	    0.001	    0.001	  0.000%	100.000%	     0.000	        1	Delegate/Softmax (NC, F32):22
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Convolution (NHWC, F32) IGEMM	   41.991	   42.297	 11.365%	 11.365%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:11
+	           Convolution (NHWC, F32) IGEMM	   41.997	   42.160	 11.328%	 22.693%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:12
+	           Convolution (NHWC, F32) IGEMM	   41.098	   41.402	 11.125%	 33.818%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:8
+	           Convolution (NHWC, F32) IGEMM	   41.083	   41.382	 11.119%	 44.937%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:7
+	           Convolution (NHWC, F32) IGEMM	   38.090	   38.246	 10.277%	 55.214%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:1
+	           Convolution (NHWC, F32) IGEMM	   37.430	   37.608	 10.105%	 65.319%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:4
+	          Fully Connected (NC, F32) GEMM	   27.370	   27.443	  7.374%	 72.693%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:19
+	           Convolution (NHWC, F32) IGEMM	   20.746	   20.900	  5.616%	 78.309%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:10
+	           Convolution (NHWC, F32) IGEMM	   19.140	   19.292	  5.184%	 83.492%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:3
+	           Convolution (NHWC, F32) IGEMM	   19.139	   19.153	  5.146%	 88.639%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:6
+
+Number of nodes executed: 23
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	           Convolution (NHWC, F32) IGEMM	       13	   337.632	    90.723%	    90.723%	     0.000	       13
+	          Fully Connected (NC, F32) GEMM	        3	    33.015	     8.871%	    99.595%	     0.000	        3
+	                 Max Pooling (NHWC, F32)	        5	     1.507	     0.405%	   100.000%	     0.000	        5
+	                       Softmax (NC, F32)	        1	     0.001	     0.000%	   100.000%	     0.000	        1
+	                          Copy (NC, X32)	        1	     0.000	     0.000%	   100.000%	     0.000	        1
+
+Timings (microseconds): count=10 first=370042 curr=373353 min=370042 max=373353 avg=372164 std=1213
+Memory (bytes): count=0
+23 nodes observed
+
+
+

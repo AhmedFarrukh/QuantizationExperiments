@@ -1,0 +1,116 @@
+INFO: STARTING!
+INFO: Log parameter values verbosely: [0]
+INFO: Min num runs: [10]
+INFO: Num threads: [1]
+INFO: Graph: [/home/cc/tflite_models/MobileNetV2_quant.tflite]
+INFO: Signature to run: []
+INFO: Enable op profiling: [1]
+INFO: #threads used for CPU inference: [1]
+INFO: Loaded model /home/cc/tflite_models/MobileNetV2_quant.tflite
+INFO: The input model file size (MB): 3.78888
+INFO: Initialized session in 40.342ms.
+INFO: Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+INFO: count=25 first=26490 curr=19099 min=19051 max=26490 avg=20187.1 std=2204 p5=19051 median=19066 p95=24002
+
+INFO: Running benchmark for at least 10 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+INFO: count=53 first=19159 curr=19063 min=19055 max=19159 avg=19075.9 std=22 p5=19061 median=19068 p95=19131
+
+INFO: Inference timings in us: Init: 40342, First inference: 26490, Warmup (avg): 20187.1, Inference (avg): 19075.9
+INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+INFO: Memory footprint delta from the start of the tool (MB): init=19.3438 overall=25.0508
+INFO: Profiling Info for Benchmark Initialization:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	   11.357	   11.357	 62.753%	 62.753%	  5628.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	    6.741	    6.741	 37.247%	100.000%	  9024.000	        1	AllocateTensors/0
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	   11.357	   11.357	 62.753%	 62.753%	  5628.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	    6.741	    6.741	 37.247%	100.000%	  9024.000	        1	AllocateTensors/0
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	    11.357	    62.753%	    62.753%	  5628.000	        1
+	                         AllocateTensors	        1	     6.741	    37.247%	   100.000%	  9024.000	        1
+
+Timings (microseconds): count=1 curr=18098
+Memory (bytes): count=0
+2 nodes observed
+
+
+
+INFO: Operator-wise Profiling Info for Regular Benchmark Runs:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                       Softmax (NC, F32)	    0.000	    0.000	  0.000%	  0.000%	     0.000	        1	Delegate/Softmax (NC, F32):7
+	Fully Connected (NC, QD8, F32, QC8W) GEMM	    0.069	    0.069	  0.362%	  0.362%	     0.000	        1	Delegate/Fully Connected (NC, QD8, F32, QC8W) GEMM:6
+	                  Convert (NC, F32, QD8)	    0.000	    0.000	  0.000%	  0.362%	     0.000	        1	Delegate/Convert (NC, F32, QD8):5
+	                          Mean (ND) Mean	    0.008	    0.008	  0.042%	  0.405%	     0.000	        1	Delegate/Mean (ND) Mean:4
+	                       DEPTHWISE_CONV_2D	    0.169	    0.169	  0.887%	  1.292%	     0.000	        1	[mobilenetv2_1.00_224/block_16_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_16_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_16_depthwise/depthwise]:63
+	                       DEPTHWISE_CONV_2D	    0.170	    0.170	  0.898%	  2.190%	     0.000	        1	[mobilenetv2_1.00_224/block_15_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_15_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_16_depthwise/depthwise;mobilenetv2_1.00_224/block_15_depthwise/depthwise]:59
+	                       DEPTHWISE_CONV_2D	    0.168	    0.169	  0.888%	  3.078%	     0.000	        1	[mobilenetv2_1.00_224/block_14_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_14_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_16_depthwise/depthwise;mobilenetv2_1.00_224/block_14_depthwise/depthwise]:55
+	                       DEPTHWISE_CONV_2D	    0.212	    0.212	  1.118%	  4.195%	     0.000	        1	[mobilenetv2_1.00_224/block_13_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_13_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_13_depthwise/depthwise]:52
+	                       DEPTHWISE_CONV_2D	    0.429	    0.429	  2.261%	  6.456%	     0.000	        1	[mobilenetv2_1.00_224/block_12_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_12_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_13_depthwise/depthwise;mobilenetv2_1.00_224/block_12_depthwise/depthwise]:47
+	                       DEPTHWISE_CONV_2D	    0.477	    0.436	  2.295%	  8.751%	     0.000	        1	[mobilenetv2_1.00_224/block_11_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_11_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_13_depthwise/depthwise;mobilenetv2_1.00_224/block_11_depthwise/depthwise]:43
+	                       DEPTHWISE_CONV_2D	    0.280	    0.280	  1.473%	 10.223%	     0.000	        1	[mobilenetv2_1.00_224/block_10_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_10_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_10_depthwise/depthwise]:40
+	                       DEPTHWISE_CONV_2D	    0.282	    0.283	  1.490%	 11.714%	     0.000	        1	[mobilenetv2_1.00_224/block_9_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_9_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_10_depthwise/depthwise;mobilenetv2_1.00_224/block_9_depthwise/depthwise]:36
+	                       DEPTHWISE_CONV_2D	    0.280	    0.281	  1.477%	 13.191%	     0.000	        1	[mobilenetv2_1.00_224/block_8_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_8_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_10_depthwise/depthwise;mobilenetv2_1.00_224/block_8_depthwise/depthwise]:32
+	           Convolution (NHWC, F32) IGEMM	    0.443	    0.443	  2.333%	 15.524%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:0
+	          Convolution (NHWC, F32) DWConv	    0.322	    0.323	  1.702%	 17.226%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:1
+	            Convolution (NHWC, F32) GEMM	    0.237	    0.240	  1.265%	 18.490%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:2
+	                  Convert (NC, F32, QD8)	    0.057	    0.009	  0.545%	 19.035%	     0.000	       11	Delegate/Convert (NC, F32, QD8):3
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    1.335	    0.382	 22.109%	 41.144%	     0.000	       11	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:4
+	          Convolution (NHWC, F32) DWConv	    0.255	    0.255	  1.342%	 42.486%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:5
+	                  Convert (NC, F32, QD8)	    0.086	    0.086	  0.455%	 42.941%	     0.000	        1	Delegate/Convert (NC, F32, QD8):6
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    0.260	    0.260	  1.371%	 44.312%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:7
+	                  Convert (NC, F32, QD8)	    0.021	    0.021	  0.111%	 44.423%	     0.000	        1	Delegate/Convert (NC, F32, QD8):8
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    0.592	    0.593	  3.121%	 47.544%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:9
+	                       DEPTHWISE_CONV_2D	    1.711	    1.717	  9.042%	 56.586%	     0.000	        1	[mobilenetv2_1.00_224/block_2_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_2_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_3_depthwise/depthwise;mobilenetv2_1.00_224/block_2_depthwise/depthwise]:8
+	                  Convert (NC, F32, QD8)	    0.147	    0.031	  2.438%	 59.025%	     0.000	       15	Delegate/Convert (NC, F32, QD8):0
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    0.362	    0.217	 17.110%	 76.135%	     0.000	       15	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:1
+	                 Binary Elementwise (ND)	    0.021	    0.006	  0.318%	 76.453%	     0.000	       10	Delegate/Binary Elementwise (ND):2
+	                  Constant Pad (ND, X32)	    0.154	    0.081	  1.286%	 77.738%	     0.000	        3	Delegate/Constant Pad (ND, X32):5
+	                       DEPTHWISE_CONV_2D	    0.778	    0.779	  4.104%	 81.843%	     0.000	        1	[mobilenetv2_1.00_224/block_3_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_3_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_3_depthwise/depthwise]:13
+	                  Convert (NC, F32, QD8)	    0.005	    0.003	  0.074%	 81.917%	     0.000	        5	Delegate/Convert (NC, F32, QD8):2
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    0.229	    0.345	  9.080%	 90.997%	     0.000	        5	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:3
+	                       DEPTHWISE_CONV_2D	    0.578	    0.579	  3.047%	 94.043%	     0.000	        1	[mobilenetv2_1.00_224/block_4_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_4_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_6_depthwise/depthwise;mobilenetv2_1.00_224/block_4_depthwise/depthwise]:16
+	                       DEPTHWISE_CONV_2D	    0.283	    0.283	  1.488%	 95.531%	     0.000	        1	[mobilenetv2_1.00_224/block_7_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_7_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_10_depthwise/depthwise;mobilenetv2_1.00_224/block_7_depthwise/depthwise]:28
+	                       DEPTHWISE_CONV_2D	    0.585	    0.581	  3.062%	 98.593%	     0.000	        1	[mobilenetv2_1.00_224/block_5_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_5_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_6_depthwise/depthwise;mobilenetv2_1.00_224/block_5_depthwise/depthwise]:20
+	                       DEPTHWISE_CONV_2D	    0.267	    0.267	  1.407%	100.000%	     0.000	        1	[mobilenetv2_1.00_224/block_6_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_6_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_6_depthwise/depthwise]:25
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                       DEPTHWISE_CONV_2D	    1.711	    1.717	  9.042%	  9.042%	     0.000	        1	[mobilenetv2_1.00_224/block_2_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_2_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_3_depthwise/depthwise;mobilenetv2_1.00_224/block_2_depthwise/depthwise]:8
+	                       DEPTHWISE_CONV_2D	    0.778	    0.779	  4.104%	 13.147%	     0.000	        1	[mobilenetv2_1.00_224/block_3_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_3_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_3_depthwise/depthwise]:13
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    0.592	    0.593	  3.121%	 16.268%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:9
+	                       DEPTHWISE_CONV_2D	    0.585	    0.581	  3.062%	 19.329%	     0.000	        1	[mobilenetv2_1.00_224/block_5_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_5_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_6_depthwise/depthwise;mobilenetv2_1.00_224/block_5_depthwise/depthwise]:20
+	                       DEPTHWISE_CONV_2D	    0.578	    0.579	  3.047%	 22.376%	     0.000	        1	[mobilenetv2_1.00_224/block_4_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_4_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_6_depthwise/depthwise;mobilenetv2_1.00_224/block_4_depthwise/depthwise]:16
+	           Convolution (NHWC, F32) IGEMM	    0.443	    0.443	  2.333%	 24.709%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:0
+	                       DEPTHWISE_CONV_2D	    0.477	    0.436	  2.295%	 27.004%	     0.000	        1	[mobilenetv2_1.00_224/block_11_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_11_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_13_depthwise/depthwise;mobilenetv2_1.00_224/block_11_depthwise/depthwise]:43
+	                       DEPTHWISE_CONV_2D	    0.429	    0.429	  2.261%	 29.264%	     0.000	        1	[mobilenetv2_1.00_224/block_12_depthwise_relu/Relu6;mobilenetv2_1.00_224/block_12_depthwise_BN/FusedBatchNormV3;mobilenetv2_1.00_224/block_13_depthwise/depthwise;mobilenetv2_1.00_224/block_12_depthwise/depthwise]:47
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    1.335	    0.382	 22.109%	 51.373%	     0.000	       11	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:4
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    0.229	    0.345	  9.080%	 60.453%	     0.000	        5	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:3
+
+Number of nodes executed: 35
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	        5	    10.023	    52.814%	    52.814%	     0.000	       33
+	                       DEPTHWISE_CONV_2D	       15	     6.628	    34.925%	    87.738%	     0.000	       15
+	                  Convert (NC, F32, QD8)	        6	     0.687	     3.620%	    91.358%	     0.000	       34
+	          Convolution (NHWC, F32) DWConv	        2	     0.577	     3.040%	    94.399%	     0.000	        2
+	           Convolution (NHWC, F32) IGEMM	        1	     0.443	     2.334%	    96.733%	     0.000	        1
+	                  Constant Pad (ND, X32)	        1	     0.244	     1.286%	    98.019%	     0.000	        3
+	            Convolution (NHWC, F32) GEMM	        1	     0.240	     1.265%	    99.283%	     0.000	        1
+	Fully Connected (NC, QD8, F32, QC8W) GEMM	        1	     0.068	     0.358%	    99.642%	     0.000	        1
+	                 Binary Elementwise (ND)	        1	     0.060	     0.316%	    99.958%	     0.000	       10
+	                          Mean (ND) Mean	        1	     0.008	     0.042%	   100.000%	     0.000	        1
+	                       Softmax (NC, F32)	        1	     0.000	     0.000%	   100.000%	     0.000	        1
+
+Timings (microseconds): count=53 first=19058 curr=18978 min=18971 max=19058 avg=18991.5 std=21
+Memory (bytes): count=0
+35 nodes observed
+
+
+

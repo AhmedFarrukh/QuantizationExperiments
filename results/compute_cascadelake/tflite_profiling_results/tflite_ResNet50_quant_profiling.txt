@@ -1,0 +1,224 @@
+INFO: STARTING!
+INFO: Log parameter values verbosely: [0]
+INFO: Min num runs: [10]
+INFO: Num threads: [1]
+INFO: Graph: [/home/cc/tflite_models/ResNet50_quant.tflite]
+INFO: Signature to run: []
+INFO: Enable op profiling: [1]
+INFO: #threads used for CPU inference: [1]
+INFO: Loaded model /home/cc/tflite_models/ResNet50_quant.tflite
+INFO: The input model file size (MB): 25.9688
+INFO: Initialized session in 92.719ms.
+INFO: Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+INFO: count=19 first=26394 curr=26426 min=26394 max=26490 avg=26435.7 std=28 p5=26394 median=26432 p95=26490
+
+INFO: Running benchmark for at least 10 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+INFO: count=38 first=26447 curr=26443 min=26360 max=26512 avg=26437.2 std=32 p5=26373 median=26443 p95=26489
+
+INFO: Inference timings in us: Init: 92719, First inference: 26394, Warmup (avg): 26435.7, Inference (avg): 26437.2
+INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+INFO: Memory footprint delta from the start of the tool (MB): init=102.223 overall=103.816
+INFO: Profiling Info for Benchmark Initialization:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	   40.224	   40.224	 65.434%	 65.434%	 48608.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	   21.249	   21.249	 34.566%	100.000%	 48836.000	        1	AllocateTensors/0
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	   40.224	   40.224	 65.434%	 65.434%	 48608.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	   21.249	   21.249	 34.566%	100.000%	 48836.000	        1	AllocateTensors/0
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	    40.224	    65.434%	    65.434%	 48608.000	        1
+	                         AllocateTensors	        1	    21.249	    34.566%	   100.000%	 48836.000	        1
+
+Timings (microseconds): count=1 curr=61473
+Memory (bytes): count=0
+2 nodes observed
+
+
+
+INFO: Operator-wise Profiling Info for Regular Benchmark Runs:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                  Constant Pad (ND, X32)	    0.639	    0.633	  2.403%	  2.403%	     0.000	        1	Delegate/Constant Pad (ND, X32):0
+	                 Convert (NC, F32, QDU8)	    0.060	    0.060	  0.228%	  2.631%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):1
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    2.023	    2.016	  7.661%	 10.293%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:2
+	                  Constant Pad (ND, X32)	    0.542	    0.544	  2.069%	 12.361%	     0.000	        1	Delegate/Constant Pad (ND, X32):3
+	                 Max Pooling (NHWC, F32)	    0.231	    0.232	  0.881%	 13.243%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):4
+	                 Convert (NC, F32, QDU8)	    0.077	    0.078	  0.295%	 13.537%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):5
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.285	    0.283	  1.076%	 14.614%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:6
+	                 Convert (NC, F32, QDU8)	    0.056	    0.055	  0.209%	 14.823%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):7
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.068	    0.068	  0.259%	 15.083%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:8
+	                 Convert (NC, F32, QDU8)	    0.029	    0.029	  0.110%	 15.193%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):9
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.352	    0.355	  1.348%	 16.540%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:10
+	                 Convert (NC, F32, QDU8)	    0.040	    0.040	  0.151%	 16.691%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):11
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.371	    0.377	  1.431%	 18.122%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:12
+	                 Binary Elementwise (ND)	    0.244	    0.246	  0.936%	 19.059%	     0.000	        1	Delegate/Binary Elementwise (ND):13
+	                  Unary Elementwise (NC)	    0.261	    0.248	  0.942%	 20.000%	     0.000	        1	Delegate/Unary Elementwise (NC):14
+	                 Convert (NC, F32, QDU8)	    0.291	    0.292	  1.111%	 21.111%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):15
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.245	    0.243	  0.925%	 22.036%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:16
+	                 Convert (NC, F32, QDU8)	    0.053	    0.052	  0.198%	 22.235%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):17
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.364	    0.358	  1.359%	 23.593%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:18
+	                 Convert (NC, F32, QDU8)	    0.046	    0.046	  0.174%	 23.767%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):19
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.426	    0.428	  1.626%	 25.393%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:20
+	                 Binary Elementwise (ND)	    0.284	    0.284	  1.081%	 26.474%	     0.000	        1	Delegate/Binary Elementwise (ND):21
+	                  Unary Elementwise (NC)	    0.447	    0.448	  1.701%	 28.175%	     0.000	        1	Delegate/Unary Elementwise (NC):22
+	                 Convert (NC, F32, QDU8)	    0.401	    0.404	  1.535%	 29.710%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):23
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.253	    0.252	  0.959%	 30.669%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:24
+	                 Convert (NC, F32, QDU8)	    0.062	    0.061	  0.230%	 30.899%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):25
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.353	    0.358	  1.361%	 32.259%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:26
+	                 Convert (NC, F32, QDU8)	    0.048	    0.048	  0.184%	 32.443%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):27
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.451	    0.449	  1.705%	 34.148%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:28
+	                 Binary Elementwise (ND)	    0.269	    0.273	  1.036%	 35.184%	     0.000	        1	Delegate/Binary Elementwise (ND):29
+	                  Unary Elementwise (NC)	    0.460	    0.458	  1.741%	 36.925%	     0.000	        1	Delegate/Unary Elementwise (NC):30
+	                 Convert (NC, F32, QDU8)	    0.415	    0.407	  1.548%	 38.473%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):31
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.408	    0.397	  1.507%	 39.979%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:32
+	                 Convert (NC, F32, QDU8)	    0.281	    0.283	  1.075%	 41.054%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):33
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.104	    0.105	  0.398%	 41.452%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:34
+	                 Convert (NC, F32, QDU8)	    0.010	    0.010	  0.038%	 41.490%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):35
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.312	    0.311	  1.183%	 42.674%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:36
+	                 Convert (NC, F32, QDU8)	    0.016	    0.017	  0.063%	 42.737%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):37
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.225	    0.225	  0.855%	 43.593%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:38
+	                 Binary Elementwise (ND)	    0.160	    0.160	  0.608%	 44.201%	     0.000	        1	Delegate/Binary Elementwise (ND):39
+	                  Unary Elementwise (NC)	    0.123	    0.122	  0.462%	 44.663%	     0.000	        1	Delegate/Unary Elementwise (NC):40
+	                 Convert (NC, F32, QDU8)	    0.144	    0.145	  0.552%	 45.216%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):41
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.169	    0.170	  0.647%	 45.863%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:42
+	                 Convert (NC, F32, QDU8)	    0.014	    0.015	  0.056%	 45.919%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):43
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.312	    0.312	  1.185%	 47.103%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:44
+	                 Convert (NC, F32, QDU8)	    0.015	    0.015	  0.056%	 47.159%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):45
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.235	    0.237	  0.900%	 48.060%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:46
+	                 Binary Elementwise (ND)	    0.142	    0.143	  0.542%	 48.602%	     0.000	        1	Delegate/Binary Elementwise (ND):47
+	                  Unary Elementwise (NC)	    0.221	    0.224	  0.852%	 49.454%	     0.000	        1	Delegate/Unary Elementwise (NC):48
+	                 Convert (NC, F32, QDU8)	    0.188	    0.189	  0.720%	 50.174%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):49
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.181	    0.183	  0.694%	 50.867%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:50
+	                 Convert (NC, F32, QDU8)	    0.019	    0.017	  0.065%	 50.932%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):51
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.310	    0.311	  1.183%	 52.115%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:52
+	                 Convert (NC, F32, QDU8)	    0.015	    0.015	  0.057%	 52.172%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):53
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.232	    0.237	  0.901%	 53.073%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:54
+	                 Binary Elementwise (ND)	    0.152	    0.146	  0.554%	 53.627%	     0.000	        1	Delegate/Binary Elementwise (ND):55
+	                  Unary Elementwise (NC)	    0.234	    0.232	  0.882%	 54.509%	     0.000	        1	Delegate/Unary Elementwise (NC):56
+	                 Convert (NC, F32, QDU8)	    0.200	    0.197	  0.748%	 55.258%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):57
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.177	    0.178	  0.675%	 55.932%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:58
+	                 Convert (NC, F32, QDU8)	    0.014	    0.015	  0.057%	 55.990%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):59
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.311	    0.312	  1.184%	 57.174%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:60
+	                 Convert (NC, F32, QDU8)	    0.014	    0.014	  0.053%	 57.227%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):61
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.231	    0.235	  0.894%	 58.121%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:62
+	                 Binary Elementwise (ND)	    0.145	    0.145	  0.550%	 58.671%	     0.000	        1	Delegate/Binary Elementwise (ND):63
+	                  Unary Elementwise (NC)	    0.227	    0.226	  0.859%	 59.530%	     0.000	        1	Delegate/Unary Elementwise (NC):64
+	                 Convert (NC, F32, QDU8)	    0.193	    0.193	  0.735%	 60.265%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):65
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.349	    0.347	  1.320%	 61.585%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:66
+	                 Convert (NC, F32, QDU8)	    0.133	    0.133	  0.505%	 62.090%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):67
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.087	    0.087	  0.332%	 62.423%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:68
+	                 Convert (NC, F32, QDU8)	    0.004	    0.004	  0.015%	 62.438%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):69
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.331	    0.331	  1.257%	 63.695%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:70
+	                 Convert (NC, F32, QDU8)	    0.007	    0.007	  0.027%	 63.722%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):71
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.190	    0.190	  0.723%	 64.444%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:72
+	                 Binary Elementwise (ND)	    0.065	    0.068	  0.259%	 64.704%	     0.000	        1	Delegate/Binary Elementwise (ND):73
+	                  Unary Elementwise (NC)	    0.056	    0.055	  0.210%	 64.914%	     0.000	        1	Delegate/Unary Elementwise (NC):74
+	                 Convert (NC, F32, QDU8)	    0.048	    0.049	  0.185%	 65.099%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):75
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.159	    0.157	  0.598%	 65.697%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:76
+	                 Convert (NC, F32, QDU8)	    0.007	    0.007	  0.028%	 65.725%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):77
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.346	    0.347	  1.318%	 67.043%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:78
+	                 Convert (NC, F32, QDU8)	    0.008	    0.009	  0.032%	 67.075%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):79
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.195	    0.198	  0.751%	 67.826%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:80
+	                 Binary Elementwise (ND)	    0.065	    0.063	  0.240%	 68.066%	     0.000	        1	Delegate/Binary Elementwise (ND):81
+	                  Unary Elementwise (NC)	    0.109	    0.107	  0.405%	 68.471%	     0.000	        1	Delegate/Unary Elementwise (NC):82
+	                 Convert (NC, F32, QDU8)	    0.062	    0.056	  0.213%	 68.684%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):83
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.158	    0.157	  0.598%	 69.282%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:84
+	                 Convert (NC, F32, QDU8)	    0.007	    0.006	  0.024%	 69.306%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):85
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.337	    0.334	  1.269%	 70.575%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:86
+	                 Convert (NC, F32, QDU8)	    0.007	    0.007	  0.028%	 70.603%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):87
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.208	    0.208	  0.790%	 71.393%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:88
+	                 Binary Elementwise (ND)	    0.078	    0.077	  0.294%	 71.687%	     0.000	        1	Delegate/Binary Elementwise (ND):89
+	                  Unary Elementwise (NC)	    0.118	    0.118	  0.447%	 72.134%	     0.000	        1	Delegate/Unary Elementwise (NC):90
+	                 Convert (NC, F32, QDU8)	    0.063	    0.063	  0.240%	 72.374%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):91
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.156	    0.155	  0.589%	 72.962%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:92
+	                 Convert (NC, F32, QDU8)	    0.007	    0.006	  0.024%	 72.987%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):93
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.341	    0.340	  1.292%	 74.279%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:94
+	                 Convert (NC, F32, QDU8)	    0.009	    0.009	  0.034%	 74.313%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):95
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.193	    0.195	  0.740%	 75.053%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:96
+	                 Binary Elementwise (ND)	    0.072	    0.073	  0.279%	 75.332%	     0.000	        1	Delegate/Binary Elementwise (ND):97
+	                  Unary Elementwise (NC)	    0.118	    0.115	  0.439%	 75.771%	     0.000	        1	Delegate/Unary Elementwise (NC):98
+	                 Convert (NC, F32, QDU8)	    0.062	    0.064	  0.242%	 76.013%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):99
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.155	    0.157	  0.596%	 76.608%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:100
+	                 Convert (NC, F32, QDU8)	    0.007	    0.007	  0.025%	 76.633%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):101
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.331	    0.332	  1.263%	 77.896%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:102
+	                 Convert (NC, F32, QDU8)	    0.007	    0.008	  0.029%	 77.925%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):103
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.203	    0.200	  0.758%	 78.683%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:104
+	                 Binary Elementwise (ND)	    0.069	    0.070	  0.265%	 78.948%	     0.000	        1	Delegate/Binary Elementwise (ND):105
+	                  Unary Elementwise (NC)	    0.112	    0.112	  0.427%	 79.375%	     0.000	        1	Delegate/Unary Elementwise (NC):106
+	                 Convert (NC, F32, QDU8)	    0.064	    0.064	  0.241%	 79.617%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):107
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.156	    0.157	  0.595%	 80.212%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:108
+	                 Convert (NC, F32, QDU8)	    0.007	    0.007	  0.025%	 80.237%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):109
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.331	    0.334	  1.270%	 81.507%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:110
+	                 Convert (NC, F32, QDU8)	    0.007	    0.007	  0.028%	 81.534%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):111
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.178	    0.178	  0.676%	 82.210%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:112
+	                 Binary Elementwise (ND)	    0.077	    0.077	  0.292%	 82.502%	     0.000	        1	Delegate/Binary Elementwise (ND):113
+	                  Unary Elementwise (NC)	    0.105	    0.106	  0.402%	 82.904%	     0.000	        1	Delegate/Unary Elementwise (NC):114
+	                 Convert (NC, F32, QDU8)	    0.066	    0.068	  0.259%	 83.163%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):115
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.603	    0.598	  2.274%	 85.437%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:116
+	                 Convert (NC, F32, QDU8)	    0.069	    0.073	  0.279%	 85.716%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):117
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.105	    0.106	  0.401%	 86.117%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:118
+	                 Convert (NC, F32, QDU8)	    0.002	    0.003	  0.010%	 86.126%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):119
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.642	    0.641	  2.436%	 88.563%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:120
+	                 Convert (NC, F32, QDU8)	    0.006	    0.007	  0.025%	 88.588%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):121
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.253	    0.257	  0.975%	 89.562%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:122
+	                 Binary Elementwise (ND)	    0.036	    0.037	  0.139%	 89.702%	     0.000	        1	Delegate/Binary Elementwise (ND):123
+	                  Unary Elementwise (NC)	    0.009	    0.009	  0.034%	 89.736%	     0.000	        1	Delegate/Unary Elementwise (NC):124
+	                 Convert (NC, F32, QDU8)	    0.013	    0.013	  0.048%	 89.784%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):125
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.256	    0.257	  0.975%	 90.759%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:126
+	                 Convert (NC, F32, QDU8)	    0.006	    0.006	  0.022%	 90.782%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):127
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.647	    0.646	  2.456%	 93.238%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:128
+	                 Convert (NC, F32, QDU8)	    0.006	    0.007	  0.025%	 93.263%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):129
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.267	    0.268	  1.018%	 94.281%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:130
+	                 Binary Elementwise (ND)	    0.031	    0.033	  0.125%	 94.406%	     0.000	        1	Delegate/Binary Elementwise (ND):131
+	                  Unary Elementwise (NC)	    0.051	    0.053	  0.200%	 94.606%	     0.000	        1	Delegate/Unary Elementwise (NC):132
+	                 Convert (NC, F32, QDU8)	    0.014	    0.015	  0.056%	 94.662%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):133
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.251	    0.254	  0.965%	 95.627%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:134
+	                 Convert (NC, F32, QDU8)	    0.007	    0.007	  0.028%	 95.655%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):135
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.647	    0.646	  2.454%	 98.109%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:136
+	                 Convert (NC, F32, QDU8)	    0.008	    0.007	  0.026%	 98.136%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):137
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.257	    0.259	  0.985%	 99.121%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:138
+	                 Binary Elementwise (ND)	    0.044	    0.045	  0.173%	 99.293%	     0.000	        1	Delegate/Binary Elementwise (ND):139
+	                  Unary Elementwise (NC)	    0.006	    0.006	  0.023%	 99.316%	     0.000	        1	Delegate/Unary Elementwise (NC):140
+	                          Mean (ND) Mean	    0.004	    0.004	  0.015%	 99.332%	     0.000	        1	Delegate/Mean (ND) Mean:141
+	                 Convert (NC, F32, QDU8)	    0.000	    0.000	  0.002%	 99.333%	     0.000	        1	Delegate/Convert (NC, F32, QDU8):142
+	Fully Connected (NC, QDU8, F32, QC8W) GEMM	    0.173	    0.174	  0.663%	 99.996%	     0.000	        1	Delegate/Fully Connected (NC, QDU8, F32, QC8W) GEMM:143
+	                       Softmax (NC, F32)	    0.001	    0.001	  0.004%	100.000%	     0.000	        1	Delegate/Softmax (NC, F32):144
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    2.023	    2.016	  7.661%	  7.661%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:2
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.647	    0.646	  2.456%	 10.117%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:128
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.647	    0.646	  2.454%	 12.571%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:136
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.642	    0.641	  2.436%	 15.008%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:120
+	                  Constant Pad (ND, X32)	    0.639	    0.633	  2.403%	 17.411%	     0.000	        1	Delegate/Constant Pad (ND, X32):0
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.603	    0.598	  2.274%	 19.685%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:116
+	                  Constant Pad (ND, X32)	    0.542	    0.544	  2.069%	 21.753%	     0.000	        1	Delegate/Constant Pad (ND, X32):3
+	                  Unary Elementwise (NC)	    0.460	    0.458	  1.741%	 23.495%	     0.000	        1	Delegate/Unary Elementwise (NC):30
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	    0.451	    0.449	  1.705%	 25.199%	     0.000	        1	Delegate/Convolution (NHWC, QDU8, F32, QC8W) IGEMM:28
+	                  Unary Elementwise (NC)	    0.447	    0.448	  1.701%	 26.900%	     0.000	        1	Delegate/Unary Elementwise (NC):22
+
+Number of nodes executed: 145
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	Convolution (NHWC, QDU8, F32, QC8W) IGEMM	       53	    16.709	    63.661%	    63.661%	     0.000	       53
+	                 Convert (NC, F32, QDU8)	       54	     3.389	    12.912%	    76.573%	     0.000	       54
+	                  Unary Elementwise (NC)	       16	     2.632	    10.028%	    86.600%	     0.000	       16
+	                 Binary Elementwise (ND)	       16	     1.932	     7.361%	    93.961%	     0.000	       16
+	                  Constant Pad (ND, X32)	        2	     1.176	     4.481%	    98.442%	     0.000	        2
+	                 Max Pooling (NHWC, F32)	        1	     0.231	     0.880%	    99.322%	     0.000	        1
+	Fully Connected (NC, QDU8, F32, QC8W) GEMM	        1	     0.174	     0.663%	    99.985%	     0.000	        1
+	                          Mean (ND) Mean	        1	     0.004	     0.015%	   100.000%	     0.000	        1
+	                       Softmax (NC, F32)	        1	     0.000	     0.000%	   100.000%	     0.000	        1
+
+Timings (microseconds): count=38 first=26324 curr=26331 min=26237 max=26395 avg=26318.8 std=33
+Memory (bytes): count=0
+145 nodes observed
+
+
+

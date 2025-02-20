@@ -1,0 +1,203 @@
+INFO: STARTING!
+INFO: Log parameter values verbosely: [0]
+INFO: Min num runs: [10]
+INFO: Num threads: [1]
+INFO: Graph: [/home/cc/tflite_models/InceptionV3.tflite]
+INFO: Signature to run: []
+INFO: Enable op profiling: [1]
+INFO: #threads used for CPU inference: [1]
+INFO: Loaded model /home/cc/tflite_models/InceptionV3.tflite
+INFO: The input model file size (MB): 95.3249
+INFO: Initialized session in 143.523ms.
+INFO: Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+INFO: count=5 first=102959 curr=103862 min=102959 max=103862 avg=103653 std=348 p5=102959 median=103835 p95=103862
+
+INFO: Running benchmark for at least 10 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+INFO: count=10 first=103835 curr=103903 min=103831 max=104413 avg=103953 std=176 p5=103831 median=103901 p95=104413
+
+INFO: Inference timings in us: Init: 143523, First inference: 102959, Warmup (avg): 103653, Inference (avg): 103953
+INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+INFO: Memory footprint delta from the start of the tool (MB): init=201.93 overall=204.051
+INFO: Profiling Info for Benchmark Initialization:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	  109.579	  109.579	 92.689%	 92.689%	181740.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	    8.643	    8.643	  7.311%	100.000%	 15588.000	        1	AllocateTensors/0
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	  109.579	  109.579	 92.689%	 92.689%	181740.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	    8.643	    8.643	  7.311%	100.000%	 15588.000	        1	AllocateTensors/0
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	   109.579	    92.689%	    92.689%	181740.000	        1
+	                         AllocateTensors	        1	     8.643	     7.311%	   100.000%	 15588.000	        1
+
+Timings (microseconds): count=1 curr=118222
+Memory (bytes): count=0
+2 nodes observed
+
+
+
+INFO: Operator-wise Profiling Info for Regular Benchmark Runs:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Convolution (NHWC, F32) IGEMM	    0.551	    0.555	  0.535%	  0.535%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:0
+	           Convolution (NHWC, F32) IGEMM	    3.059	    3.062	  2.950%	  3.485%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:1
+	           Convolution (NHWC, F32) IGEMM	    6.028	    6.036	  5.814%	  9.299%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:2
+	                 Max Pooling (NHWC, F32)	    0.382	    0.386	  0.372%	  9.671%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):3
+	            Convolution (NHWC, F32) GEMM	    0.398	    0.396	  0.381%	 10.052%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:4
+	           Convolution (NHWC, F32) IGEMM	   10.144	   10.177	  9.803%	 19.855%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:5
+	                 Max Pooling (NHWC, F32)	    0.202	    0.198	  0.190%	 20.045%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):6
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.150	    0.152	  0.147%	 20.192%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:7
+	            Convolution (NHWC, F32) GEMM	    0.096	    0.094	  0.090%	 20.283%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:8
+	            Convolution (NHWC, F32) GEMM	    0.182	    0.184	  0.177%	 20.460%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:9
+	            Convolution (NHWC, F32) GEMM	    0.178	    0.178	  0.172%	 20.632%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:10
+	           Convolution (NHWC, F32) IGEMM	    1.368	    1.372	  1.322%	 21.953%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:11
+	            Convolution (NHWC, F32) GEMM	    0.183	    0.182	  0.175%	 22.129%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:12
+	           Convolution (NHWC, F32) IGEMM	    0.993	    0.993	  0.956%	 23.085%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:13
+	           Convolution (NHWC, F32) IGEMM	    1.495	    1.501	  1.446%	 24.531%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:14
+	                          Copy (NC, X32)	    0.117	    0.116	  0.111%	 24.642%	     0.000	        1	Delegate/Copy (NC, X32):15
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.194	    0.196	  0.189%	 24.831%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:16
+	            Convolution (NHWC, F32) GEMM	    0.236	    0.238	  0.229%	 25.060%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:17
+	            Convolution (NHWC, F32) GEMM	    0.236	    0.237	  0.228%	 25.288%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:18
+	            Convolution (NHWC, F32) GEMM	    0.234	    0.234	  0.226%	 25.514%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:19
+	           Convolution (NHWC, F32) IGEMM	    1.365	    1.363	  1.313%	 26.827%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:20
+	            Convolution (NHWC, F32) GEMM	    0.235	    0.235	  0.226%	 27.054%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:21
+	           Convolution (NHWC, F32) IGEMM	    0.993	    0.997	  0.961%	 28.014%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:22
+	           Convolution (NHWC, F32) IGEMM	    1.491	    1.499	  1.444%	 29.459%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:23
+	                          Copy (NC, X32)	    0.119	    0.121	  0.117%	 29.576%	     0.000	        1	Delegate/Copy (NC, X32):24
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.219	    0.219	  0.211%	 29.787%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:25
+	            Convolution (NHWC, F32) GEMM	    0.264	    0.264	  0.254%	 30.041%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:26
+	            Convolution (NHWC, F32) GEMM	    0.264	    0.264	  0.254%	 30.295%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:27
+	            Convolution (NHWC, F32) GEMM	    0.262	    0.262	  0.253%	 30.548%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:28
+	           Convolution (NHWC, F32) IGEMM	    1.361	    1.368	  1.318%	 31.866%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:29
+	            Convolution (NHWC, F32) GEMM	    0.263	    0.265	  0.255%	 32.121%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:30
+	           Convolution (NHWC, F32) IGEMM	    0.991	    0.999	  0.962%	 33.084%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:31
+	           Convolution (NHWC, F32) IGEMM	    1.493	    1.493	  1.438%	 34.521%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:32
+	                          Copy (NC, X32)	    0.121	    0.121	  0.116%	 34.638%	     0.000	        1	Delegate/Copy (NC, X32):33
+	           Convolution (NHWC, F32) IGEMM	    6.770	    6.782	  6.533%	 41.171%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:34
+	            Convolution (NHWC, F32) GEMM	    0.265	    0.267	  0.257%	 41.428%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:35
+	           Convolution (NHWC, F32) IGEMM	    0.992	    0.993	  0.956%	 42.384%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:36
+	           Convolution (NHWC, F32) IGEMM	    0.380	    0.383	  0.369%	 42.753%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:37
+	                 Max Pooling (NHWC, F32)	    0.065	    0.065	  0.063%	 42.815%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):38
+	                          Copy (NC, X32)	    0.071	    0.071	  0.068%	 42.884%	     0.000	        1	Delegate/Copy (NC, X32):39
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.142	    0.142	  0.136%	 43.020%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:40
+	            Convolution (NHWC, F32) GEMM	    0.515	    0.518	  0.499%	 43.520%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:41
+	            Convolution (NHWC, F32) GEMM	    0.525	    0.529	  0.509%	 44.029%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:42
+	            Convolution (NHWC, F32) GEMM	    0.344	    0.351	  0.338%	 44.367%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:43
+	           Convolution (NHWC, F32) IGEMM	    0.519	    0.524	  0.505%	 44.872%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:44
+	           Convolution (NHWC, F32) IGEMM	    0.859	    0.857	  0.825%	 45.697%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:45
+	            Convolution (NHWC, F32) GEMM	    0.345	    0.345	  0.332%	 46.029%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:46
+	           Convolution (NHWC, F32) IGEMM	    0.529	    0.531	  0.512%	 46.541%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:47
+	           Convolution (NHWC, F32) IGEMM	    0.517	    0.520	  0.501%	 47.042%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:48
+	           Convolution (NHWC, F32) IGEMM	    0.526	    0.526	  0.507%	 47.549%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:49
+	           Convolution (NHWC, F32) IGEMM	    0.808	    0.809	  0.780%	 48.328%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:50
+	                          Copy (NC, X32)	    0.065	    0.065	  0.062%	 48.391%	     0.000	        1	Delegate/Copy (NC, X32):51
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.142	    0.144	  0.139%	 48.530%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:52
+	            Convolution (NHWC, F32) GEMM	    0.559	    0.562	  0.541%	 49.071%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:53
+	            Convolution (NHWC, F32) GEMM	    0.519	    0.524	  0.505%	 49.575%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:54
+	            Convolution (NHWC, F32) GEMM	    0.432	    0.432	  0.416%	 49.992%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:55
+	           Convolution (NHWC, F32) IGEMM	    0.812	    0.815	  0.785%	 50.777%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:56
+	           Convolution (NHWC, F32) IGEMM	    1.038	    1.042	  1.004%	 51.781%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:57
+	            Convolution (NHWC, F32) GEMM	    0.431	    0.430	  0.415%	 52.195%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:58
+	           Convolution (NHWC, F32) IGEMM	    0.853	    0.852	  0.821%	 53.016%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:59
+	           Convolution (NHWC, F32) IGEMM	    0.822	    0.821	  0.791%	 53.807%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:60
+	           Convolution (NHWC, F32) IGEMM	    0.869	    0.874	  0.842%	 54.650%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:61
+	           Convolution (NHWC, F32) IGEMM	    1.082	    1.084	  1.044%	 55.694%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:62
+	                          Copy (NC, X32)	    0.066	    0.066	  0.063%	 55.758%	     0.000	        1	Delegate/Copy (NC, X32):63
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.141	    0.141	  0.136%	 55.894%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:64
+	            Convolution (NHWC, F32) GEMM	    0.516	    0.518	  0.499%	 56.393%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:65
+	            Convolution (NHWC, F32) GEMM	    0.527	    0.525	  0.506%	 56.899%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:66
+	            Convolution (NHWC, F32) GEMM	    0.435	    0.437	  0.421%	 57.320%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:67
+	           Convolution (NHWC, F32) IGEMM	    0.812	    0.813	  0.783%	 58.103%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:68
+	           Convolution (NHWC, F32) IGEMM	    1.053	    1.058	  1.020%	 59.123%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:69
+	            Convolution (NHWC, F32) GEMM	    0.428	    0.430	  0.414%	 59.537%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:70
+	           Convolution (NHWC, F32) IGEMM	    0.820	    0.824	  0.793%	 60.330%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:71
+	           Convolution (NHWC, F32) IGEMM	    0.811	    0.807	  0.777%	 61.107%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:72
+	           Convolution (NHWC, F32) IGEMM	    0.874	    0.874	  0.842%	 61.948%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:73
+	           Convolution (NHWC, F32) IGEMM	    1.040	    1.048	  1.009%	 62.958%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:74
+	                          Copy (NC, X32)	    0.066	    0.066	  0.064%	 63.021%	     0.000	        1	Delegate/Copy (NC, X32):75
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.141	    0.141	  0.136%	 63.158%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:76
+	            Convolution (NHWC, F32) GEMM	    0.519	    0.517	  0.498%	 63.656%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:77
+	            Convolution (NHWC, F32) GEMM	    0.522	    0.520	  0.501%	 64.157%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:78
+	            Convolution (NHWC, F32) GEMM	    0.531	    0.522	  0.503%	 64.660%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:79
+	           Convolution (NHWC, F32) IGEMM	    1.345	    1.339	  1.290%	 65.950%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:80
+	           Convolution (NHWC, F32) IGEMM	    1.425	    1.430	  1.377%	 67.328%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:81
+	            Convolution (NHWC, F32) GEMM	    0.520	    0.523	  0.504%	 67.831%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:82
+	           Convolution (NHWC, F32) IGEMM	    1.453	    1.445	  1.392%	 69.224%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:83
+	           Convolution (NHWC, F32) IGEMM	    1.350	    1.354	  1.304%	 70.528%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:84
+	           Convolution (NHWC, F32) IGEMM	    1.465	    1.475	  1.420%	 71.948%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:85
+	           Convolution (NHWC, F32) IGEMM	    1.317	    1.316	  1.267%	 73.216%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:86
+	                          Copy (NC, X32)	    0.067	    0.066	  0.064%	 73.279%	     0.000	        1	Delegate/Copy (NC, X32):87
+	            Convolution (NHWC, F32) GEMM	    0.513	    0.518	  0.499%	 73.778%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:88
+	           Convolution (NHWC, F32) IGEMM	    1.049	    1.048	  1.009%	 74.787%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:89
+	            Convolution (NHWC, F32) GEMM	    0.516	    0.516	  0.497%	 75.284%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:90
+	           Convolution (NHWC, F32) IGEMM	    1.433	    1.409	  1.357%	 76.641%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:91
+	           Convolution (NHWC, F32) IGEMM	    1.482	    1.481	  1.427%	 78.068%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:92
+	           Convolution (NHWC, F32) IGEMM	    0.580	    0.575	  0.554%	 78.622%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:93
+	                 Max Pooling (NHWC, F32)	    0.042	    0.042	  0.041%	 78.663%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):94
+	                          Copy (NC, X32)	    0.017	    0.017	  0.016%	 78.679%	     0.000	        1	Delegate/Copy (NC, X32):95
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.054	    0.054	  0.052%	 78.732%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:96
+	            Convolution (NHWC, F32) GEMM	    0.331	    0.332	  0.320%	 79.052%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:97
+	            Convolution (NHWC, F32) GEMM	    0.720	    0.717	  0.691%	 79.742%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:98
+	            Convolution (NHWC, F32) GEMM	    0.916	    0.918	  0.884%	 80.626%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:99
+	           Convolution (NHWC, F32) IGEMM	    0.813	    0.816	  0.786%	 81.412%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:100
+	           Convolution (NHWC, F32) IGEMM	    0.815	    0.825	  0.794%	 82.206%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:101
+	                          Copy (NC, X32)	    0.015	    0.015	  0.014%	 82.221%	     0.000	        1	Delegate/Copy (NC, X32):102
+	            Convolution (NHWC, F32) GEMM	    1.079	    1.084	  1.044%	 83.265%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:103
+	           Convolution (NHWC, F32) IGEMM	    3.107	    3.109	  2.995%	 86.260%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:104
+	           Convolution (NHWC, F32) IGEMM	    0.834	    0.830	  0.800%	 87.060%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:105
+	           Convolution (NHWC, F32) IGEMM	    0.826	    0.812	  0.782%	 87.842%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:106
+	                          Copy (NC, X32)	    0.024	    0.024	  0.023%	 87.865%	     0.000	        1	Delegate/Copy (NC, X32):107
+	                          Copy (NC, X32)	    0.049	    0.048	  0.046%	 87.911%	     0.000	        1	Delegate/Copy (NC, X32):108
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	    0.103	    0.102	  0.099%	 88.009%	     0.000	        1	Delegate/Average Pooling (NHWC, F32) Pixelwise Average Pooling:109
+	            Convolution (NHWC, F32) GEMM	    0.713	    0.713	  0.687%	 88.696%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:110
+	            Convolution (NHWC, F32) GEMM	    1.262	    1.263	  1.217%	 89.913%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:111
+	            Convolution (NHWC, F32) GEMM	    1.516	    1.521	  1.465%	 91.378%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:112
+	           Convolution (NHWC, F32) IGEMM	    0.811	    0.809	  0.779%	 92.157%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:113
+	           Convolution (NHWC, F32) IGEMM	    0.831	    0.829	  0.798%	 92.955%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:114
+	                          Copy (NC, X32)	    0.016	    0.016	  0.015%	 92.970%	     0.000	        1	Delegate/Copy (NC, X32):115
+	            Convolution (NHWC, F32) GEMM	    1.779	    1.778	  1.713%	 94.683%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:116
+	           Convolution (NHWC, F32) IGEMM	    3.105	    3.096	  2.983%	 97.666%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:117
+	           Convolution (NHWC, F32) IGEMM	    0.833	    0.836	  0.805%	 98.470%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:118
+	           Convolution (NHWC, F32) IGEMM	    0.832	    0.830	  0.800%	 99.270%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:119
+	                          Copy (NC, X32)	    0.018	    0.019	  0.018%	 99.288%	     0.000	        1	Delegate/Copy (NC, X32):120
+	                          Copy (NC, X32)	    0.047	    0.045	  0.044%	 99.332%	     0.000	        1	Delegate/Copy (NC, X32):121
+	                          Mean (ND) Mean	    0.006	    0.006	  0.006%	 99.338%	     0.000	        1	Delegate/Mean (ND) Mean:122
+	          Fully Connected (NC, F32) GEMM	    0.686	    0.686	  0.661%	 99.999%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:123
+	                       Softmax (NC, F32)	    0.001	    0.001	  0.001%	100.000%	     0.000	        1	Delegate/Softmax (NC, F32):124
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Convolution (NHWC, F32) IGEMM	   10.144	   10.177	  9.803%	  9.803%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:5
+	           Convolution (NHWC, F32) IGEMM	    6.770	    6.782	  6.533%	 16.336%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:34
+	           Convolution (NHWC, F32) IGEMM	    6.028	    6.036	  5.814%	 22.151%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:2
+	           Convolution (NHWC, F32) IGEMM	    3.107	    3.109	  2.995%	 25.146%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:104
+	           Convolution (NHWC, F32) IGEMM	    3.105	    3.096	  2.983%	 28.129%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:117
+	           Convolution (NHWC, F32) IGEMM	    3.059	    3.062	  2.950%	 31.078%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:1
+	            Convolution (NHWC, F32) GEMM	    1.779	    1.778	  1.713%	 32.791%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:116
+	            Convolution (NHWC, F32) GEMM	    1.516	    1.521	  1.465%	 34.256%	     0.000	        1	Delegate/Convolution (NHWC, F32) GEMM:112
+	           Convolution (NHWC, F32) IGEMM	    1.495	    1.501	  1.446%	 35.702%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:14
+	           Convolution (NHWC, F32) IGEMM	    1.491	    1.499	  1.444%	 37.147%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:23
+
+Number of nodes executed: 125
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	           Convolution (NHWC, F32) IGEMM	       54	    79.892	    76.998%	    76.998%	     0.000	       54
+	            Convolution (NHWC, F32) GEMM	       40	    20.327	    19.591%	    96.588%	     0.000	       40
+	Average Pooling (NHWC, F32) Pixelwise Average Pooling	        9	     1.289	     1.242%	    97.831%	     0.000	        9
+	                          Copy (NC, X32)	       15	     0.868	     0.837%	    98.667%	     0.000	       15
+	                 Max Pooling (NHWC, F32)	        4	     0.690	     0.665%	    99.332%	     0.000	        4
+	          Fully Connected (NC, F32) GEMM	        1	     0.686	     0.661%	    99.993%	     0.000	        1
+	                          Mean (ND) Mean	        1	     0.006	     0.006%	    99.999%	     0.000	        1
+	                       Softmax (NC, F32)	        1	     0.001	     0.001%	   100.000%	     0.000	        1
+
+Timings (microseconds): count=10 first=103681 curr=103765 min=103681 max=104279 avg=103811 std=177
+Memory (bytes): count=0
+125 nodes observed
+
+
+

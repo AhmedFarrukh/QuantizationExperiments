@@ -11,12 +11,20 @@ git clone https://github.com/AhmedFarrukh/QuantizationExperiments.git
 ```
 Then open the `QuantizationExperiments/notebooks` directory and follow along the instructions in the notebooks.
 
-<!-- 
 ## Reproduce plots
 To reproduce the plots, you can run the following commands using the sample results available in the `results` directory. To reproduce the plots with new results, replace the results' directories in the following commands. 
 
--->
+```
+python code/result1_frameworks.py --model ResNet50 --tflite_result=results/compute_cascadelake/tflite_profiling_results --onnx_result=results/compute_cascadelake/onnxruntime_profiling_results --num_repetitions=10 --output=.
+```
 
+```
+python code/result2_hardware.py --model ResNet50 --tflite_result=results --num_repetitions=10 --output=.  
+```
+
+```
+python code/result3_models.py --tflite_result=results/compute_cascadelake/tflite_profiling_results --onnx_result=results/compute_cascadelake/onnxruntime_profiling_results --num_repetitions=10 --output=.
+```
 
 
 
