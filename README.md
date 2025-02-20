@@ -1,5 +1,5 @@
 # Benchmarking Inference Speedup due to Quantization
-In our experiments, we tested the effect of Post-Training Dynamic Range Quantization across frameworks, hardware and models. The experiments were conducted using [Chameleon](https://chameleoncloud.org/), an open testbed that provides access to different hardware environments. 
+In our experiments, we tested the effect of Post-Training Dynamic Range Quantization across different models, frameworks and hardware. The experiments were conducted using [Chameleon](https://chameleoncloud.org/), an open testbed that provides access to different hardware environments. 
 
 This repository contains notebooks for two main tasks: model quantization and inference time measurement. For each of these tasks, we provide notebooks implemented in three popular machine learning frameworks: ONNX, TFLite, and PyTorch. On PyTorch, convolution operators could not be quantized using Dynamic Range Quantization, so the results were not included in the findings. To test on different hardware, change the `NODE_TYPE` in the notebook. 
 
