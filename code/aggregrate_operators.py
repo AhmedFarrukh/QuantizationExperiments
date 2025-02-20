@@ -1,9 +1,10 @@
+from collections import defaultdict
 def aggregate_convolution(framework, orig_ops, quant_ops, model):
     
     if framework not in ['onnx', 'tflite']:
         raise NotImplemented
 
-    conv_operators = dict()
+    conv_operators = defaultdict(int)
 
     if model == "ResNet50":
         if framework == 'onnx':
