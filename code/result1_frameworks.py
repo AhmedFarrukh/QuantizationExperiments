@@ -24,34 +24,80 @@ def main():
     onnx_orig_ops = get_onnx_operators(args.onnx_result + f'/onnx_{args.model}_profiling', n = args.num_repetitions)
     onnx_quant_ops = get_onnx_operators(args.onnx_result + f'/onnx_{args.model}_quant_profiling', n = args.num_repetitions)
     tflite_df = extract_tflite_results(args.tflite_result, args.num_repetitions)
-    onnx_df = extract_onnx_results(args.onnx_result, n = args.num_repetitions)
+    onnx_df = extract_onnx_results(args.onnx_result, args.num_repetitions)
 
     frameworks = ['TFlite', 'ONNX']
-    colors = ["#00cd63", "#339fff", "#f7b300"]
 
     #Part 1: Comapring Inference Times
     #Load inference times for the given model
     tflite_orig = tflite_df.loc[args.model, 'Avg Inference']
+    tflite_orig_error = tflite_df.loc[args.model, 'Avg Inference STD']
     tflite_quant = tflite_df.loc[args.model + '_quant', 'Avg Inference']
+    tflite_quant_error = tflite_df.loc[args.model + '_quant', 'Avg Inference STD']
     onnx_orig = onnx_df.loc[args.model, 'model_run']
+    onnx_orig_error = onnx_df.loc[args.model, 'model_run_sd']
     onnx_quant = onnx_df.loc[args.model + '_quant', 'model_run']
-
-    #Figure 1: Inference Time for Original and Quantized Models across TFlite and ONNX
-    fig, plot1 = plt.subplots(figsize=(6, 4))
-    bar_width = 0.25
-    x = np.arange(len(frameworks))
+    onnx_quant_error = onnx_df.loc[args.model + '_quant', 'model_run_sd']
     
-    plot1.bar(x - bar_width / 2, [tflite_orig, onnx_orig], width=bar_width, label="Original", color=colors[0])
-    plot1.bar(x + bar_width / 2, [tflite_quant, onnx_quant], width=bar_width, label="Quantized", color=colors[1])
+    #Figure 1: Inference Time for Original and Quantized Models across TFlite and ONNX
 
-    # Labels and title
-    plot1.set_xticks(x)
-    plot1.set_xticklabels(frameworks)
-    plot1.set_ylabel('Time (ms)')
-    plot1.set_title("Inference Time for ResNet50")
-    plot1.legend()
-    plt.savefig(f'{args.output}/Result1_{args.model}_InferenceTimes.png')
+    fig, ax = plt.subplots(figsize=(2.5, 4))
+    bar_width = 0.35
+    opacity = 0.8
 
+    x = np.arange(len(frameworks))
+
+    # Plot the bars
+    rects1 = ax.bar(
+        x - bar_width/2,
+        [tflite_orig, onnx_orig],
+        bar_width,
+        alpha=opacity,
+        label='Original'
+    )
+    rects2 = ax.bar(
+        x + bar_width/2,
+        [tflite_quant, onnx_quant],
+        bar_width,
+        alpha=opacity,
+        label='Quantized'
+    )
+
+    # Plot the error bars separately
+    ax.errorbar(
+        x - bar_width/2,
+        [tflite_orig, onnx_orig],
+        yerr=[tflite_orig_error, onnx_orig_error],
+        fmt='none',           
+        ecolor='black',       
+        capsize=5,            
+        elinewidth=1
+    )
+    ax.errorbar(
+        x + bar_width/2,
+        [tflite_quant, onnx_quant],
+        yerr=[tflite_quant_error, onnx_quant_error],
+        fmt='none',
+        ecolor='black',
+        capsize=5,
+        elinewidth=1
+    )
+
+    ax.set_xlim(-1.2, 2.2)
+    ax.set_ylim(0, 120)
+    ax.set_xticks(x)
+    ax.set_xticklabels(frameworks, rotation=45)
+    ax.set_ylabel('Time (ms)')
+    #ax.set_title(f'Inference Time for {args.model}')
+    ax.legend()
+    ax.set_xlabel('Framework')
+
+    y_range = ax.get_ylim()
+    x_range = ax.get_xlim()
+
+    #plt.tight_layout()
+    plt.subplots_adjust(left=0.25, right=0.95, bottom=0.25, top=0.95)
+    plt.savefig(f'{args.output}/Result1_{args.model}_InferenceTimes.pdf', format='pdf')
     
     #Part 2: Comparing time taken by convolution operator
     #Loading convolution times
@@ -59,22 +105,41 @@ def main():
     onnx_conv = aggregate_convolution("onnx", onnx_orig_ops, onnx_quant_ops, "ResNet50") 
     categories = ['Convolution', 'Quantized Convolution', 'Convert']
 
-    bar_width = 0.25
-    fig, plot2 = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(2.5, 4))
     x = np.arange(len(frameworks))
-    plot2.bar(x - bar_width / 2, [tflite_conv['Convolution'], onnx_conv['Convolution']], width=bar_width, label="Convolution", color=colors[0])
+    
+    rects1 = ax.bar(x - bar_width / 2, 
+                    [tflite_conv['Convolution'], onnx_conv['Convolution']], 
+                    width=bar_width, 
+                    label="Convolution", 
+                    alpha = opacity)
 
     # Plot stacked bars for Quantized Convolution + Convert
-    plot2.bar(x + bar_width / 2, [tflite_conv['Quantized Convolution'], onnx_conv['Quantized Convolution']], width=bar_width, label='Quantized Convolution', color=colors[1])
-    plot2.bar(x + bar_width / 2, [tflite_conv['Convert'], onnx_conv['Convert']], width=bar_width, label=categories[2], bottom=[tflite_conv['Quantized Convolution'], onnx_conv['Quantized Convolution']], color=colors[2])
+    rects2 = ax.bar(x + bar_width / 2, 
+                    [tflite_conv['Quantized Convolution'], onnx_conv['Quantized Convolution']], 
+                    width=bar_width, 
+                    label='Quantized \nConvolution', 
+                    alpha = opacity)
+    rects3 = ax.bar(x + bar_width / 2, 
+                    [tflite_conv['Convert'], onnx_conv['Convert']], 
+                    width=bar_width, 
+                    label='Convert', 
+                    bottom=[tflite_conv['Quantized Convolution'], onnx_conv['Quantized Convolution']], 
+                    alpha = opacity)
 
     # Labels and title
-    plot2.set_xticks(x)
-    plot2.set_xticklabels(frameworks)
-    plot2.set_ylabel('Time (ms)')
-    plot2.set_title("Convolution Layer")
-    plot2.legend()
-    plt.savefig(f'{args.output}/Result1_{args.model}_ConvolutionComparison.png')
+    ax.set_xticks(x)
+    ax.set_xticklabels(frameworks, rotation=45)
+    #ax.set_ylabel('Time (ms)')
+    ax.set_xlabel('Framework')
+    #ax.set_title(f"Convolution Layer for {args.model}")
+    ax.legend()
+    ax.set_ylim(y_range)
+    ax.set_xlim(x_range)
+    ax.set_yticklabels([])  # Also removes the tick labels
+    #plt.tight_layout()
+    plt.subplots_adjust(left=0.25, right=0.95, bottom=0.25, top=0.95)
+    plt.savefig(f'{args.output}/Result1_{args.model}_ConvolutionComparison.pdf', format='pdf')
 
 
 

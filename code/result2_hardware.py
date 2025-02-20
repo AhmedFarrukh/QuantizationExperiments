@@ -15,10 +15,12 @@ def main():
     if args.model not in ["ResNet50"]:
         raise NotImplementedError("Currently, this code has not been extended for models other than ResNet50")
     
-    hardware_lst = ["compute_haswell_ib", "compute_skylake", "compute_icelake", "compute_cascadelake_r"]
+    hardware_lst = ["compute_haswell_ib", "compute_skylake", "compute_icelake_r650", "compute_cascadelake"]
     hardware_names = ["Haswell", "Skylake", "Icelake", "Cascade Lake"]
     tflite_orig_inference = []
     tflite_quant_inference = []
+    tflite_orig_inference_std = []
+    tflite_quant_inference_std = []
     tflite_orig_conv = []
     tflite_quant_conv = []
     tflite_quant_convert = []
@@ -34,45 +36,60 @@ def main():
 
         tflite_orig_inference.append(tflite_df.loc[args.model, 'Avg Inference'])
         tflite_quant_inference.append(tflite_df.loc[args.model + '_quant', 'Avg Inference'])
+        tflite_orig_inference_std.append(tflite_df.loc[args.model, 'Avg Inference STD'])
+        tflite_quant_inference_std.append(tflite_df.loc[args.model + '_quant', 'Avg Inference STD'])
         tflite_orig_conv.append(tflite_conv["Convolution"])
         tflite_quant_conv.append(tflite_conv["Quantized Convolution"])
         tflite_quant_convert.append(tflite_conv["Convert"])
 
-    bar_width = 0.25
-    colors = ["#00cd63", "#339fff", "#f7b300"]
+    bar_width = 0.35
+    opacity = 0.8
     x = np.arange(len(hardware_lst))
 
     #Part 1: Overall Inference times before and after quantization across hardware
-    fig, plot1 = plt.subplots(figsize=(6, 4))
-    bar_width = 0.25
+    fig, ax = plt.subplots(figsize=(3, 4))
 
-    plot1.bar(x - bar_width / 2, tflite_orig_inference, width=bar_width, label="Original", color=colors[0])
-    plot1.bar(x + bar_width / 2, tflite_quant_inference, width=bar_width, label="Quantized", color=colors[1])
+    rects1 = ax.bar(x - bar_width / 2, tflite_orig_inference, width=bar_width, label="Original", alpha = opacity)
+    rects2 = ax.bar(x + bar_width / 2, tflite_quant_inference, width=bar_width, label="Quantized", alpha = opacity)
+
+    plt.errorbar(x - bar_width / 2, tflite_orig_inference, yerr=tflite_orig_inference_std, fmt='none', color='black', capsize=5)
+    plt.errorbar(x + bar_width / 2, tflite_quant_inference, yerr=tflite_quant_inference_std, fmt='none', color='black', capsize=5)
 
     # Labels and title
-    plot1.set_xticks(x)
-    plot1.set_xticklabels(hardware_names)
-    plot1.set_ylabel('Time (ms)')
-    plot1.set_title(f"Inference Time for {args.model}")
-    plot1.legend()
-    plt.savefig(f'{args.output}/Result2_{args.model}_InferenceTimes.png')
+    ax.set_xticks(x)
+    ax.set_xticklabels(hardware_names, rotation=45)
+    ax.set_ylabel('Time (ms)')
+    ax.set_xlabel('Hardware')
+    #plot1.set_title(f"Inference Time for {args.model}")
+    ax.legend()
+    #plt.tight_layout()
+    plt.subplots_adjust(left=0.2, right=0.95, bottom=0.3, top=0.95)
+    plt.savefig(f'{args.output}/Result2_{args.model}_InferenceTimes.pdf', format='pdf')
+
+    y_range = ax.get_ylim()
 
     #Part2: Comparing time taken by convolution operator across hardware
-    fig, plot2 = plt.subplots(figsize=(6, 4))
+    bar_width = 0.35
+    fig, ax2 = plt.subplots(figsize=(3, 4))
     
-    plot2.bar(x - bar_width / 2, tflite_orig_conv, width=bar_width, label="Convolution", color=colors[0])
+    ax2.bar(x - bar_width / 2, tflite_orig_conv, width=bar_width, label="Convolution", alpha = opacity)
 
     # Plot stacked bars for Quantized Convolution + Convert
-    plot2.bar(x + bar_width / 2, tflite_quant_conv, width=bar_width, label="Quantized Convolution", color=colors[1])
-    plot2.bar(x + bar_width / 2, tflite_quant_convert, width=bar_width, label="Convert", bottom=tflite_quant_conv, color=colors[2])
+    ax2.bar(x + bar_width / 2, tflite_quant_conv, width=bar_width, label="Quantized \nConvolution", alpha = opacity)
+    ax2.bar(x + bar_width / 2, tflite_quant_convert, width=bar_width, label="Convert", bottom=tflite_quant_conv, alpha = opacity)
 
     # Labels and title
-    plot2.set_xticks(x)
-    plot2.set_xticklabels(hardware_names)
-    plot2.set_ylabel('Time (ms)')
-    plot2.set_title("Convolution Layer")
-    plot2.legend()
-    plt.savefig(f'{args.output}/Result2_{args.model}_ConvolutionComparison.png')
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(hardware_names, rotation=45)
+    ax2.set_ylim(y_range)
+    #ax2.set_ylabel('Time (ms)')
+    ax2.set_xlabel('Hardware')
+    #plot2.set_title(f"Convolution Layer for {args.model}")
+    ax2.legend()
+    ax2.set_yticklabels([])  # Also removes the tick labels
+    #plt.tight_layout()
+    plt.subplots_adjust(left=0.2, right=0.95, bottom=0.3, top=0.95)
+    plt.savefig(f'{args.output}/Result2_{args.model}_ConvolutionComparison.pdf', format='pdf')
 
 
 if __name__ == "__main__":
