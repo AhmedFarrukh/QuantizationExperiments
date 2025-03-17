@@ -11,6 +11,10 @@ git clone https://github.com/AhmedFarrukh/QuantizationExperiments.git
 ```
 Then open the `QuantizationExperiments/notebooks` directory and follow along the instructions in the notebooks.
 
+Pre-trained models, including both original and quantized versions, are available for direct use:
+* [ONNX](https://drive.google.com/drive/folders/1YD2eW0557lorRmmP5izPiVf5anjdFgdc?usp=drive_link)
+* [TFLite](https://drive.google.com/drive/folders/1OcJ9ceYg6ZWFJ4QMR0zznsw0KVeHPa4h?usp=drive_link)
+
 ## Reproduce plots
 To reproduce the plots, you can run the following commands using the sample results available in the `results` directory. To reproduce the plots with new results, replace the results' directories in the following commands. 
 
