@@ -11,12 +11,18 @@ def profile(onnx_dir, results_dir, n):
     
     for onnx_model in onnx_model_names:
         print(f"Profiling {onnx_model} models")
-        for i in range(n):
-            onnx_model_path = os.path.join(onnx_dir, f"{onnx_model}.onnx")
+        
+        onnx_model_path = os.path.join(onnx_dir, f"{onnx_model}.onnx")
+        onnx_results_path = os.path.join(results_dir, f"onnx_{onnx_model}_profiling_first.json")
+        run_profiler(onnx_model_path, onnx_results_path)
+        for i in range(n): 
             onnx_results_path = os.path.join(results_dir, f"onnx_{onnx_model}_profiling_{i}.json")
             run_profiler(onnx_model_path, onnx_results_path)
-            
-            onnx_model_path_quant = os.path.join(onnx_dir, f"{onnx_model}_quant.onnx")
+        
+        onnx_model_path_quant = os.path.join(onnx_dir, f"{onnx_model}_quant.onnx")
+        onnx_results_path_quant = os.path.join(results_dir, f"onnx_{onnx_model}_quant_profiling_first.json")
+        run_profiler(onnx_model_path_quant, onnx_results_path_quant)
+        for i in range(n):
             onnx_results_path_quant = os.path.join(results_dir, f"onnx_{onnx_model}_quant_profiling_{i}.json")
             run_profiler(onnx_model_path_quant, onnx_results_path_quant)
 
