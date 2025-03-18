@@ -10,7 +10,7 @@ import subprocess
 tflite_model_names = ["MobileNetV2", "InceptionV3", "ResNet50", "ResNet101", "ResNet152", "VGG16", "VGG19"]
 
 def download_benchmark(dir):
-    subprocess.check_output(f'/home/cc/.local/bin/gdown https://drive.google.com/file/d/1YS5_PLZZ4qDuZYz8r4QFj5Sx4P5b1TfO/view?usp=drive_link -O {dir}/benchmark --fuzzy', shell=True)
+    subprocess.check_output(f'python3 -m gdown https://drive.google.com/file/d/1YS5_PLZZ4qDuZYz8r4QFj5Sx4P5b1TfO/view?usp=drive_link -O {dir}/benchmark --fuzzy', shell=True)
     os.chmod(dir + '/benchmark', stat.S_IEXEC)
 
 def benchmark(results_dir, tflite_dir, num_repetitions):
