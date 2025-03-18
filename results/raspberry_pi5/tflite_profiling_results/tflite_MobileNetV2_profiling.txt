@@ -1,0 +1,141 @@
+INFO: STARTING!
+INFO: Log parameter values verbosely: [0]
+INFO: Min num runs: [10]
+INFO: Num threads: [1]
+INFO: Graph: [/home/jovyan/tflite_models/MobileNetV2.tflite]
+INFO: Signature to run: []
+INFO: Enable op profiling: [1]
+INFO: #threads used for CPU inference: [1]
+INFO: Loaded model /home/jovyan/tflite_models/MobileNetV2.tflite
+INFO: The input model file size (MB): 13.9867
+INFO: Initialized session in 29.26ms.
+INFO: Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+INFO: count=20 first=28463 curr=25462 min=25323 max=28463 avg=25846.1 std=743 p5=25356 median=25485 p95=28463
+
+INFO: Running benchmark for at least 10 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+INFO: count=39 first=25552 curr=25555 min=25345 max=26870 avg=25701.6 std=311 p5=25377 median=25601 p95=26601
+
+INFO: Inference timings in us: Init: 29260, First inference: 28463, Warmup (avg): 25846.1, Inference (avg): 25701.6
+INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+INFO: Memory footprint delta from the start of the tool (MB): init=37.5 overall=38.75
+INFO: Profiling Info for Benchmark Initialization:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	   20.639	   20.639	 73.895%	 73.895%	 26112.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	    7.291	    7.291	 26.105%	100.000%	  7296.000	        1	AllocateTensors/0
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	   20.639	   20.639	 73.895%	 73.895%	 26112.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	    7.291	    7.291	 26.105%	100.000%	  7296.000	        1	AllocateTensors/0
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	    20.639	    73.895%	    73.895%	 26112.000	        1
+	                         AllocateTensors	        1	     7.291	    26.105%	   100.000%	  7296.000	        1
+
+Timings (microseconds): count=1 curr=27930
+Memory (bytes): count=0
+2 nodes observed
+
+
+
+INFO: Operator-wise Profiling Info for Regular Benchmark Runs:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	           Convolution (NHWC, F32) IGEMM	    1.103	    1.117	  4.361%	  4.361%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:0
+	          Convolution (NHWC, F32) DWConv	    0.827	    0.773	  3.018%	  7.379%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:1
+	          Fully Connected (NC, F32) GEMM	    0.574	    0.575	  2.244%	  9.623%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:2
+	          Fully Connected (NC, F32) GEMM	    2.795	    2.773	 10.821%	 20.444%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:3
+	          Convolution (NHWC, F32) DWConv	    1.401	    1.465	  5.719%	 26.163%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:4
+	          Fully Connected (NC, F32) GEMM	    0.476	    0.482	  1.883%	 28.045%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:5
+	          Fully Connected (NC, F32) GEMM	    0.907	    0.939	  3.662%	 31.708%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:6
+	          Convolution (NHWC, F32) DWConv	    1.006	    1.076	  4.200%	 35.908%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:7
+	          Fully Connected (NC, F32) GEMM	    0.765	    0.768	  2.997%	 38.904%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:8
+	                 Binary Elementwise (ND)	    0.075	    0.072	  0.283%	 39.187%	     0.000	        1	Delegate/Binary Elementwise (ND):9
+	          Fully Connected (NC, F32) GEMM	    0.912	    0.929	  3.624%	 42.811%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:10
+	          Convolution (NHWC, F32) DWConv	    0.698	    0.671	  2.619%	 45.430%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:11
+	          Fully Connected (NC, F32) GEMM	    0.227	    0.226	  0.883%	 46.313%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:12
+	          Fully Connected (NC, F32) GEMM	    0.305	    0.309	  1.205%	 47.518%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:13
+	          Convolution (NHWC, F32) DWConv	    0.208	    0.208	  0.810%	 48.328%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:14
+	          Fully Connected (NC, F32) GEMM	    0.316	    0.324	  1.264%	 49.592%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:15
+	                 Binary Elementwise (ND)	    0.018	    0.020	  0.076%	 49.668%	     0.000	        1	Delegate/Binary Elementwise (ND):16
+	          Fully Connected (NC, F32) GEMM	    0.302	    0.310	  1.208%	 50.876%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:17
+	          Convolution (NHWC, F32) DWConv	    0.203	    0.208	  0.810%	 51.686%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:18
+	          Fully Connected (NC, F32) GEMM	    0.302	    0.297	  1.158%	 52.845%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:19
+	                 Binary Elementwise (ND)	    0.008	    0.010	  0.038%	 52.883%	     0.000	        1	Delegate/Binary Elementwise (ND):20
+	          Fully Connected (NC, F32) GEMM	    0.297	    0.299	  1.166%	 54.048%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:21
+	          Convolution (NHWC, F32) DWConv	    0.059	    0.060	  0.233%	 54.282%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:22
+	          Fully Connected (NC, F32) GEMM	    0.134	    0.135	  0.525%	 54.807%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:23
+	          Fully Connected (NC, F32) GEMM	    0.282	    0.283	  1.103%	 55.910%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:24
+	          Convolution (NHWC, F32) DWConv	    0.096	    0.098	  0.384%	 56.294%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:25
+	          Fully Connected (NC, F32) GEMM	    0.267	    0.269	  1.049%	 57.343%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:26
+	                 Binary Elementwise (ND)	    0.003	    0.004	  0.014%	 57.356%	     0.000	        1	Delegate/Binary Elementwise (ND):27
+	          Fully Connected (NC, F32) GEMM	    0.279	    0.282	  1.099%	 58.456%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:28
+	          Convolution (NHWC, F32) DWConv	    0.099	    0.099	  0.387%	 58.842%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:29
+	          Fully Connected (NC, F32) GEMM	    0.266	    0.268	  1.045%	 59.887%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:30
+	                 Binary Elementwise (ND)	    0.003	    0.003	  0.013%	 59.900%	     0.000	        1	Delegate/Binary Elementwise (ND):31
+	          Fully Connected (NC, F32) GEMM	    0.280	    0.282	  1.100%	 61.000%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:32
+	          Convolution (NHWC, F32) DWConv	    0.097	    0.098	  0.381%	 61.381%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:33
+	          Fully Connected (NC, F32) GEMM	    0.264	    0.265	  1.035%	 62.416%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:34
+	                 Binary Elementwise (ND)	    0.003	    0.003	  0.012%	 62.428%	     0.000	        1	Delegate/Binary Elementwise (ND):35
+	          Fully Connected (NC, F32) GEMM	    0.279	    0.281	  1.095%	 63.524%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:36
+	          Convolution (NHWC, F32) DWConv	    0.095	    0.096	  0.376%	 63.900%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:37
+	          Fully Connected (NC, F32) GEMM	    0.394	    0.395	  1.543%	 65.443%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:38
+	          Fully Connected (NC, F32) GEMM	    0.622	    0.617	  2.409%	 67.853%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:39
+	          Convolution (NHWC, F32) DWConv	    0.175	    0.177	  0.690%	 68.542%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:40
+	          Fully Connected (NC, F32) GEMM	    0.589	    0.591	  2.306%	 70.849%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:41
+	                 Binary Elementwise (ND)	    0.008	    0.009	  0.035%	 70.883%	     0.000	        1	Delegate/Binary Elementwise (ND):42
+	          Fully Connected (NC, F32) GEMM	    0.611	    0.616	  2.403%	 73.286%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:43
+	          Convolution (NHWC, F32) DWConv	    0.175	    0.175	  0.682%	 73.968%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:44
+	          Fully Connected (NC, F32) GEMM	    0.588	    0.590	  2.303%	 76.271%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:45
+	                 Binary Elementwise (ND)	    0.005	    0.005	  0.020%	 76.291%	     0.000	        1	Delegate/Binary Elementwise (ND):46
+	          Fully Connected (NC, F32) GEMM	    0.607	    0.609	  2.377%	 78.668%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:47
+	          Convolution (NHWC, F32) DWConv	    0.047	    0.048	  0.186%	 78.854%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:48
+	          Fully Connected (NC, F32) GEMM	    0.271	    0.272	  1.062%	 79.916%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:49
+	          Fully Connected (NC, F32) GEMM	    0.484	    0.470	  1.832%	 81.748%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:50
+	          Convolution (NHWC, F32) DWConv	    0.079	    0.078	  0.304%	 82.052%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:51
+	          Fully Connected (NC, F32) GEMM	    0.460	    0.448	  1.750%	 83.802%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:52
+	                 Binary Elementwise (ND)	    0.003	    0.003	  0.011%	 83.813%	     0.000	        1	Delegate/Binary Elementwise (ND):53
+	          Fully Connected (NC, F32) GEMM	    0.473	    0.467	  1.824%	 85.637%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:54
+	          Convolution (NHWC, F32) DWConv	    0.080	    0.080	  0.312%	 85.950%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:55
+	          Fully Connected (NC, F32) GEMM	    0.454	    0.458	  1.786%	 87.736%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:56
+	                 Binary Elementwise (ND)	    0.002	    0.002	  0.009%	 87.745%	     0.000	        1	Delegate/Binary Elementwise (ND):57
+	          Fully Connected (NC, F32) GEMM	    0.466	    0.468	  1.827%	 89.572%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:58
+	          Convolution (NHWC, F32) DWConv	    0.078	    0.079	  0.307%	 89.879%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:59
+	          Fully Connected (NC, F32) GEMM	    0.903	    0.912	  3.558%	 93.437%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:60
+	          Fully Connected (NC, F32) GEMM	    1.212	    1.220	  4.763%	 98.200%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:61
+	                          Mean (ND) Mean	    0.018	    0.016	  0.064%	 98.264%	     0.000	        1	Delegate/Mean (ND) Mean:62
+	          Fully Connected (NC, F32) GEMM	    0.421	    0.441	  1.721%	 99.985%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:63
+	                       Softmax (NC, F32)	    0.004	    0.004	  0.015%	100.000%	     0.000	        1	Delegate/Softmax (NC, F32):64
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	          Fully Connected (NC, F32) GEMM	    2.795	    2.773	 10.821%	 10.821%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:3
+	          Convolution (NHWC, F32) DWConv	    1.401	    1.465	  5.719%	 16.540%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:4
+	          Fully Connected (NC, F32) GEMM	    1.212	    1.220	  4.763%	 21.303%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:61
+	           Convolution (NHWC, F32) IGEMM	    1.103	    1.117	  4.361%	 25.663%	     0.000	        1	Delegate/Convolution (NHWC, F32) IGEMM:0
+	          Convolution (NHWC, F32) DWConv	    1.006	    1.076	  4.200%	 29.864%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:7
+	          Fully Connected (NC, F32) GEMM	    0.907	    0.939	  3.662%	 33.526%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:6
+	          Fully Connected (NC, F32) GEMM	    0.912	    0.929	  3.624%	 37.150%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:10
+	          Fully Connected (NC, F32) GEMM	    0.903	    0.912	  3.558%	 40.708%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:60
+	          Convolution (NHWC, F32) DWConv	    0.827	    0.773	  3.018%	 43.726%	     0.000	        1	Delegate/Convolution (NHWC, F32) DWConv:1
+	          Fully Connected (NC, F32) GEMM	    0.765	    0.768	  2.997%	 46.722%	     0.000	        1	Delegate/Fully Connected (NC, F32) GEMM:8
+
+Number of nodes executed: 65
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	          Fully Connected (NC, F32) GEMM	       35	    18.851	    73.657%	    73.657%	     0.000	       35
+	          Convolution (NHWC, F32) DWConv	       17	     5.480	    21.412%	    95.069%	     0.000	       17
+	           Convolution (NHWC, F32) IGEMM	        1	     1.117	     4.364%	    99.433%	     0.000	        1
+	                 Binary Elementwise (ND)	       10	     0.126	     0.492%	    99.926%	     0.000	       10
+	                          Mean (ND) Mean	        1	     0.016	     0.063%	    99.988%	     0.000	        1
+	                       Softmax (NC, F32)	        1	     0.003	     0.012%	   100.000%	     0.000	        1
+
+Timings (microseconds): count=39 first=25460 curr=25482 min=25269 max=26794 avg=25625.9 std=311
+Memory (bytes): count=0
+65 nodes observed
+
+
+

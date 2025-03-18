@@ -1,0 +1,122 @@
+INFO: STARTING!
+INFO: Log parameter values verbosely: [0]
+INFO: Min num runs: [10]
+INFO: Num threads: [1]
+INFO: Graph: [/home/jovyan/tflite_models/VGG19_quant.tflite]
+INFO: Signature to run: []
+INFO: Enable op profiling: [1]
+INFO: #threads used for CPU inference: [1]
+INFO: Loaded model /home/jovyan/tflite_models/VGG19_quant.tflite
+INFO: The input model file size (MB): 143.789
+INFO: Initialized session in 466.523ms.
+INFO: Running benchmark for at least 1 iterations and at least 0.5 seconds but terminate if exceeding 150 seconds.
+INFO: count=2 first=310201 curr=314297 min=310201 max=314297 avg=312249 std=2048 p5=310201 median=314297 p95=314297
+
+INFO: Running benchmark for at least 10 iterations and at least 1 seconds but terminate if exceeding 150 seconds.
+INFO: count=10 first=314861 curr=314091 min=313929 max=328456 avg=315715 std=4256 p5=313929 median=314286 p95=328456
+
+INFO: Inference timings in us: Init: 466523, First inference: 310201, Warmup (avg): 312249, Inference (avg): 315715
+INFO: Note: as the benchmark tool itself affects memory footprint, the following is only APPROXIMATE to the actual memory footprint of the model at runtime. Take the information at your discretion.
+INFO: Memory footprint delta from the start of the tool (MB): init=303.375 overall=304.875
+INFO: Profiling Info for Benchmark Initialization:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	  442.128	  442.128	 94.947%	 94.947%	280320.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	   23.528	   23.528	  5.053%	100.000%	 26112.000	        1	AllocateTensors/0
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                 ModifyGraphWithDelegate	  442.128	  442.128	 94.947%	 94.947%	280320.000	        1	ModifyGraphWithDelegate/0
+	                         AllocateTensors	   23.528	   23.528	  5.053%	100.000%	 26112.000	        1	AllocateTensors/0
+
+Number of nodes executed: 2
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	                 ModifyGraphWithDelegate	        1	   442.128	    94.947%	    94.947%	280320.000	        1
+	                         AllocateTensors	        1	    23.528	     5.053%	   100.000%	 26112.000	        1
+
+Timings (microseconds): count=1 curr=465656
+Memory (bytes): count=0
+2 nodes observed
+
+
+
+INFO: Operator-wise Profiling Info for Regular Benchmark Runs:
+============================== Run Order ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	                  Convert (NC, F32, QD8)	    0.111	    0.100	  0.032%	  0.032%	     0.000	        1	Delegate/Convert (NC, F32, QD8):0
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   11.707	   11.659	  3.694%	  3.725%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:1
+	                  Convert (NC, F32, QD8)	    3.353	    3.352	  1.062%	  4.787%	     0.000	        1	Delegate/Convert (NC, F32, QD8):2
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   27.677	   27.598	  8.743%	 13.531%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:3
+	                 Max Pooling (NHWC, F32)	    3.095	    3.148	  0.997%	 14.528%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):4
+	                  Convert (NC, F32, QD8)	    0.689	    0.684	  0.217%	 14.745%	     0.000	        1	Delegate/Convert (NC, F32, QD8):5
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   14.088	   14.095	  4.465%	 19.210%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:6
+	                  Convert (NC, F32, QD8)	    2.083	    2.025	  0.642%	 19.852%	     0.000	        1	Delegate/Convert (NC, F32, QD8):7
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   26.240	   26.151	  8.285%	 28.136%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:8
+	                 Max Pooling (NHWC, F32)	    1.736	    1.784	  0.565%	 28.702%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):9
+	                  Convert (NC, F32, QD8)	    0.306	    0.308	  0.097%	 28.799%	     0.000	        1	Delegate/Convert (NC, F32, QD8):10
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   12.983	   12.971	  4.109%	 32.908%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:11
+	                  Convert (NC, F32, QD8)	    1.382	    1.353	  0.429%	 33.337%	     0.000	        1	Delegate/Convert (NC, F32, QD8):12
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   25.208	   25.231	  7.993%	 41.330%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:13
+	                  Convert (NC, F32, QD8)	    0.590	    0.700	  0.222%	 41.552%	     0.000	        1	Delegate/Convert (NC, F32, QD8):14
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   25.262	   25.304	  8.017%	 49.568%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:15
+	                  Convert (NC, F32, QD8)	    0.688	    0.679	  0.215%	 49.783%	     0.000	        1	Delegate/Convert (NC, F32, QD8):16
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   25.297	   25.324	  8.023%	 57.806%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:17
+	                 Max Pooling (NHWC, F32)	    0.581	    0.597	  0.189%	 57.995%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):18
+	                  Convert (NC, F32, QD8)	    0.129	    0.120	  0.038%	 58.033%	     0.000	        1	Delegate/Convert (NC, F32, QD8):19
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   12.705	   12.848	  4.070%	 62.104%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:20
+	                  Convert (NC, F32, QD8)	    0.520	    0.503	  0.159%	 62.263%	     0.000	        1	Delegate/Convert (NC, F32, QD8):21
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   26.862	   27.198	  8.616%	 70.879%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:22
+	                  Convert (NC, F32, QD8)	    0.356	    0.305	  0.096%	 70.976%	     0.000	        1	Delegate/Convert (NC, F32, QD8):23
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   26.942	   27.710	  8.779%	 79.755%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:24
+	                  Convert (NC, F32, QD8)	    0.299	    0.298	  0.095%	 79.849%	     0.000	        1	Delegate/Convert (NC, F32, QD8):25
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   26.798	   26.822	  8.497%	 88.346%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:26
+	                 Max Pooling (NHWC, F32)	    0.231	    0.237	  0.075%	 88.422%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):27
+	                  Convert (NC, F32, QD8)	    0.063	    0.063	  0.020%	 88.442%	     0.000	        1	Delegate/Convert (NC, F32, QD8):28
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    7.255	    6.834	  2.165%	 90.607%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:29
+	                  Convert (NC, F32, QD8)	    0.067	    0.066	  0.021%	 90.628%	     0.000	        1	Delegate/Convert (NC, F32, QD8):30
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    6.674	    6.745	  2.137%	 92.765%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:31
+	                  Convert (NC, F32, QD8)	    0.075	    0.067	  0.021%	 92.786%	     0.000	        1	Delegate/Convert (NC, F32, QD8):32
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    6.641	    6.660	  2.110%	 94.896%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:33
+	                  Convert (NC, F32, QD8)	    0.067	    0.068	  0.022%	 94.917%	     0.000	        1	Delegate/Convert (NC, F32, QD8):34
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	    6.680	    6.689	  2.119%	 97.036%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:35
+	                 Max Pooling (NHWC, F32)	    0.042	    0.044	  0.014%	 97.050%	     0.000	        1	Delegate/Max Pooling (NHWC, F32):36
+	                          Copy (NC, X32)	    0.000	    0.000	  0.000%	 97.050%	     0.000	        1	Delegate/Copy (NC, X32):37
+	                  Convert (NC, F32, QP8)	    0.055	    0.055	  0.017%	 97.068%	     0.000	        1	Delegate/Convert (NC, F32, QP8):38
+	Fully Connected (NC, QP8, F32, QC8W) GEMM	    7.669	    7.676	  2.432%	 99.499%	     0.000	        1	Delegate/Fully Connected (NC, QP8, F32, QC8W) GEMM:39
+	                  Convert (NC, F32, QP8)	    0.010	    0.010	  0.003%	 99.503%	     0.000	        1	Delegate/Convert (NC, F32, QP8):40
+	Fully Connected (NC, QP8, F32, QC8W) GEMM	    1.245	    1.250	  0.396%	 99.899%	     0.000	        1	Delegate/Fully Connected (NC, QP8, F32, QC8W) GEMM:41
+	                  Convert (NC, F32, QP8)	    0.009	    0.009	  0.003%	 99.902%	     0.000	        1	Delegate/Convert (NC, F32, QP8):42
+	Fully Connected (NC, QP8, F32, QC8W) GEMM	    0.305	    0.307	  0.097%	 99.999%	     0.000	        1	Delegate/Fully Connected (NC, QP8, F32, QC8W) GEMM:43
+	                       Softmax (NC, F32)	    0.003	    0.003	  0.001%	100.000%	     0.000	        1	Delegate/Softmax (NC, F32):44
+
+============================== Top by Computation Time ==============================
+	                             [node type]	  [first]	 [avg ms]	     [%]	  [cdf%]	  [mem KB]	[times called]	[Name]
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   26.942	   27.710	  8.779%	  8.779%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:24
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   27.677	   27.598	  8.743%	 17.522%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:3
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   26.862	   27.198	  8.616%	 26.138%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:22
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   26.798	   26.822	  8.497%	 34.636%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:26
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   26.240	   26.151	  8.285%	 42.920%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:8
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   25.297	   25.324	  8.023%	 50.943%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:17
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   25.262	   25.304	  8.017%	 58.960%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:15
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   25.208	   25.231	  7.993%	 66.953%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:13
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   14.088	   14.095	  4.465%	 71.419%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:6
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	   12.983	   12.971	  4.109%	 75.528%	     0.000	        1	Delegate/Convolution (NHWC, QD8, F32, QC8W) IGEMM:11
+
+Number of nodes executed: 45
+============================== Summary by node type ==============================
+	                             [Node type]	  [count]	  [avg ms]	    [avg %]	    [cdf %]	  [mem KB]	[times called]
+	Convolution (NHWC, QD8, F32, QC8W) IGEMM	       16	   289.834	    91.826%	    91.826%	     0.000	       16
+	                  Convert (NC, F32, QD8)	       16	    10.683	     3.385%	    95.211%	     0.000	       16
+	Fully Connected (NC, QP8, F32, QC8W) GEMM	        3	     9.233	     2.925%	    98.136%	     0.000	        3
+	                 Max Pooling (NHWC, F32)	        5	     5.809	     1.840%	    99.977%	     0.000	        5
+	                  Convert (NC, F32, QP8)	        3	     0.071	     0.022%	    99.999%	     0.000	        3
+	                       Softmax (NC, F32)	        1	     0.003	     0.001%	   100.000%	     0.000	        1
+	                          Copy (NC, X32)	        1	     0.000	     0.000%	   100.000%	     0.000	        1
+
+Timings (microseconds): count=10 first=314778 curr=314030 min=313867 max=328395 avg=315652 std=4257
+Memory (bytes): count=0
+45 nodes observed
+
+
+
